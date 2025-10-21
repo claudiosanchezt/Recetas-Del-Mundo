@@ -232,7 +232,6 @@ Docker Compose (ejemplo de producción):
 ```powershell
 docker compose -f docker-compose.prod.yml --env-file .env up -d
 ```
-
 ## Backups y restauración
 
 - Scripts: `scripts/backup_full.sh`, `scripts/backup_rotate.sh`, `scripts/restore_recetas_stack.sh`.
