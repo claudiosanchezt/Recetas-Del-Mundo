@@ -14,7 +14,7 @@ API Recetas del Mundo es una API RESTful contenerizada, diseñada para producci�
 - Backend modular en Spring Boot con autenticación JWT y hashing con BCrypt.
 - Modelo relacional en PostgreSQL 15 optimizado para búsquedas por país y categoría.
 - Funcionalidad social y de monetización: favoritos, comentarios, rating y donaciones.
-- Estrategia operativa: imágenes reproducibles, CI/CD, backups automáticos y pruebas de restore.
+- Estrategia operativa: imágenes reproducibles, Pipelines (integración y despliegue continuos), backups automáticos y pruebas de restore.
 
 Estado actual: API operativa y validada (ver `docs/ENDPOINTS-COMPLETOS.md` para la lista completa — ~42 endpoints confirmados).
 
@@ -47,8 +47,9 @@ Este repositorio contiene el backend de "Recetas del Mundo": una API REST constr
 
 - Java 17+
 - Maven 3.6+
-- Docker (opcional, para Postgres y plantuml) y docker-compose
-- Inkscape o Cairo/PlantUML si necesitas generar PNGs desde SVG/PUML localmente
+- Docker 
+- PostgreSQL
+- Spring Boot
 
 ---
 
@@ -111,14 +112,17 @@ Consulta `docs/ENDPOINTS-COMPLETOS.md` para la lista y ejemplos de uso.
 - Overview de endpoints: `docs/endpoints_overview.svg`.
 - Diagrama ER y scripts: `docs/er_diagram_actualizado.puml`, `docs/er_diagram_actualizado.png`, `docs/ER_diagrama_ascii.txt`.
 
-Imágenes (embebidas):
 
+## Diagrama de arquitectura
 ![Arquitectura](docs/architecture_diagram.svg)
 
+## Diagrama ER  
 ![Diagrama ER](docs/er_diagram_actualizado.png)
 
+## Diagrama de Autenticacion
 ![Flujo Auth](docs/auth_flow.svg)
 
+## Diagrama de Enpoints
 ![Overview Endpoints](docs/endpoints_overview.svg)
 
 Si quieres PNGs de los SVGs, puedo añadir un script PowerShell que use Inkscape/PlantUML; necesitarás ejecutar la conversión localmente (por dependencias nativas).
@@ -167,12 +171,9 @@ API Recetas del Mundo ofrece una base técnica sólida para productos culinarios
 
 Puntos clave:
 
-- Despliegue reproducible (imágenes, CI/CD).
+- Despliegue reproducible (imágenes, Pipelines — integración y despliegue continuos).
 - Escalabilidad horizontal mediante servicios stateless y réplicas.
 - Operaciones seguras: gestión de secretos, backups automatizados y rotación.
 
 © 2025 API Recetas del Mundo. Todos los derechos reservados.
 
----
-
-Si quieres que ajuste el README (añada capturas/PNGs, comandos para conversiones locales o ejemplos de curl más extensos), dime qué prefieres y lo actualizo.
