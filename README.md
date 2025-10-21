@@ -119,20 +119,19 @@ Consulta `docs/ENDPOINTS-COMPLETOS.md` para la lista y ejemplos de uso.
 ## Diagrama ER  
 ![Diagrama ER](docs/er_diagram_actualizado.png)
 
-## Diagrama de Autenticacion
+## Diagrama de Autenticación
 ![Flujo Auth](docs/auth_flow.svg)
 
 ## Diagrama de Enpoints
 ![Overview Endpoints](docs/endpoints_overview.svg)
 
-Si quieres PNGs de los SVGs, puedo añadir un script PowerShell que use Inkscape/PlantUML; necesitarás ejecutar la conversión localmente (por dependencias nativas).
 
 ---
 
 ## Backups y restauración
 
-- Hay scripts para backup en `scripts/` (PowerShell y bash). El dump utilizado es `database/init.sql` y los scripts de herramientas están en `database/tools/`.
-- Estrategia recomendada: `pg_dump` periódicos + backups completos del volumen Docker.
+- Hay scripts para backup en `scripts/` (PowerShell y bash). El dump utilizado es `database/init.sql`.
+- Estrategia de recuperacion: periódicos + backups completos del volumen Docker.
 
 ---
 
@@ -140,21 +139,6 @@ Si quieres PNGs de los SVGs, puedo añadir un script PowerShell que use Inkscape
 
 - Scripts E2E en PowerShell: `scripts/e2e_*.ps1`. Están preparados para ejecutarse contra `http://localhost:8081`.
 - Variables útiles: `E2E_BASE_URL`, `E2E_EMAIL`, `E2E_PASSWORD`.
-
----
-
-## Seguridad y limpieza de secretos
-
-- El repositorio fue auditado y existen guías/scripts para eliminar secretos de la historia (`scripts/clean_remove_secret.sh`).
-- Si alguna clave de Stripe u otro provider fue comprometida, rota la clave y purga la historia git localmente con `git filter-repo` o BFG, siguiendo la guía en `scripts/`.
-
----
-
-## Contribuir
-
-- Abre issues para bugs y features.
-- Para PRs: bifurca la rama, crea una rama descriptiva y abre PR hacia `Bakend_Recetas_Final`.
-- Sigue las convenciones: tests E2E para cambios en endpoints y actualiza `docs/openapi.json` si agregas rutas.
 
 ---
 
