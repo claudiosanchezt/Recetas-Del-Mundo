@@ -41,16 +41,11 @@
     <text x="18" y="124" class="muted">• Firma HMAC — configurar JWT_SECRET</text>
   </g>
 
-  <!-- Right: Token Store -->
-  <g transform="translate(760,90)">
-    <rect class="box-soft" x="0" y="0" width="200" height="80" />
-    <text x="100" y="36" text-anchor="middle" class="label">Token Store</text>
-    <text x="100" y="56" text-anchor="middle" class="muted">Ej: Redis (opcional)</text>
-  </g>
+  <!-- Token Store removed per request -->
 
   <!-- Connections -->
   <line x1="280" y1="115" x2="380" y2="120" class="line" marker-end="url(#arrow)"/>
-  <line x1="680" y1="120" x2="760" y2="120" class="line" marker-end="url(#arrow)"/>
+  <!-- Token Store connection removed -->
   <!-- Backend -> Uso de accessToken -->
   <line x1="530" y1="220" x2="500" y2="300" class="line" marker-end="url(#arrow)"/>
   <!-- Uso de accessToken -> Logout -->
