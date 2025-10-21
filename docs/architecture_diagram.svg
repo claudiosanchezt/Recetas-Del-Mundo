@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-label="Arquitectura del sistema - Cliente, Reverse Proxy, Backend, Postgres, Backups y CI/CD">
+  <style>
+    .box { fill:#ffffff; stroke:#0b6b88; stroke-width:2px; rx:8px }
+    .title { font: bold 13px/1.1 sans-serif; fill:#0b6b88 }
+    .text { font: 12px/1.1 sans-serif; fill:#0b2733 }
+    .small { font: 11px sans-serif; fill:#4a5568 }
+    .arrow { stroke:#7a7a7a; stroke-width:1.6; marker-end: url(#arrow); }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7a7a7a" />
+    </marker>
+  </defs>
+
+  <!-- Row 1: Cliente / Edge / CDN -->
+  <g transform="translate(40,36)">
+    <rect class="box" x="0" y="0" width="200" height="84" />
+    <text class="title" x="12" y="24">Cliente</text>
+    <text class="text" x="12" y="44">Web / Mobile</text>
+    <text class="small" x="12" y="62">Browser, SPA, Native App</text>
+  </g>
+
+  <g transform="translate(280,36)">
+    <rect class="box" x="0" y="0" width="260" height="100" />
+    <text class="title" x="12" y="24">Reverse Proxy</text>
+    <text class="text" x="12" y="44">nginx / traefik</text>
+  </g>
+
+  <g transform="translate(580,36)">
+    <rect class="box" x="0" y="0" width="200" height="84" />
+    <text class="title" x="12" y="24">CDN / Static</text>
+    <text class="small" x="12" y="44">S3 / CDN (opcional)</text>
+  </g>
+
+  <!-- Row 2: Backend -->
+  <g transform="translate(220,180)">
+    <rect class="box" x="0" y="0" width="520" height="140" />
+    <text class="title" x="12" y="26">Backend / Servicios</text>
+    <text class="text" x="12" y="50">Spring Boot (API REST)</text>
+    <text class="small" x="12" y="70">JWT Auth • Actuator • Contenedores</text>
+  </g>
+
+  <!-- Row 2: DB -->
+  <g transform="translate(760,220)">
+    <rect class="box" x="0" y="0" width="320" height="120" />
+    <text class="title" x="12" y="24">Postgres</text>
+    <text class="small" x="12" y="44">Volumen persistente • pg_dump</text>
+  </g>
+
+  <!-- Backups / Ops -->
+  <g transform="translate(760,360)">
+    <rect class="box" x="0" y="0" width="320" height="100" />
+    <text class="title" x="12" y="24">Operaciones</text>
+    <text class="small" x="12" y="44">systemd timers • backups • rotación</text>
+  </g>
+
+  <!-- CI/CD -->
+  <g transform="translate(40,360)">
+    <rect class="box" x="0" y="0" width="600" height="100" />
+    <text class="title" x="12" y="24">CI / CD</text>
+    <text class="small" x="12" y="44">Build → Registry → Deploy</text>
+  </g>
+
+  <!-- Lines -->
+  <line class="arrow" x1="240" y1="78" x2="280" y2="78" />
+  <line class="arrow" x1="540" y1="78" x2="580" y2="78" />
+  <line class="arrow" x1="420" y1="200" x2="760" y2="260" />
+
+  <text class="small" x="40" y="740">Nota: use `BACKEND_IMAGE` en producción y mantenga secrets fuera de repo (Vault / env protected).</text>
+
+</svg>

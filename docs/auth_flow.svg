@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="540" viewBox="0 0 1100 540" role="img" aria-label="Flujo de autenticación JWT - login, emisión tokens, refresh y logout">
+  <style>
+    .box { fill:#ffffff; stroke:#0b6b88; stroke-width:2px; rx:6px }
+    .title { font: bold 13px sans-serif; fill:#0b6b88 }
+    .text { font: 12px sans-serif; fill:#0b2733 }
+    .muted { font:11px sans-serif; fill:#4a5568 }
+    .arrow { stroke:#7a7a7a; stroke-width:1.6; marker-end: url(#arrow); }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7a7a7a" />
+    </marker>
+  </defs>
+
+  <g transform="translate(40,36)">
+    <rect class="box" x="0" y="0" width="220" height="84" />
+    <text class="title" x="12" y="24">Cliente (SPA / Mobile)</text>
+    <text class="text" x="12" y="44">POST /api/login {email,password}</text>
+    <text class="muted" x="12" y="62">Almacenar refresh token en cookie HttpOnly</text>
+  </g>
+
+  <g transform="translate(320,36)">
+    <rect class="box" x="0" y="0" width="420" height="160" />
+    <text class="title" x="12" y="26">Backend (Auth Service)</text>
+    <text class="text" x="12" y="48">Valida credenciales</text>
+    <text class="text" x="12" y="68">Emite accessToken (vida corta)</text>
+    <text class="text" x="12" y="88">Emite refreshToken (vida larga)</text>
+    <text class="muted" x="12" y="110">Firma HMAC/RSA; rotación de claves recomendada</text>
+  </g>
+
+  <g transform="translate(760,36)">
+    <rect class="box" x="0" y="0" width="280" height="100" />
+    <text class="title" x="12" y="24">Token Store</text>
+    <text class="muted" x="12" y="44">DB / Redis: refreshToken hash, jti, expiry</text>
+  </g>
+
+  <line class="arrow" x1="260" y1="78" x2="320" y2="78" />
+  <line class="arrow" x1="740" y1="78" x2="760" y2="78" />
+  <!-- Response box: clearer HTTP response with Set-Cookie + JSON body -->
+  <g transform="translate(380,66)">
+    <rect x="0" y="0" width="340" height="64" rx="6" fill="#ffffff" stroke="#cbdfe4" />
+    <text class="title" x="10" y="18" style="font:13px sans-serif; fill:#0b6b88">200 OK</text>
+    <text class="muted" x="10" y="36" style="font:11px monospace; fill:#264448">Set-Cookie: refreshToken=&lt;token&gt;; HttpOnly; Secure; Path=/; SameSite=Strict</text>
+    <text class="muted" x="10" y="52" style="font:11px monospace; fill:#264448">Body: { accessToken: &lt;jwt&gt;, expiresIn: 900 }</text>
+  </g>
+
+  <g transform="translate(40,220)">
+    <rect class="box" x="0" y="0" width="980" height="120" />
+    <text class="title" x="12" y="24">Uso de accessToken</text>
+    <text class="text" x="12" y="46">Authorization: Bearer &lt;accessToken&gt;</text>
+    <text class="muted" x="12" y="66">Backend valida firma, exp y scopes en middleware</text>
+  </g>
+
+  <g transform="translate(40,360)">
+    <rect class="box" x="0" y="0" width="520" height="120" />
+    <text class="title" x="12" y="24">Refresh</text>
+    <text class="text" x="12" y="44">POST /api/refresh {refreshToken}</text>
+    <text class="muted" x="12" y="64">Valida refresh en Token Store → nuevo accessToken</text>
+  </g>
+
+  <g transform="translate(580,360)">
+    <rect class="box" x="0" y="0" width="420" height="120" />
+    <text class="title" x="12" y="24">Logout / Revocación</text>
+    <text class="muted" x="12" y="44">POST /api/logout → invalidar refreshToken</text>
+    <text class="muted" x="12" y="64">Opcional: blacklist para accessTokens</text>
+  </g>
+
+</svg>

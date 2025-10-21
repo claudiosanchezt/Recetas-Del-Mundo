@@ -1,0 +1,3 @@
+# replacements.example.txt
+# Example:
+# literal:<STRIPE_TEST_KEY_REMOVED>==> <STRIPE_TEST_KEY_REMOVED>
