@@ -44,7 +44,7 @@ Flujo de autenticación (SVG):
 
 ## Endpoints — resumen operativo
 
-Listado resumido (ver `docs/ENDPOINTS-COMPLETOS.md` para detalles y ejemplos):
+Resumen rápido (ver `docs/ENDPOINTS-COMPLETOS.md` para la lista completa y ejemplos):
 
 - Autenticación: POST /auth/login, POST /auth/register
 - Usuarios: GET/POST/PUT/DELETE /usuarios
@@ -52,100 +52,7 @@ Listado resumido (ver `docs/ENDPOINTS-COMPLETOS.md` para detalles y ejemplos):
 - Países: CRUD /paises
 - Recetas: CRUD /recetas + búsquedas especiales (/recetas/trending, /recetas/del-dia, /recetas/carrusel)
 
-Endpoints (extraídos desde OpenAPI `GET /v3/api-docs`):
-
-DELETE /admin/comentarios/{id}
-DELETE /admin/estrellas/{id}
-DELETE /admin/favoritos/{id}
-DELETE /admin/ingredientes/{id}
-DELETE /admin/megusta/{id}
-DELETE /admin/perfil/{id}
-DELETE /categorias/{id}
-DELETE /paises/{id}
-DELETE /recetas/{id}
-DELETE /recetas/{idReceta}/ingredientes/{idIngrediente}
-DELETE /recetas/comentarios/{id}
-DELETE /recetas/estrellas/{id}
-DELETE /recetas/favoritos
-DELETE /recetas/megusta
-DELETE /usuarios/{id}
-GET /admin/comentarios
-GET /admin/comentarios/{id}
-GET /admin/estrellas
-GET /admin/estrellas/{id}
-GET /admin/estrellas/receta/{recetaId}
-GET /admin/estrellas/receta/{recetaId}/promedio
-GET /admin/favoritos
-GET /admin/favoritos/{id}
-GET /admin/ingredientes
-GET /admin/ingredientes/{id}
-GET /admin/megusta
-GET /admin/megusta/{id}
-GET /admin/megusta/receta/{recetaId}/count
-GET /admin/perfil
-GET /admin/perfil/{id}
-GET /categorias
-GET /categorias/{id}
-GET /paises
-GET /paises/{id}
-GET /paises/nombre/{nombre}
-GET /recetas
-GET /recetas/{id}
-GET /recetas/{id}/ingredientes
-GET /recetas/carrusel
-GET /recetas/categoria/{idCategoria}
-GET /recetas/comentarios
-GET /recetas/comentarios/receta/{id}
-GET /recetas/del-dia
-GET /recetas/estrellas
-GET /recetas/estrellas/stats/{idReceta}
-GET /recetas/favoritos
-GET /recetas/favoritos/count/{idReceta}
-GET /recetas/megusta
-GET /recetas/megustas/count/{idReceta}
-GET /recetas/nombre/{nombre}
-GET /recetas/pais/{idPais}
-GET /recetas/trending
-GET /recetas/usuario/{usuarioId}
-GET /usuarios
-GET /usuarios/{id}
-POST /admin/comentarios
-POST /admin/donaciones
-POST /admin/estrellas
-POST /admin/favoritos
-POST /admin/ingredientes
-POST /admin/megusta
-POST /admin/megusta/toggle
-POST /admin/perfil
-POST /auth/login
-POST /auth/register
-POST /categorias
-POST /donaciones/create-session
-POST /paises
-POST /recetas
-POST /recetas/{id}/ingredientes
-POST /recetas/comentarios
-POST /recetas/donaciones
-POST /recetas/estrellas
-POST /recetas/favoritos
-POST /recetas/megusta
-POST /usuarios
-POST /webhook/stripe
-PUT /admin/comentarios/{id}
-PUT /admin/estrellas/{id}
-PUT /admin/favoritos/{id}
-PUT /admin/ingredientes/{id}
-PUT /admin/megusta/{id}
-PUT /admin/perfil/{id}
-PUT /categorias/{id}
-PUT /paises/{id}
-PUT /recetas/{id}
-PUT /recetas/{id}/ingredientes
-PUT /recetas/comentarios/{id}
-PUT /recetas/estrellas/{id}
-PUT /recetas/favoritos/{id}
-PUT /recetas/megusta/{id}
-PUT /usuarios/{id}
+Nota: la lista completa y ejemplos está en `docs/ENDPOINTS-COMPLETOS.md`. Para una vista gráfica abre `docs/endpoints_overview.svg` o genera `docs/endpoints_overview.png` si prefieres ver la imagen inline en GitHub.
 
 ## Pruebas E2E y cómo ejecutarlas
 
