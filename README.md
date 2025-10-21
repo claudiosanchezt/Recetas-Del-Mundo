@@ -2,7 +2,25 @@
 
 
 Versión profesional del README, alineada con la presentación técnica en `docs/presentation_architecture.html`. Este documento está pensado para CTOs, equipos DevOps e inversores: resume la propuesta de valor, arquitectura, operaciones críticas y cómo arrancar el sistema.
-# Recetas del Mundo — API Backend
+
+# 🍽️ API Recetas del Mundo — Resumen ejecutivo y guía técnica
+
+Versión profesional del README, alineada con la presentación técnica en `docs/presentation_architecture.html`. Este documento está pensado para CTOs, equipos DevOps e inversores: resume la propuesta de valor, arquitectura, operaciones críticas y cómo arrancar el sistema.
+
+## Resumen ejecutivo
+
+API Recetas del Mundo es una API RESTful contenerizada, diseñada para producción con Docker y portable a Kubernetes. Ofrece:
+
+- Backend modular en Spring Boot con autenticación JWT y hashing con BCrypt.
+- Modelo relacional en PostgreSQL 15 optimizado para búsquedas por país y categoría.
+- Funcionalidad social y de monetización: favoritos, comentarios, rating y donaciones.
+- Estrategia operativa: imágenes reproducibles, CI/CD, backups automáticos y pruebas de restore.
+
+Estado actual: API operativa y validada (ver `docs/ENDPOINTS-COMPLETOS.md` para la lista completa — ~42 endpoints confirmados).
+
+---
+
+## Visión rápida
 
 Este repositorio contiene el backend de "Recetas del Mundo": una API REST construida con Spring Boot y PostgreSQL que gestiona recetas, ingredientes, interacciones (favoritos, me gusta, estrellas, comentarios), usuarios, categorías y donaciones (Stripe).
 
@@ -87,10 +105,21 @@ Consulta `docs/ENDPOINTS-COMPLETOS.md` para la lista y ejemplos de uso.
 
 ## Diagramas y arquitectura
 
+
 - Diagrama de arquitectura: `docs/architecture_diagram.svg` (SVG editable). Está estilizado y contiene flechas y cajas separadas.
 - Flujo de autenticación: `docs/auth_flow.svg`.
 - Overview de endpoints: `docs/endpoints_overview.svg`.
 - Diagrama ER y scripts: `docs/er_diagram_actualizado.puml`, `docs/er_diagram_actualizado.png`, `docs/ER_diagrama_ascii.txt`.
+
+Imágenes (embebidas):
+
+![Arquitectura](docs/architecture_diagram.svg)
+
+![Diagrama ER](docs/er_diagram_actualizado.png)
+
+![Flujo Auth](docs/auth_flow.svg)
+
+![Overview Endpoints](docs/endpoints_overview.svg)
 
 Si quieres PNGs de los SVGs, puedo añadir un script PowerShell que use Inkscape/PlantUML; necesitarás ejecutar la conversión localmente (por dependencias nativas).
 
@@ -127,7 +156,22 @@ Si quieres PNGs de los SVGs, puedo añadir un script PowerShell que use Inkscape
 
 ## Contacto
 
+
 Equipo de desarrollo — `dev@recetas.cl` (consulta `docs/openapi.json` para más metadatos de contacto).
+
+---
+
+## Conclusión
+
+API Recetas del Mundo ofrece una base técnica sólida para productos culinarios digitales que requieren estabilidad, seguridad y capacidad de crecer a escala. Está pensada para equipos que necesitan una solución híbrida —capaz de coexistir con sistemas legacy y migrar hacia la nube— reduciendo riesgos operacionales y acelerando la entrega de valor.
+
+Puntos clave:
+
+- Despliegue reproducible (imágenes, CI/CD).
+- Escalabilidad horizontal mediante servicios stateless y réplicas.
+- Operaciones seguras: gestión de secretos, backups automatizados y rotación.
+
+© 2025 API Recetas del Mundo. Todos los derechos reservados.
 
 ---
 
