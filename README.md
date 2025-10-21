@@ -72,6 +72,30 @@ docker compose build backend
 docker compose up -d backend
 ```
 
+### Uso de docker-compose: `docker-compose.yml` vs `docker-compose.prod.yml`
+
+Este repositorio mantiene dos archivos `docker-compose` con roles distintos:
+
+- `docker-compose.yml` — Archivo principal pensado para desarrollo local. Contiene la sección `build:` para construir la imagen del backend desde `./Springboot`, monta el directorio `./database` para inicializadores y contiene valores por defecto para conveniencia (no recomendado para producción).
+- `docker-compose.prod.yml` — Variante orientada a producción. Usa imágenes (campo `image`) en vez de `build`, declara volúmenes como `external` (espera que los volúmenes ya existan en el host) y no incluye valores por defecto sensibles — exige que proveas las variables de entorno.
+
+Ejemplos de uso:
+
+```powershell
+# Desarrollo (con build local)
+docker compose build backend
+docker compose up -d
+
+# Producción (usar archivo prod y un .env con variables seguras)
+docker compose -f docker-compose.prod.yml --env-file .env up -d
+```
+
+Recomendaciones:
+
+- No mantengas secretos en los archivos `docker-compose` ni en el repo. Usa `.env` (no versionado) o un gestor de secretos para valores sensibles (DB password, JWT secret, claves Stripe).
+- `docker-compose.yml` es cómodo para desarrollo; `docker-compose.prod.yml` refleja el comportamiento esperado en despliegues (imágenes ya construidas, volúmenes administrados por la plataforma).
+- Si necesitas alinear comportamientos, consérvalo en la documentación; evita copiar contraseñas entre los archivos.
+
 ### Variables de entorno importantes
 
 - `JWT_SECRET` — secreto para firmar JWT.
