@@ -1,10 +1,5 @@
 # 🍽️ API Recetas del Mundo — Resumen ejecutivo y guía técnica
 
-
-Versión profesional del README, alineada con la presentación técnica en `docs/presentation_architecture.html`. Este documento está pensado para CTOs, equipos DevOps e inversores: resume la propuesta de valor, arquitectura, operaciones críticas y cómo arrancar el sistema.
-
-# 🍽️ API Recetas del Mundo — Resumen ejecutivo y guía técnica
-
 Versión profesional del README, alineada con la presentación técnica en `docs/presentation_architecture.html`. Este documento está pensado para CTOs, equipos DevOps e inversores: resume la propuesta de valor, arquitectura, operaciones críticas y cómo arrancar el sistema.
 
 ## Resumen ejecutivo
