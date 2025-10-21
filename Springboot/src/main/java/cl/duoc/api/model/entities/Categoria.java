@@ -1,12 +1,10 @@
 package cl.duoc.api.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "categoria")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Categoria {
 
     @Id
@@ -34,16 +32,6 @@ public class Categoria {
 
     // Constructors
     public Categoria() {}
-    
-    @PrePersist
-    public void prePersist() {
-        if (fechaCreacion == null) {
-            fechaCreacion = LocalDateTime.now();
-        }
-        if (estado == null) {
-            estado = 1; // Activo por defecto
-        }
-    }
 
     public Categoria(String nombre, String urlImagen, Short estado, LocalDateTime fechaCreacion, String comentario, Integer idUsr) {
         this.nombre = nombre;
