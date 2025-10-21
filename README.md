@@ -107,24 +107,35 @@ Consulta `docs/ENDPOINTS-COMPLETOS.md` para la lista y ejemplos de uso.
 ## Diagramas y arquitectura
 
 
-- Diagrama de arquitectura: `docs/architecture_diagram.svg` (SVG editable). Está estilizado y contiene flechas y cajas separadas.
-- Flujo de autenticación: `docs/auth_flow.svg`.
-- Overview de endpoints: `docs/endpoints_overview.svg`.
-- Diagrama ER y scripts: `docs/er_diagram_actualizado.puml`, `docs/er_diagram_actualizado.png`, `docs/ER_diagrama_ascii.txt`.
 
 
 ## Diagrama de arquitectura
 ![Arquitectura](docs/architecture_diagram.svg)
 
+Arquitectura:
+
+La imagen muestra los componentes principales: cliente, reverse proxy, backend y la base de datos. Indica cómo fluye el tráfico desde el cliente hacia el backend y cómo se manejan backups y operaciones. Es útil para diseñar despliegues y planificar disponibilidad y seguridad. Las flechas muestran dependencias importantes y puntos de integración.
+
 ## Diagrama ER  
 ![Diagrama ER](docs/er_diagram_actualizado.png)
+
+Diagrama ER (Entidad-Relación):
+
+Resumen de las tablas principales y sus relaciones FK (usuario, receta, ingrediente, comentario, donación, etc.). Útil para entender integridad referencial, claves primarias y las columnas esenciales como `fecha_creacion`. Sirve como referencia para migraciones y consultas optimizadas.
 
 ## Diagrama de Autenticación
 ![Flujo Auth](docs/auth_flow.svg)
 
+Flujo de autenticación:
+
+Describe el proceso de login/registro: el cliente envía credenciales, el backend valida y emite un JWT, y las peticiones subsiguientes usan Authorization Bearer. Incluye logout/revocación y el uso del token en middleware. Ideal para implementar y auditar seguridad en endpoints.
+
 ## Diagrama de Enpoints
 ![Overview Endpoints](docs/endpoints_overview.svg)
 
+Overview de endpoints:
+
+Mapa de los módulos expuestos por la API (auth, usuarios, categorias, recetas, administración y donaciones). Proporciona una vista rápida para desarrolladores que quieren saber dónde implementar cambios o cómo integrar frontend y pruebas E2E.
 
 ---
 
