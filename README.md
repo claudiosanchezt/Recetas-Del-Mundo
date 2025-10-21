@@ -44,6 +44,8 @@ Flujo de autenticación (SVG):
 
 ## Endpoints — resumen operativo
 
+![Flujo Endpoints](docs/endpoints_overview.svg)
+
 Resumen rápido (ver `docs/ENDPOINTS-COMPLETOS.md` para la lista completa y ejemplos):
 
 - Autenticación: POST /auth/login, POST /auth/register
