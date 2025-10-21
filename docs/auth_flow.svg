@@ -1,69 +1,76 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="540" viewBox="0 0 1100 540" role="img" aria-label="Flujo de autenticación JWT - login, emisión tokens, refresh y logout">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="520" viewBox="0 0 1000 520">
   <style>
-    .box { fill:#ffffff; stroke:#0b6b88; stroke-width:2px; rx:6px }
-    .title { font: bold 13px sans-serif; fill:#0b6b88 }
-    .text { font: 12px sans-serif; fill:#0b2733 }
-    .muted { font:11px sans-serif; fill:#4a5568 }
-    .arrow { stroke:#7a7a7a; stroke-width:1.6; marker-end: url(#arrow); }
+    .title { font: bold 18px 'Segoe UI', Roboto, Arial, sans-serif; fill:#0f172a }
+    .label { font: 14px 'Segoe UI', Roboto, Arial, sans-serif; fill:#fff }
+    .box { rx:10; ry:10; fill:#0f172a; stroke:#0b6b88; stroke-width:2 }
+    .box-soft { rx:10; ry:10; fill:#2b6cb0; stroke:#1e40af; stroke-width:2 }
+    .center { fill:#ffffff; font: 16px 'Segoe UI', Roboto, Arial, sans-serif; font-weight:700 }
+    .line { stroke:#94a3b8; stroke-width:2 }
+    .muted { font:12px 'Segoe UI', Roboto, Arial, sans-serif; fill:#000000 }
   </style>
+
+  <!-- arrow marker -->
   <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7a7a7a" />
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569" />
     </marker>
   </defs>
 
-  <g transform="translate(40,36)">
-    <rect class="box" x="0" y="0" width="220" height="84" />
-    <text class="title" x="12" y="24">Cliente (SPA / Mobile)</text>
-    <text class="text" x="12" y="44">POST /api/login {email,password}</text>
-    <text class="muted" x="12" y="62">Almacenar refresh token en cookie HttpOnly</text>
+  <!-- background -->
+  <rect width="100%" height="100%" fill="#f8fafc"/>
+
+  <!-- Title -->
+  <text x="30" y="34" class="title">Flujo de autenticación — /auth</text>
+
+  <!-- Left: Cliente -->
+  <g transform="translate(40,70)">
+    <rect class="box-soft" x="0" y="0" width="240" height="90" />
+    <text x="120" y="36" text-anchor="middle" class="label">Cliente (SPA / Mobile)</text>
+    <text x="120" y="60" text-anchor="middle" class="muted">POST /auth/login { email, password }</text>
+    <text x="120" y="76" text-anchor="middle" class="muted">POST /auth/register</text>
   </g>
 
-  <g transform="translate(320,36)">
-    <rect class="box" x="0" y="0" width="420" height="160" />
-    <text class="title" x="12" y="26">Backend (Auth Service)</text>
-    <text class="text" x="12" y="48">Valida credenciales</text>
-    <text class="text" x="12" y="68">Emite accessToken (vida corta)</text>
-    <text class="text" x="12" y="88">Emite refreshToken (vida larga)</text>
-    <text class="muted" x="12" y="110">Firma HMAC/RSA; rotación de claves recomendada</text>
+  <!-- Center: Backend -->
+  <g transform="translate(380,60)">
+    <rect class="box-soft" x="0" y="0" width="300" height="160" />
+    <text x="150" y="32" text-anchor="middle" class="center">Backend (Auth Service)</text>
+    <text x="18" y="64" class="muted">• Valida credenciales</text>
+    <text x="18" y="84" class="muted">• Emite accessToken (JWT)</text>
+    <text x="18" y="104" class="muted">• Claims: id_usr, nombre, correo, id_perfil</text>
+    <text x="18" y="124" class="muted">• Firma HMAC — configurar JWT_SECRET</text>
   </g>
 
-  <g transform="translate(760,36)">
-    <rect class="box" x="0" y="0" width="280" height="100" />
-    <text class="title" x="12" y="24">Token Store</text>
-    <text class="muted" x="12" y="44">DB / Redis: refreshToken hash, jti, expiry</text>
+  <!-- Right: Token Store -->
+  <g transform="translate(760,90)">
+    <rect class="box-soft" x="0" y="0" width="200" height="80" />
+    <text x="100" y="36" text-anchor="middle" class="label">Token Store</text>
+    <text x="100" y="56" text-anchor="middle" class="muted">Ej: Redis (opcional)</text>
   </g>
 
-  <line class="arrow" x1="260" y1="78" x2="320" y2="78" />
-  <line class="arrow" x1="740" y1="78" x2="760" y2="78" />
-  <!-- Response box: clearer HTTP response with Set-Cookie + JSON body -->
-  <g transform="translate(380,66)">
-    <rect x="0" y="0" width="340" height="64" rx="6" fill="#ffffff" stroke="#cbdfe4" />
-    <text class="title" x="10" y="18" style="font:13px sans-serif; fill:#0b6b88">200 OK</text>
-    <text class="muted" x="10" y="36" style="font:11px monospace; fill:#264448">Set-Cookie: refreshToken=&lt;token&gt;; HttpOnly; Secure; Path=/; SameSite=Strict</text>
-    <text class="muted" x="10" y="52" style="font:11px monospace; fill:#264448">Body: { accessToken: &lt;jwt&gt;, expiresIn: 900 }</text>
+  <!-- Connections -->
+  <line x1="280" y1="115" x2="380" y2="120" class="line" marker-end="url(#arrow)"/>
+  <line x1="680" y1="120" x2="760" y2="120" class="line" marker-end="url(#arrow)"/>
+  <!-- Backend -> Uso de accessToken -->
+  <line x1="530" y1="220" x2="500" y2="300" class="line" marker-end="url(#arrow)"/>
+  <!-- Uso de accessToken -> Logout -->
+  <line x1="500" y1="380" x2="500" y2="420" class="line" marker-end="url(#arrow)"/>
+
+  <!-- Bottom center: Uso de accessToken -->
+  <g transform="translate(200,300)">
+    <rect class="box-soft" x="0" y="0" width="600" height="80" />
+    <text x="300" y="36" text-anchor="middle" class="label">Uso de accessToken</text>
+    <text x="300" y="56" text-anchor="middle" class="muted">Authorization: Bearer &lt;accessToken&gt; — middleware valida firma y expiración</text>
   </g>
 
-  <g transform="translate(40,220)">
-    <rect class="box" x="0" y="0" width="980" height="120" />
-    <text class="title" x="12" y="24">Uso de accessToken</text>
-    <text class="text" x="12" y="46">Authorization: Bearer &lt;accessToken&gt;</text>
-    <text class="muted" x="12" y="66">Backend valida firma, exp y scopes en middleware</text>
+  <!-- Logout block (center-bottom) -->
+  <g transform="translate(400,420)">
+    <rect class="box-soft" x="0" y="0" width="200" height="70" />
+    <text x="100" y="28" text-anchor="middle" class="center">Logout / Revocación</text>
+    <text x="100" y="48" text-anchor="middle" class="muted">Invalidar refresh token / blacklist</text>
   </g>
 
-  <g transform="translate(40,360)">
-    <rect class="box" x="0" y="0" width="520" height="120" />
-    <text class="title" x="12" y="24">Refresh</text>
-    <text class="text" x="12" y="44">POST /api/refresh {refreshToken}</text>
-    <text class="muted" x="12" y="64">Valida refresh en Token Store → nuevo accessToken</text>
-  </g>
-
-  <g transform="translate(580,360)">
-    <rect class="box" x="0" y="0" width="420" height="120" />
-    <text class="title" x="12" y="24">Logout / Revocación</text>
-    <text class="muted" x="12" y="44">POST /api/logout → invalidar refreshToken</text>
-    <text class="muted" x="12" y="64">Opcional: blacklist para accessTokens</text>
-  </g>
+  <!-- Footer note -->
+  <text x="30" y="500" font-size="12" fill="#475569">Nota: el backend implementa /auth/login y /auth/register; el JWT se entrega en el body de la respuesta.</text>
 
 </svg>

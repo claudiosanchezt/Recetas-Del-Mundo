@@ -1,5 +1,131 @@
 #!/usr/bin/env bash
 
+# Crear un respaldo compatible con restore_recetas_stack.sh
+# Produce un tar.gz con la siguiente estructura:
+#  - docker/images_YYYYMMDD_HHMMSS.tar
+#  - database/pgdump_YYYYMMDD_HHMMSS.sql
+#  - volumes/<vol_name>_YYYYMMDD_HHMMSS.tar.gz
+#  - config/docker-compose*.yml
+#  - config/servers.json (si existe)
+
+set -euo pipefail
+
+BASE_DIR="${BASE_DIR:-/home/admin/api-recetas}"
+BACKUP_DIR="${BACKUP_DIR:-$BASE_DIR/backups}"
+TIMESTAMP="$(date +%Y%m%d_%H%M%S)"
+WORKDIR="$(mktemp -d)"
+trap 'rm -rf "$WORKDIR"' EXIT
+
+# Configurables
+POSTGRES_CONTAINER_NAME="${POSTGRES_CONTAINER_NAME:-api-recetas-postgres}"
+POSTGRES_DB="${POSTGRES_DB:-api_recetas_postgres}"
+POSTGRES_USER="${POSTGRES_USER:-postgres}"
+COMPOSE_FILE="${COMPOSE_FILE:-$BASE_DIR/docker-compose.yml}"
+INCLUDE_IMAGES="${INCLUDE_IMAGES:-yes}"
+INCLUDE_DB="${INCLUDE_DB:-auto}"
+INCLUDE_VOLUMES="${INCLUDE_VOLUMES:-yes}"
+VOLUMES_LIST="${VOLUMES:-}" # comma-separated list if provided
+
+mkdir -p "$BACKUP_DIR"
+mkdir -p "$WORKDIR/docker" "$WORKDIR/database" "$WORKDIR/volumes" "$WORKDIR/config"
+
+echo "[INFO] Creando respaldo en temporal: $WORKDIR"
+
+## 1) Guardar imágenes Docker
+if [ "$INCLUDE_IMAGES" = "yes" ]; then
+  echo "[INFO] Recolectando imágenes usadas por contenedores actuales..."
+  # Preferir lista de imágenes de los contenedores del proyecto; fallback a todas las imágenes en uso
+  mapfile -t images < <(docker ps -a --format '{{.Image}}' | sort -u)
+  if [ ${#images[@]} -eq 0 ]; then
+    echo "[WARN] No se detectaron imágenes de contenedores locales. Omitiendo docker save."
+  else
+    images_file="$WORKDIR/docker/images_$TIMESTAMP.txt"
+    printf '%s
+' "${images[@]}" > "$images_file"
+    tarfile="$WORKDIR/docker/images_$TIMESTAMP.tar"
+    echo "[INFO] Guardando imágenes en: $tarfile"
+    docker save -o "$tarfile" "${images[@]}" || {
+      echo "[WARN] docker save fallo, intentando guardar imagen por imagen..."
+      rm -f "$tarfile"
+      for img in "${images[@]}"; do
+        docker save -o "$WORKDIR/docker/$(echo "$img" | tr '/:' '__')_$TIMESTAMP.tar" "$img" || echo "[WARN] no pude guardar $img"
+      done
+    }
+    echo "[OK] Imágenes guardadas"
+  fi
+fi
+
+## 2) Dump de Postgres (si procede)
+if [ "$INCLUDE_DB" = "yes" ] || { [ "$INCLUDE_DB" = "auto" ] && ! ls "$WORKDIR/volumes"/*postgres* 2>/dev/null; }; then
+  echo "[INFO] Intentando exportar dump de Postgres desde contenedor: $POSTGRES_CONTAINER_NAME"
+  if docker ps -a --format '{{.Names}}' | grep -qx "$POSTGRES_CONTAINER_NAME"; then
+    dumpfile="$WORKDIR/database/pgdump_$TIMESTAMP.sql"
+    docker exec -i "$POSTGRES_CONTAINER_NAME" pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" -F p > "$dumpfile" && echo "[OK] Dump exportado: $dumpfile" || echo "[WARN] pg_dump falló (¿pg_dump presente en la imagen?)"
+  else
+    echo "[WARN] Contenedor Postgres '$POSTGRES_CONTAINER_NAME' no encontrado. Omitiendo dump SQL."
+  fi
+fi
+
+## 3) Empaquetar volúmenes especificados o detectados
+if [ "$INCLUDE_VOLUMES" = "yes" ]; then
+  vols_to_backup=()
+  if [ -n "$VOLUMES_LIST" ]; then
+    IFS=',' read -r -a vols_to_backup <<< "$VOLUMES_LIST"
+  else
+    # Intentar detectar volúmenes listados en docker-compose (top-level 'volumes')
+    if [ -f "$COMPOSE_FILE" ]; then
+      echo "[INFO] Extrayendo volúmenes desde $COMPOSE_FILE"
+      # Extrae claves top-level bajo 'volumes:' (requiere formato estándar)
+      awk '/^volumes:/{flag=1; next} /^services:/{flag=0} flag && /^[[:space:]]{2}[a-zA-Z0-9_\-]+:/{gsub(/[: ]/,"",$1); print $1}' "$COMPOSE_FILE" | while read -r v; do vols_to_backup+=("$v"); done
+    fi
+    # Fallback: incluir volúmenes que contienen 'postgres' o 'pg' o 'recetas'
+    if [ ${#vols_to_backup[@]} -eq 0 ]; then
+      mapfile -t allvols < <(docker volume ls --format '{{.Name}}' 2>/dev/null || true)
+      for v in "${allvols[@]}"; do
+        if [[ "$v" == *post* ]] || [[ "$v" == *pg* ]] || [[ "$v" == *recet* ]] || [[ "$v" == *db* ]]; then
+          vols_to_backup+=("$v")
+        fi
+      done
+    fi
+  fi
+
+  if [ ${#vols_to_backup[@]} -eq 0 ]; then
+    echo "[WARN] No se detectaron volúmenes para respaldar. Si quieres especificarlos, exporta VOLUMES='vol1,vol2' antes de ejecutar el script."
+  else
+    echo "[INFO] Volúmenes a respaldar: ${vols_to_backup[*]}"
+    for vol in "${vols_to_backup[@]}"; do
+      safe_name="${vol//[^a-zA-Z0-9_.-]/_}"
+      out="$WORKDIR/volumes/${safe_name}_$TIMESTAMP.tar.gz"
+      echo "[INFO] -> Empaquetando volumen: $vol -> $out"
+      docker run --rm -v "$vol:/volume" -v "$WORKDIR/volumes:/backup" alpine sh -c "set -e; cd /volume || exit 0; tar -czf /backup/${safe_name}_$TIMESTAMP.tar.gz ."
+      echo "[OK]   Volumen empaquetado: $out"
+    done
+  fi
+fi
+
+## 4) Copiar archivos de configuración (compose y pgadmin servers.json)
+if [ -f "$COMPOSE_FILE" ]; then
+  cp -f "$COMPOSE_FILE" "$WORKDIR/config/$(basename "$COMPOSE_FILE")"
+  echo "[OK] Copiado compose: $COMPOSE_FILE"
+fi
+if [ -f "$BASE_DIR/pgadmin/servers.json" ]; then
+  mkdir -p "$WORKDIR/config/pgadmin"
+  cp -f "$BASE_DIR/pgadmin/servers.json" "$WORKDIR/config/pgadmin/servers.json"
+  echo "[OK] Copiado pgAdmin servers.json"
+fi
+
+## 5) Empaquetar todo en un tar.gz final
+outfile="$BACKUP_DIR/complete_backup_$TIMESTAMP.tar.gz"
+echo "[INFO] Creando tar final: $outfile"
+(cd "$WORKDIR" && tar -czf "$outfile" .)
+
+echo "[DONE] Respaldo creado: $outfile"
+echo "[INFO] Tamaño: $(du -h "$outfile" | cut -f1)"
+
+exit 0
+
+#!/usr/bin/env bash
+
 set -euo pipefail
 
 # Backup completo del stack de Recetas-Del-Mundo (Docker + DB)
