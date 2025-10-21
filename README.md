@@ -46,6 +46,7 @@ Flujo de autenticación (SVG):
 
 ![Flujo Endpoints](docs/endpoints_overview.svg)
 
+
 Resumen rápido (ver `docs/ENDPOINTS-COMPLETOS.md` para la lista completa y ejemplos):
 
 - Autenticación: POST /auth/login, POST /auth/register
@@ -54,7 +55,7 @@ Resumen rápido (ver `docs/ENDPOINTS-COMPLETOS.md` para la lista completa y ejem
 - Países: CRUD /paises
 - Recetas: CRUD /recetas + búsquedas especiales (/recetas/trending, /recetas/del-dia, /recetas/carrusel)
 
-Nota: la lista completa y ejemplos está en `docs/ENDPOINTS-COMPLETOS.md`. Para una vista gráfica abre `docs/endpoints_overview.svg` o genera `docs/endpoints_overview.png` si prefieres ver la imagen inline en GitHub.
+Nota: la lista completa y ejemplos está en `docs/ENDPOINTS-COMPLETOS.md`.
 
 ## Pruebas E2E y cómo ejecutarlas
 
