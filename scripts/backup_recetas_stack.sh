@@ -107,17 +107,84 @@ else
   echo "[WARN] docker no disponible en PATH. Omitiendo guardado de imágenes."
 fi
 
-### 3) Respaldar volúmenes (postgres y pgadmin por defecto)
-echo "[INFO] Respaldando volúmenes: $POSTGRES_VOLUME $PGADMIN_VOLUME"
-for vol in "$POSTGRES_VOLUME" "$PGADMIN_VOLUME"; do
+### 3) Respaldar volúmenes (detectar por prefijo o heurística)
+echo "[INFO] Detectando volúmenes Docker para respaldo"
+# Construir lista candidate basada en varias heurísticas:
+#  - nombres exactos en POSTGRES_VOLUME y PGADMIN_VOLUME
+#  - nombres que terminan en _${POSTGRES_VOLUME} o _${PGADMIN_VOLUME}
+#  - nombres que contienen 'postgres' o 'pgadmin'
+#  - nombres que empiezan con el directorio del repo (prefijo de compose)
+
+PROJECT_DIR_BASENAME="$(basename "$ROOT_DIR")"
+SANITIZED_PREFIX="$(echo "$PROJECT_DIR_BASENAME" | tr '[:upper:]-' '[:lower:]_' | sed 's/[^a-z0-9_]/_/g')"
+
+vols_to_backup=""
+if command -v docker >/dev/null 2>&1; then
+  docker volume ls --format '{{.Name}}' | while IFS= read -r v; do
+    # exact names
+    if [ "$v" = "$POSTGRES_VOLUME" ] || [ "$v" = "$PGADMIN_VOLUME" ]; then
+      echo "$v"
+      continue
+    fi
+    # suffix match (project prefixed volumes like project_postgres_data)
+    if echo "$v" | grep -E "_(?:${POSTGRES_VOLUME}|${PGADMIN_VOLUME})$" >/dev/null 2>&1; then
+      echo "$v"
+      continue
+    fi
+    # contains keywords
+    if echo "$v" | grep -E "postgres|pgadmin" >/dev/null 2>&1; then
+      echo "$v"
+      continue
+    fi
+    # starts with project basename or sanitized prefix
+    if echo "$v" | grep -E "^${PROJECT_DIR_BASENAME}_|^${SANITIZED_PREFIX}_" >/dev/null 2>&1; then
+      echo "$v"
+      continue
+    fi
+  done | sort -u > "$TMP_DIR/staging/volumes/vols_to_backup_${TIMESTAMP}.txt"
+  vols_to_backup_file="$TMP_DIR/staging/volumes/vols_to_backup_${TIMESTAMP}.txt"
+  if [ -s "$vols_to_backup_file" ]; then
+    echo "[INFO] Volúmenes detectados para respaldo:"; sed -n '1,200p' "$vols_to_backup_file"
+  else
+    echo "[WARN] No se detectaron volúmenes por heurística. Intentando nombres por defecto: $POSTGRES_VOLUME $PGADMIN_VOLUME"
+    printf "%s
+" "$POSTGRES_VOLUME" "$PGADMIN_VOLUME" > "$vols_to_backup_file"
+  fi
+else
+  echo "[WARN] docker no disponible; no se pueden listar volúmenes. Usando nombres por defecto."
+  printf "%s
+" "$POSTGRES_VOLUME" "$PGADMIN_VOLUME" > "$TMP_DIR/staging/volumes/vols_to_backup_${TIMESTAMP}.txt"
+  vols_to_backup_file="$TMP_DIR/staging/volumes/vols_to_backup_${TIMESTAMP}.txt"
+fi
+
+while IFS= read -r vol; do
+  [ -z "$vol" ] && continue
   if docker volume inspect "$vol" >/dev/null 2>&1; then
     out="$TMP_DIR/staging/volumes/${vol}_${TIMESTAMP}.tar.gz"
-    docker run --rm -v "$vol:/volume:ro" -v "$TMP_DIR/staging/volumes:/backup:rw" alpine sh -lc "set -e; cd /volume || exit 0; tar -czf /backup/${vol}_${TIMESTAMP}.tar.gz ."
-    echo "[OK] Volumen $vol empaquetado -> $out"
+    echo "[INFO] Empaquetando volumen: $vol -> $out"
+    # Usar tar por stdout para evitar problemas de bind-mount en entornos Windows/Docker Desktop
+    if docker run --rm -v "$vol:/volume:ro" alpine sh -c "cd /volume || exit 0; tar -czf - ." > "$out"; then
+      echo "[OK] Volumen $vol empaquetado -> $out"
+    else
+      echo "[WARN] Falló empaquetar volumen $vol via stdout redirection. Intentando método alternativo con contenedor temporal."
+      tmpctr="backup_tmp_pack_${TIMESTAMP}"
+      docker run -d --name "$tmpctr" -v "$vol:/volume" alpine sleep 600 >/dev/null 2>&1 || true
+      if docker cp "$tmpctr":/volume - > /dev/null 2>&1; then
+        # Fallback: intentar copiar contenido vía tar dentro del contenedor a un archivo en /tmp y luego docker cp out
+        docker exec "$tmpctr" sh -c "cd /volume || exit 0; tar -czf /tmp/${vol}_${TIMESTAMP}.tar.gz ." || true
+        docker cp "$tmpctr":/tmp/${vol}_${TIMESTAMP}.tar.gz "$out" || true
+      fi
+      docker rm -f "$tmpctr" >/dev/null 2>&1 || true
+      if [ -f "$out" ]; then
+        echo "[OK] Volumen $vol empaquetado (fallback) -> $out"
+      else
+        echo "[ERROR] No se pudo empaquetar el volumen $vol"
+      fi
+    fi
   else
     echo "[WARN] Volumen $vol no existe, se omite."
   fi
-done
+done < "$vols_to_backup_file"
 
 ### 4) Copiar archivos relevantes (compose, configs, jar)
 echo "[INFO] Copiando configuración y artefactos"

@@ -37,45 +37,6 @@ Este repositorio contiene el backend de "Recetas del Mundo": una API REST constr
 - Documentación OpenAPI generada: `docs/openapi.json` y Swagger UI (si se levanta la app).
 
 ---
-# 🍽️ API Recetas del Mundo — Resumen ejecutivo y guía técnica
-
-Versión profesional del README, alineada con la presentación técnica en `docs/presentation_architecture.html`. Este documento está pensado para CTOs, equipos DevOps e inversores: resume la propuesta de valor, arquitectura, operaciones críticas y cómo arrancar el sistema.
-
-## Resumen ejecutivo
-
-API Recetas del Mundo es una API RESTful contenerizada, diseñada para producción con Docker y portable a Kubernetes. Ofrece:
-
-- Backend modular en Spring Boot con autenticación JWT y hashing con BCrypt.
-- Modelo relacional en PostgreSQL 15 optimizado para búsquedas por país y categoría.
-- Funcionalidad social y de monetización: favoritos, comentarios, rating y donaciones.
-- Estrategia operativa: imágenes reproducibles, Pipelines (integración y despliegue continuos), backups automáticos y pruebas de restore.
-
-Estado actual: API operativa y validada (ver `docs/ENDPOINTS-COMPLETOS.md` para la lista completa — ~42 endpoints confirmados).
-
----
-
-## Visión rápida
-
-Este repositorio contiene el backend de "Recetas del Mundo": una API REST construida con Spring Boot y PostgreSQL que gestiona recetas, ingredientes, interacciones (favoritos, me gusta, estrellas, comentarios), usuarios, categorías y donaciones (Stripe).
-
----
-
-## Contenido
-
-- `Springboot/` — código del backend (Java, Maven).
-- `docs/` — documentación técnica: OpenAPI (`openapi.json`), diagramas ER, SVGs de arquitectura y flujos, listas de tablas/columnas/constraints y guía de endpoints completa.
-- `scripts/` — scripts para backup, E2E automatizados en PowerShell y utilidades.
-- `database/` — utilitarios y conexión a la base de datos.
-
----
-
-## Resumen rápido
-
-- API lista para ejecución local en `http://localhost:8081`.
-- Endpoints principales: `/auth`, `/usuarios`, `/categorias`, `/paises`, `/recetas` (incluye CRUD y muchas rutas de interacción).
-- Documentación OpenAPI generada: `docs/openapi.json` y Swagger UI (si se levanta la app).
-
----
 
 ## Requisitos
 
