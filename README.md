@@ -162,22 +162,8 @@ Mapa de los módulos expuestos por la API (auth, usuarios, categorias, recetas, 
 
 	- `scripts/backup_recetas_stack.sh` — crea un backup completo que incluye: imágenes Docker, dump SQL, configuración y (cuando se detectan) volúmenes. Resultado: `backups/complete_backup_YYYYMMDD_HHMMSS.tar.gz`.
 	- `scripts/restore_recetas_stack.sh` — restaura imágenes, volúmenes y (opcionalmente) importa el dump SQL. Diseñado para ejecutarse en Linux/WSL/Git-Bash; acepta variables de entorno como `DEPLOY_DIR` y `COMPOSE_UP`.
-	- `scripts/restore_volumes_from_backup.ps1` — helper PowerShell para restaurar volúmenes desde backup en Windows (usa `docker cp` y contenedores temporales cuando `--mount` no es fiable).
 
 - El dump SQL principal suele estar en `database/init.sql` (asegúrate que esté en UTF-8 sin BOM). Si tu dump tiene problemas de encoding conviértelo a UTF-8 antes de usarlo.
-
-Estrategia de recuperación recomendada:
-
-- Mantén backups periódicos y prueba restauraciones en un host limpio (VM/CI) para verificar integridad.
-- En Windows usa WSL o Git Bash para ejecutar los scripts Bash (evita problemas de parsing con rutas y `tar`). Hay un helper PowerShell para restaurar volúmenes, pero la ejecución completa de `restore_recetas_stack.sh` 
-
-Comandos de ejemplo
-
-En Linux / WSL / Git-Bash (recomendado):
-
-```bash
-# Restaurar (extrae, docker load, restaura volúmenes)
-bash ./scripts/restore_recetas_stack.sh /ruta/a/backups/complete_backup_YYYYMMDD_HHMMSS.tar.gz
 
 ## Pruebas E2E
 
