@@ -169,7 +169,7 @@ Mapa de los módulos expuestos por la API (auth, usuarios, categorias, recetas, 
 Estrategia de recuperación recomendada:
 
 - Mantén backups periódicos y prueba restauraciones en un host limpio (VM/CI) para verificar integridad.
-- En Windows usa WSL o Git Bash para ejecutar los scripts Bash (evita problemas de parsing con rutas y `tar`). Hay un helper PowerShell para restaurar volúmenes, pero la ejecución completa de `restore_recetas_stack.sh` se recomienda desde WSL/Git-Bash.
+- En Windows usa WSL o Git Bash para ejecutar los scripts Bash (evita problemas de parsing con rutas y `tar`). Hay un helper PowerShell para restaurar volúmenes, pero la ejecución completa de `restore_recetas_stack.sh` 
 
 Comandos de ejemplo
 
@@ -178,30 +178,6 @@ En Linux / WSL / Git-Bash (recomendado):
 ```bash
 # Restaurar (extrae, docker load, restaura volúmenes)
 bash ./scripts/restore_recetas_stack.sh /ruta/a/backups/complete_backup_YYYYMMDD_HHMMSS.tar.gz
-
-# Restaurar y levantar el stack (ejemplo para Windows repo path en WSL):
-DEPLOY_DIR=/c/GitHub/api-recetas_final COMPOSE_UP=yes bash ./scripts/restore_recetas_stack.sh /ruta/a/complete_backup_YYYYMMDD_HHMMSS.tar.gz
-```
-
-En PowerShell (solo restauración de volúmenes desde Windows):
-
-```powershell
-# Restaura volúmenes desde el backup (usa docker cp dentro de un contenedor temporal)
-& .\scripts\restore_volumes_from_backup.ps1
-```
-
-Generar backup de verificación
-
-```bash
-# Ejecutar en Git Bash/WSL
-bash ./scripts/backup_recetas_stack.sh
-ls -lh backups/complete_backup_*.tar.gz
-```
-
-Limitaciones conocidas
-
-- El script de backup busca volúmenes por nombre; si tus volúmenes tienen prefijos de proyecto (por ejemplo `api-recetas_final_postgres_data`) puede que necesitemos ajustar la detección automática por prefijo. Puedo actualizar `backup_recetas_stack.sh` para detectar y respaldar volúmenes por prefijo si lo deseas.
-- Asegúrate de que `.env` no contenga BOM y que valores con `&` o espacios estén entre comillas para evitar fallos al `source`.
 
 ## Pruebas E2E
 
