@@ -124,8 +124,6 @@ Consulta `docs/ENDPOINTS-COMPLETOS.md` para la lista y ejemplos de uso.
 
 ---
 
-## Diagramas y arquitectura
-
 ## Diagrama de arquitectura
 ![Arquitectura](docs/architecture_diagram.svg)
 
