@@ -37,14 +37,54 @@ Este repositorio contiene el backend de "Recetas del Mundo": una API REST constr
 - Documentación OpenAPI generada: `docs/openapi.json` y Swagger UI (si se levanta la app).
 
 ---
+# 🍽️ API Recetas del Mundo — Resumen ejecutivo y guía técnica
+
+Versión profesional del README, alineada con la presentación técnica en `docs/presentation_architecture.html`. Este documento está pensado para CTOs, equipos DevOps e inversores: resume la propuesta de valor, arquitectura, operaciones críticas y cómo arrancar el sistema.
+
+## Resumen ejecutivo
+
+API Recetas del Mundo es una API RESTful contenerizada, diseñada para producción con Docker y portable a Kubernetes. Ofrece:
+
+- Backend modular en Spring Boot con autenticación JWT y hashing con BCrypt.
+- Modelo relacional en PostgreSQL 15 optimizado para búsquedas por país y categoría.
+- Funcionalidad social y de monetización: favoritos, comentarios, rating y donaciones.
+- Estrategia operativa: imágenes reproducibles, Pipelines (integración y despliegue continuos), backups automáticos y pruebas de restore.
+
+Estado actual: API operativa y validada (ver `docs/ENDPOINTS-COMPLETOS.md` para la lista completa — ~42 endpoints confirmados).
+
+---
+
+## Visión rápida
+
+Este repositorio contiene el backend de "Recetas del Mundo": una API REST construida con Spring Boot y PostgreSQL que gestiona recetas, ingredientes, interacciones (favoritos, me gusta, estrellas, comentarios), usuarios, categorías y donaciones (Stripe).
+
+---
+
+## Contenido
+
+- `Springboot/` — código del backend (Java, Maven).
+- `docs/` — documentación técnica: OpenAPI (`openapi.json`), diagramas ER, SVGs de arquitectura y flujos, listas de tablas/columnas/constraints y guía de endpoints completa.
+- `scripts/` — scripts para backup, E2E automatizados en PowerShell y utilidades.
+- `database/` — utilitarios y conexión a la base de datos.
+
+---
+
+## Resumen rápido
+
+- API lista para ejecución local en `http://localhost:8081`.
+- Endpoints principales: `/auth`, `/usuarios`, `/categorias`, `/paises`, `/recetas` (incluye CRUD y muchas rutas de interacción).
+- Documentación OpenAPI generada: `docs/openapi.json` y Swagger UI (si se levanta la app).
+
+---
 
 ## Requisitos
 
-- Java 17+
+- Java 21+ (el backend de esta rama se compiló y ejecuta con JDK 21)
 - Maven 3.6+
-- Docker 
-- PostgreSQL
-- Spring Boot
+- Docker
+- Docker Compose (o `docker compose` integrado)
+- PostgreSQL (solo si ejecutas la DB fuera de Docker)
+- Spring Boot (solo para desarrollo local)
 
 ---
 
@@ -94,7 +134,7 @@ Recomendaciones:
 
 - No mantengas secretos en los archivos `docker-compose` ni en el repo. Usa `.env` (no versionado) o un gestor de secretos para valores sensibles (DB password, JWT secret, claves Stripe).
 - `docker-compose.yml` es cómodo para desarrollo; `docker-compose.prod.yml` refleja el comportamiento esperado en despliegues (imágenes ya construidas, volúmenes administrados por la plataforma).
-- Si necesitas alinear comportamientos, consérvalo en la documentación; evita copiar contraseñas entre los archivos.
+- Para entornos Windows use Git Bash o WSL cuando ejecute los scripts de backup/restore que dependen de utilidades POSIX (tar, mktemp). Hay un script PowerShell `scripts/restore_volumes_from_backup.ps1` para restauración de volúmenes desde Windows, pero la vía más robusta es ejecutar `scripts/restore_recetas_stack.sh` desde WSL/Git-Bash.
 
 ### Variables de entorno importantes
 
@@ -124,9 +164,6 @@ Consulta `docs/ENDPOINTS-COMPLETOS.md` para la lista y ejemplos de uso.
 ---
 
 ## Diagramas y arquitectura
-
-
-
 
 ## Diagrama de arquitectura
 ![Arquitectura](docs/architecture_diagram.svg)
@@ -160,10 +197,50 @@ Mapa de los módulos expuestos por la API (auth, usuarios, categorias, recetas, 
 
 ## Backups y restauración
 
-- Hay scripts para backup en `scripts/` (PowerShell y bash). El dump utilizado es `database/init.sql`.
-- Estrategia de recuperacion: periódicos + backups completos del volumen Docker.
+- Hay scripts para backup en `scripts/` (PowerShell y bash). Los scripts principales son:
 
----
+	- `scripts/backup_recetas_stack.sh` — crea un backup completo que incluye: imágenes Docker, dump SQL, configuración y (cuando se detectan) volúmenes. Resultado: `backups/complete_backup_YYYYMMDD_HHMMSS.tar.gz`.
+	- `scripts/restore_recetas_stack.sh` — restaura imágenes, volúmenes y (opcionalmente) importa el dump SQL. Diseñado para ejecutarse en Linux/WSL/Git-Bash; acepta variables de entorno como `DEPLOY_DIR` y `COMPOSE_UP`.
+	- `scripts/restore_volumes_from_backup.ps1` — helper PowerShell para restaurar volúmenes desde backup en Windows (usa `docker cp` y contenedores temporales cuando `--mount` no es fiable).
+
+- El dump SQL principal suele estar en `database/init.sql` (asegúrate que esté en UTF-8 sin BOM). Si tu dump tiene problemas de encoding conviértelo a UTF-8 antes de usarlo.
+
+Estrategia de recuperación recomendada:
+
+- Mantén backups periódicos y prueba restauraciones en un host limpio (VM/CI) para verificar integridad.
+- En Windows usa WSL o Git Bash para ejecutar los scripts Bash (evita problemas de parsing con rutas y `tar`). Hay un helper PowerShell para restaurar volúmenes, pero la ejecución completa de `restore_recetas_stack.sh` se recomienda desde WSL/Git-Bash.
+
+Comandos de ejemplo
+
+En Linux / WSL / Git-Bash (recomendado):
+
+```bash
+# Restaurar (extrae, docker load, restaura volúmenes)
+bash ./scripts/restore_recetas_stack.sh /ruta/a/backups/complete_backup_YYYYMMDD_HHMMSS.tar.gz
+
+# Restaurar y levantar el stack (ejemplo para Windows repo path en WSL):
+DEPLOY_DIR=/c/GitHub/api-recetas_final COMPOSE_UP=yes bash ./scripts/restore_recetas_stack.sh /ruta/a/complete_backup_YYYYMMDD_HHMMSS.tar.gz
+```
+
+En PowerShell (solo restauración de volúmenes desde Windows):
+
+```powershell
+# Restaura volúmenes desde el backup (usa docker cp dentro de un contenedor temporal)
+& .\scripts\restore_volumes_from_backup.ps1
+```
+
+Generar backup de verificación
+
+```bash
+# Ejecutar en Git Bash/WSL
+bash ./scripts/backup_recetas_stack.sh
+ls -lh backups/complete_backup_*.tar.gz
+```
+
+Limitaciones conocidas
+
+- El script de backup busca volúmenes por nombre; si tus volúmenes tienen prefijos de proyecto (por ejemplo `api-recetas_final_postgres_data`) puede que necesitemos ajustar la detección automática por prefijo. Puedo actualizar `backup_recetas_stack.sh` para detectar y respaldar volúmenes por prefijo si lo deseas.
+- Asegúrate de que `.env` no contenga BOM y que valores con `&` o espacios estén entre comillas para evitar fallos al `source`.
 
 ## Pruebas E2E
 
@@ -173,7 +250,6 @@ Mapa de los módulos expuestos por la API (auth, usuarios, categorias, recetas, 
 ---
 
 ## Contacto
-
 
 Equipo de desarrollo — `dev@recetas.cl` (consulta `docs/openapi.json` para más metadatos de contacto).
 

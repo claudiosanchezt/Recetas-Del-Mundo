@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
-\restrict QjOblnNyCu2vWqJS2YdUrsIes5UbuPto4dtHzP6DHxU2yWOgdHuEITQkE7eEBka
--- SELECT pg_catalog.setval('public.carrusel_id_carrusel_seq', 1, false); -- removed (carrusel table eliminated)
--- Dumped from database version 15.14
--- Dumped by pg_dump version 15.14
+\restrict hv4TYBV82P2ChcZTg34MD6kDHGcK6e3OJjgYBjpiCtZHtX4925pXBwQ1mkzVlQu
+
+-- Dumped from database version 15.14 (Debian 15.14-1.pgdg13+1)
+-- Dumped by pg_dump version 15.14 (Debian 15.14-1.pgdg13+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -64,41 +64,6 @@ ALTER FUNCTION public.trg_update_fecha_actualizacion() OWNER TO postgres;
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
-
--- Carrusel table removed: functionality replaced by dynamic selection
--- The original DDL is kept commented below for reference and possible rollback.
---
--- -- Name: carrusel; Type: TABLE; Schema: public; Owner: postgres
--- --
--- CREATE TABLE public.carrusel (
---     id_carrusel integer NOT NULL,
---     titulo character varying(200) NOT NULL,
---     descripcion text,
---     url_imagen character varying(300),
---     estado smallint DEFAULT 1 NOT NULL,
---     fecha_creacion timestamp without time zone DEFAULT now() NOT NULL,
---     comentario text,
---     id_usr integer
--- );
---
--- ALTER TABLE public.carrusel OWNER TO postgres;
---
--- -- Name: carrusel_id_carrusel_seq; Type: SEQUENCE; Schema: public; Owner: postgres
--- --
--- CREATE SEQUENCE public.carrusel_id_carrusel_seq
---     AS integer
---     START WITH 1
---     INCREMENT BY 1
---     NO MINVALUE
---     NO MAXVALUE
---     CACHE 1;
---
--- ALTER TABLE public.carrusel_id_carrusel_seq OWNER TO postgres;
---
--- -- Name: carrusel_id_carrusel_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
--- --
--- ALTER SEQUENCE public.carrusel_id_carrusel_seq OWNED BY public.carrusel.id_carrusel;
-
 
 --
 -- Name: categoria; Type: TABLE; Schema: public; Owner: postgres
@@ -564,9 +529,6 @@ ALTER TABLE public.usuario_id_usr_seq OWNER TO postgres;
 ALTER SEQUENCE public.usuario_id_usr_seq OWNED BY public.usuario.id_usr;
 
 
--- (carrusel defaults removed)
-
-
 --
 -- Name: categoria id_cat; Type: DEFAULT; Schema: public; Owner: postgres
 --
@@ -645,17 +607,6 @@ ALTER TABLE ONLY public.usuario ALTER COLUMN id_usr SET DEFAULT nextval('public.
 
 
 --
--- Data for Name: carrusel; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
--- (carrusel data removed)
-
---
--- (carrusel sequence setval removed)
--- original statement removed: SELECT pg_catalog.setval('public.carrusel_id_carrusel_seq', 1, false);
-
-
---
 -- Data for Name: categoria; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -674,7 +625,7 @@ COPY public.categoria (id_cat, nombre, url_imagen, estado, fecha_creacion, comen
 37	Categoria Modificada Automaticamente	https://example.com/category-test.png	0	2025-10-10 11:06:02.906225	Esta es una categoria creada automaticamente para pruebas	\N
 38	Categoria de Pruebas Automatizadas	https://example.com/category-test.png	0	2025-10-10 11:37:07.845508	Esta es una categoria creada automaticamente para pruebas	\N
 39	Categoria Test 782955005	\N	1	2025-10-10 12:22:53.505307	\N	\N
-40	Categor├¡a Test 269048356	\N	1	2025-10-10 15:00:52.570013	\N	\N
+40	Categor?????a Test 269048356	\N	1	2025-10-10 15:00:52.570013	\N	\N
 41	Test Categoria	\N	1	2025-10-10 15:12:15.502098	\N	\N
 43	Test Debug Cat	\N	1	2025-10-10 15:31:25.450142	\N	\N
 45	Test Categoria Updated	\N	0	2025-10-10 15:50:04.846682	\N	\N
@@ -686,8 +637,6 @@ COPY public.categoria (id_cat, nombre, url_imagen, estado, fecha_creacion, comen
 --
 
 COPY public.comentario (id_comentario, fecha_creacion, id_receta, texto, id_usr) FROM stdin;
-185	2025-09-15 17:56:55.742644	1	Muy buena receta!	1
-186	2025-09-15 17:56:55.742644	2	Muy buena receta!	1
 187	2025-09-15 17:56:55.742644	3	Muy buena receta!	1
 188	2025-09-15 17:56:55.742644	4	Muy buena receta!	1
 189	2025-09-15 17:56:55.742644	5	Muy buena receta!	1
@@ -793,6 +742,7 @@ COPY public.comentario (id_comentario, fecha_creacion, id_receta, texto, id_usr)
 289	2025-09-15 17:56:55.742644	105	Muy buena receta!	1
 290	2025-09-15 17:56:55.742644	106	Muy buena receta!	1
 291	2025-09-15 17:56:55.742644	107	Muy buena receta!	1
+186	2025-09-15 17:56:55.742644	2	\N	1
 292	2025-09-15 17:56:55.742644	108	Muy buena receta!	1
 293	2025-09-15 17:56:55.742644	109	Muy buena receta!	1
 294	2025-09-15 17:56:55.742644	110	Muy buena receta!	1
@@ -1326,647 +1276,656 @@ COPY public.comentario (id_comentario, fecha_creacion, id_receta, texto, id_usr)
 822	2025-09-15 17:56:55.742644	638	Muy buena receta!	1
 823	2025-09-15 17:56:55.742644	639	Muy buena receta!	1
 824	2025-09-15 17:56:55.742644	640	Muy buena receta!	1
-825	2025-09-15 17:56:55.742644	1	Me encantÔö£Ôöé, la recomiendo.	2
-826	2025-09-15 17:56:55.742644	2	Me encantÔö£Ôöé, la recomiendo.	2
-827	2025-09-15 17:56:55.742644	3	Me encantÔö£Ôöé, la recomiendo.	2
-828	2025-09-15 17:56:55.742644	4	Me encantÔö£Ôöé, la recomiendo.	2
-829	2025-09-15 17:56:55.742644	5	Me encantÔö£Ôöé, la recomiendo.	2
-830	2025-09-15 17:56:55.742644	6	Me encantÔö£Ôöé, la recomiendo.	2
-831	2025-09-15 17:56:55.742644	7	Me encantÔö£Ôöé, la recomiendo.	2
-832	2025-09-15 17:56:55.742644	8	Me encantÔö£Ôöé, la recomiendo.	2
-833	2025-09-15 17:56:55.742644	9	Me encantÔö£Ôöé, la recomiendo.	2
-834	2025-09-15 17:56:55.742644	10	Me encantÔö£Ôöé, la recomiendo.	2
-835	2025-09-15 17:56:55.742644	11	Me encantÔö£Ôöé, la recomiendo.	2
-836	2025-09-15 17:56:55.742644	12	Me encantÔö£Ôöé, la recomiendo.	2
-837	2025-09-15 17:56:55.742644	13	Me encantÔö£Ôöé, la recomiendo.	2
-838	2025-09-15 17:56:55.742644	14	Me encantÔö£Ôöé, la recomiendo.	2
-839	2025-09-15 17:56:55.742644	15	Me encantÔö£Ôöé, la recomiendo.	2
-840	2025-09-15 17:56:55.742644	16	Me encantÔö£Ôöé, la recomiendo.	2
-841	2025-09-15 17:56:55.742644	17	Me encantÔö£Ôöé, la recomiendo.	2
-842	2025-09-15 17:56:55.742644	18	Me encantÔö£Ôöé, la recomiendo.	2
-843	2025-09-15 17:56:55.742644	19	Me encantÔö£Ôöé, la recomiendo.	2
-844	2025-09-15 17:56:55.742644	20	Me encantÔö£Ôöé, la recomiendo.	2
-845	2025-09-15 17:56:55.742644	21	Me encantÔö£Ôöé, la recomiendo.	2
-846	2025-09-15 17:56:55.742644	22	Me encantÔö£Ôöé, la recomiendo.	2
-847	2025-09-15 17:56:55.742644	23	Me encantÔö£Ôöé, la recomiendo.	2
-848	2025-09-15 17:56:55.742644	24	Me encantÔö£Ôöé, la recomiendo.	2
-849	2025-09-15 17:56:55.742644	25	Me encantÔö£Ôöé, la recomiendo.	2
-850	2025-09-15 17:56:55.742644	26	Me encantÔö£Ôöé, la recomiendo.	2
-851	2025-09-15 17:56:55.742644	27	Me encantÔö£Ôöé, la recomiendo.	2
-852	2025-09-15 17:56:55.742644	28	Me encantÔö£Ôöé, la recomiendo.	2
-853	2025-09-15 17:56:55.742644	29	Me encantÔö£Ôöé, la recomiendo.	2
-854	2025-09-15 17:56:55.742644	30	Me encantÔö£Ôöé, la recomiendo.	2
-855	2025-09-15 17:56:55.742644	31	Me encantÔö£Ôöé, la recomiendo.	2
-856	2025-09-15 17:56:55.742644	32	Me encantÔö£Ôöé, la recomiendo.	2
-857	2025-09-15 17:56:55.742644	33	Me encantÔö£Ôöé, la recomiendo.	2
-858	2025-09-15 17:56:55.742644	34	Me encantÔö£Ôöé, la recomiendo.	2
-859	2025-09-15 17:56:55.742644	35	Me encantÔö£Ôöé, la recomiendo.	2
-860	2025-09-15 17:56:55.742644	36	Me encantÔö£Ôöé, la recomiendo.	2
-861	2025-09-15 17:56:55.742644	37	Me encantÔö£Ôöé, la recomiendo.	2
-862	2025-09-15 17:56:55.742644	38	Me encantÔö£Ôöé, la recomiendo.	2
-863	2025-09-15 17:56:55.742644	39	Me encantÔö£Ôöé, la recomiendo.	2
-864	2025-09-15 17:56:55.742644	40	Me encantÔö£Ôöé, la recomiendo.	2
-865	2025-09-15 17:56:55.742644	41	Me encantÔö£Ôöé, la recomiendo.	2
-866	2025-09-15 17:56:55.742644	42	Me encantÔö£Ôöé, la recomiendo.	2
-867	2025-09-15 17:56:55.742644	43	Me encantÔö£Ôöé, la recomiendo.	2
-868	2025-09-15 17:56:55.742644	44	Me encantÔö£Ôöé, la recomiendo.	2
-869	2025-09-15 17:56:55.742644	45	Me encantÔö£Ôöé, la recomiendo.	2
-870	2025-09-15 17:56:55.742644	46	Me encantÔö£Ôöé, la recomiendo.	2
-871	2025-09-15 17:56:55.742644	47	Me encantÔö£Ôöé, la recomiendo.	2
-872	2025-09-15 17:56:55.742644	48	Me encantÔö£Ôöé, la recomiendo.	2
-873	2025-09-15 17:56:55.742644	49	Me encantÔö£Ôöé, la recomiendo.	2
-874	2025-09-15 17:56:55.742644	50	Me encantÔö£Ôöé, la recomiendo.	2
-875	2025-09-15 17:56:55.742644	51	Me encantÔö£Ôöé, la recomiendo.	2
-876	2025-09-15 17:56:55.742644	52	Me encantÔö£Ôöé, la recomiendo.	2
-877	2025-09-15 17:56:55.742644	53	Me encantÔö£Ôöé, la recomiendo.	2
-878	2025-09-15 17:56:55.742644	54	Me encantÔö£Ôöé, la recomiendo.	2
-879	2025-09-15 17:56:55.742644	55	Me encantÔö£Ôöé, la recomiendo.	2
-880	2025-09-15 17:56:55.742644	56	Me encantÔö£Ôöé, la recomiendo.	2
-881	2025-09-15 17:56:55.742644	57	Me encantÔö£Ôöé, la recomiendo.	2
-882	2025-09-15 17:56:55.742644	58	Me encantÔö£Ôöé, la recomiendo.	2
-883	2025-09-15 17:56:55.742644	59	Me encantÔö£Ôöé, la recomiendo.	2
-884	2025-09-15 17:56:55.742644	60	Me encantÔö£Ôöé, la recomiendo.	2
-885	2025-09-15 17:56:55.742644	61	Me encantÔö£Ôöé, la recomiendo.	2
-886	2025-09-15 17:56:55.742644	62	Me encantÔö£Ôöé, la recomiendo.	2
-887	2025-09-15 17:56:55.742644	63	Me encantÔö£Ôöé, la recomiendo.	2
-888	2025-09-15 17:56:55.742644	64	Me encantÔö£Ôöé, la recomiendo.	2
-889	2025-09-15 17:56:55.742644	65	Me encantÔö£Ôöé, la recomiendo.	2
-890	2025-09-15 17:56:55.742644	66	Me encantÔö£Ôöé, la recomiendo.	2
-891	2025-09-15 17:56:55.742644	67	Me encantÔö£Ôöé, la recomiendo.	2
-892	2025-09-15 17:56:55.742644	68	Me encantÔö£Ôöé, la recomiendo.	2
-893	2025-09-15 17:56:55.742644	69	Me encantÔö£Ôöé, la recomiendo.	2
-894	2025-09-15 17:56:55.742644	70	Me encantÔö£Ôöé, la recomiendo.	2
-895	2025-09-15 17:56:55.742644	71	Me encantÔö£Ôöé, la recomiendo.	2
-896	2025-09-15 17:56:55.742644	72	Me encantÔö£Ôöé, la recomiendo.	2
-897	2025-09-15 17:56:55.742644	73	Me encantÔö£Ôöé, la recomiendo.	2
-898	2025-09-15 17:56:55.742644	74	Me encantÔö£Ôöé, la recomiendo.	2
-899	2025-09-15 17:56:55.742644	75	Me encantÔö£Ôöé, la recomiendo.	2
-900	2025-09-15 17:56:55.742644	76	Me encantÔö£Ôöé, la recomiendo.	2
-901	2025-09-15 17:56:55.742644	77	Me encantÔö£Ôöé, la recomiendo.	2
-902	2025-09-15 17:56:55.742644	78	Me encantÔö£Ôöé, la recomiendo.	2
-903	2025-09-15 17:56:55.742644	79	Me encantÔö£Ôöé, la recomiendo.	2
-904	2025-09-15 17:56:55.742644	80	Me encantÔö£Ôöé, la recomiendo.	2
-905	2025-09-15 17:56:55.742644	81	Me encantÔö£Ôöé, la recomiendo.	2
-906	2025-09-15 17:56:55.742644	82	Me encantÔö£Ôöé, la recomiendo.	2
-907	2025-09-15 17:56:55.742644	83	Me encantÔö£Ôöé, la recomiendo.	2
-908	2025-09-15 17:56:55.742644	84	Me encantÔö£Ôöé, la recomiendo.	2
-909	2025-09-15 17:56:55.742644	85	Me encantÔö£Ôöé, la recomiendo.	2
-910	2025-09-15 17:56:55.742644	86	Me encantÔö£Ôöé, la recomiendo.	2
-911	2025-09-15 17:56:55.742644	87	Me encantÔö£Ôöé, la recomiendo.	2
-912	2025-09-15 17:56:55.742644	88	Me encantÔö£Ôöé, la recomiendo.	2
-913	2025-09-15 17:56:55.742644	89	Me encantÔö£Ôöé, la recomiendo.	2
-914	2025-09-15 17:56:55.742644	90	Me encantÔö£Ôöé, la recomiendo.	2
-915	2025-09-15 17:56:55.742644	91	Me encantÔö£Ôöé, la recomiendo.	2
-916	2025-09-15 17:56:55.742644	92	Me encantÔö£Ôöé, la recomiendo.	2
-917	2025-09-15 17:56:55.742644	93	Me encantÔö£Ôöé, la recomiendo.	2
-918	2025-09-15 17:56:55.742644	94	Me encantÔö£Ôöé, la recomiendo.	2
-919	2025-09-15 17:56:55.742644	95	Me encantÔö£Ôöé, la recomiendo.	2
-920	2025-09-15 17:56:55.742644	96	Me encantÔö£Ôöé, la recomiendo.	2
-921	2025-09-15 17:56:55.742644	97	Me encantÔö£Ôöé, la recomiendo.	2
-922	2025-09-15 17:56:55.742644	98	Me encantÔö£Ôöé, la recomiendo.	2
-923	2025-09-15 17:56:55.742644	99	Me encantÔö£Ôöé, la recomiendo.	2
-924	2025-09-15 17:56:55.742644	100	Me encantÔö£Ôöé, la recomiendo.	2
-925	2025-09-15 17:56:55.742644	101	Me encantÔö£Ôöé, la recomiendo.	2
-926	2025-09-15 17:56:55.742644	102	Me encantÔö£Ôöé, la recomiendo.	2
-927	2025-09-15 17:56:55.742644	103	Me encantÔö£Ôöé, la recomiendo.	2
-928	2025-09-15 17:56:55.742644	104	Me encantÔö£Ôöé, la recomiendo.	2
-929	2025-09-15 17:56:55.742644	105	Me encantÔö£Ôöé, la recomiendo.	2
-930	2025-09-15 17:56:55.742644	106	Me encantÔö£Ôöé, la recomiendo.	2
-931	2025-09-15 17:56:55.742644	107	Me encantÔö£Ôöé, la recomiendo.	2
-932	2025-09-15 17:56:55.742644	108	Me encantÔö£Ôöé, la recomiendo.	2
-933	2025-09-15 17:56:55.742644	109	Me encantÔö£Ôöé, la recomiendo.	2
-934	2025-09-15 17:56:55.742644	110	Me encantÔö£Ôöé, la recomiendo.	2
-935	2025-09-15 17:56:55.742644	111	Me encantÔö£Ôöé, la recomiendo.	2
-936	2025-09-15 17:56:55.742644	112	Me encantÔö£Ôöé, la recomiendo.	2
-937	2025-09-15 17:56:55.742644	113	Me encantÔö£Ôöé, la recomiendo.	2
-938	2025-09-15 17:56:55.742644	114	Me encantÔö£Ôöé, la recomiendo.	2
-939	2025-09-15 17:56:55.742644	115	Me encantÔö£Ôöé, la recomiendo.	2
-940	2025-09-15 17:56:55.742644	116	Me encantÔö£Ôöé, la recomiendo.	2
-941	2025-09-15 17:56:55.742644	117	Me encantÔö£Ôöé, la recomiendo.	2
-942	2025-09-15 17:56:55.742644	118	Me encantÔö£Ôöé, la recomiendo.	2
-943	2025-09-15 17:56:55.742644	119	Me encantÔö£Ôöé, la recomiendo.	2
-944	2025-09-15 17:56:55.742644	120	Me encantÔö£Ôöé, la recomiendo.	2
-945	2025-09-15 17:56:55.742644	121	Me encantÔö£Ôöé, la recomiendo.	2
-946	2025-09-15 17:56:55.742644	122	Me encantÔö£Ôöé, la recomiendo.	2
-947	2025-09-15 17:56:55.742644	123	Me encantÔö£Ôöé, la recomiendo.	2
-948	2025-09-15 17:56:55.742644	124	Me encantÔö£Ôöé, la recomiendo.	2
-949	2025-09-15 17:56:55.742644	125	Me encantÔö£Ôöé, la recomiendo.	2
-950	2025-09-15 17:56:55.742644	126	Me encantÔö£Ôöé, la recomiendo.	2
-951	2025-09-15 17:56:55.742644	127	Me encantÔö£Ôöé, la recomiendo.	2
-952	2025-09-15 17:56:55.742644	128	Me encantÔö£Ôöé, la recomiendo.	2
-953	2025-09-15 17:56:55.742644	129	Me encantÔö£Ôöé, la recomiendo.	2
-954	2025-09-15 17:56:55.742644	130	Me encantÔö£Ôöé, la recomiendo.	2
-955	2025-09-15 17:56:55.742644	131	Me encantÔö£Ôöé, la recomiendo.	2
-956	2025-09-15 17:56:55.742644	132	Me encantÔö£Ôöé, la recomiendo.	2
-957	2025-09-15 17:56:55.742644	133	Me encantÔö£Ôöé, la recomiendo.	2
-958	2025-09-15 17:56:55.742644	134	Me encantÔö£Ôöé, la recomiendo.	2
-959	2025-09-15 17:56:55.742644	135	Me encantÔö£Ôöé, la recomiendo.	2
-960	2025-09-15 17:56:55.742644	136	Me encantÔö£Ôöé, la recomiendo.	2
-961	2025-09-15 17:56:55.742644	137	Me encantÔö£Ôöé, la recomiendo.	2
-962	2025-09-15 17:56:55.742644	138	Me encantÔö£Ôöé, la recomiendo.	2
-963	2025-09-15 17:56:55.742644	139	Me encantÔö£Ôöé, la recomiendo.	2
-964	2025-09-15 17:56:55.742644	140	Me encantÔö£Ôöé, la recomiendo.	2
-965	2025-09-15 17:56:55.742644	141	Me encantÔö£Ôöé, la recomiendo.	2
-966	2025-09-15 17:56:55.742644	142	Me encantÔö£Ôöé, la recomiendo.	2
-967	2025-09-15 17:56:55.742644	143	Me encantÔö£Ôöé, la recomiendo.	2
-968	2025-09-15 17:56:55.742644	144	Me encantÔö£Ôöé, la recomiendo.	2
-969	2025-09-15 17:56:55.742644	145	Me encantÔö£Ôöé, la recomiendo.	2
-970	2025-09-15 17:56:55.742644	146	Me encantÔö£Ôöé, la recomiendo.	2
-971	2025-09-15 17:56:55.742644	147	Me encantÔö£Ôöé, la recomiendo.	2
-972	2025-09-15 17:56:55.742644	148	Me encantÔö£Ôöé, la recomiendo.	2
-973	2025-09-15 17:56:55.742644	149	Me encantÔö£Ôöé, la recomiendo.	2
-974	2025-09-15 17:56:55.742644	150	Me encantÔö£Ôöé, la recomiendo.	2
-975	2025-09-15 17:56:55.742644	151	Me encantÔö£Ôöé, la recomiendo.	2
-976	2025-09-15 17:56:55.742644	152	Me encantÔö£Ôöé, la recomiendo.	2
-977	2025-09-15 17:56:55.742644	153	Me encantÔö£Ôöé, la recomiendo.	2
-978	2025-09-15 17:56:55.742644	154	Me encantÔö£Ôöé, la recomiendo.	2
-979	2025-09-15 17:56:55.742644	155	Me encantÔö£Ôöé, la recomiendo.	2
-980	2025-09-15 17:56:55.742644	156	Me encantÔö£Ôöé, la recomiendo.	2
-981	2025-09-15 17:56:55.742644	157	Me encantÔö£Ôöé, la recomiendo.	2
-982	2025-09-15 17:56:55.742644	158	Me encantÔö£Ôöé, la recomiendo.	2
-983	2025-09-15 17:56:55.742644	159	Me encantÔö£Ôöé, la recomiendo.	2
-984	2025-09-15 17:56:55.742644	160	Me encantÔö£Ôöé, la recomiendo.	2
-985	2025-09-15 17:56:55.742644	161	Me encantÔö£Ôöé, la recomiendo.	2
-986	2025-09-15 17:56:55.742644	162	Me encantÔö£Ôöé, la recomiendo.	2
-987	2025-09-15 17:56:55.742644	163	Me encantÔö£Ôöé, la recomiendo.	2
-988	2025-09-15 17:56:55.742644	164	Me encantÔö£Ôöé, la recomiendo.	2
-989	2025-09-15 17:56:55.742644	165	Me encantÔö£Ôöé, la recomiendo.	2
-990	2025-09-15 17:56:55.742644	166	Me encantÔö£Ôöé, la recomiendo.	2
-991	2025-09-15 17:56:55.742644	167	Me encantÔö£Ôöé, la recomiendo.	2
-992	2025-09-15 17:56:55.742644	168	Me encantÔö£Ôöé, la recomiendo.	2
-993	2025-09-15 17:56:55.742644	169	Me encantÔö£Ôöé, la recomiendo.	2
-994	2025-09-15 17:56:55.742644	170	Me encantÔö£Ôöé, la recomiendo.	2
-995	2025-09-15 17:56:55.742644	171	Me encantÔö£Ôöé, la recomiendo.	2
-996	2025-09-15 17:56:55.742644	172	Me encantÔö£Ôöé, la recomiendo.	2
-997	2025-09-15 17:56:55.742644	173	Me encantÔö£Ôöé, la recomiendo.	2
-998	2025-09-15 17:56:55.742644	174	Me encantÔö£Ôöé, la recomiendo.	2
-999	2025-09-15 17:56:55.742644	175	Me encantÔö£Ôöé, la recomiendo.	2
-1000	2025-09-15 17:56:55.742644	176	Me encantÔö£Ôöé, la recomiendo.	2
-1001	2025-09-15 17:56:55.742644	177	Me encantÔö£Ôöé, la recomiendo.	2
-1002	2025-09-15 17:56:55.742644	178	Me encantÔö£Ôöé, la recomiendo.	2
-1003	2025-09-15 17:56:55.742644	179	Me encantÔö£Ôöé, la recomiendo.	2
-1004	2025-09-15 17:56:55.742644	180	Me encantÔö£Ôöé, la recomiendo.	2
-1005	2025-09-15 17:56:55.742644	181	Me encantÔö£Ôöé, la recomiendo.	2
-1006	2025-09-15 17:56:55.742644	182	Me encantÔö£Ôöé, la recomiendo.	2
-1007	2025-09-15 17:56:55.742644	183	Me encantÔö£Ôöé, la recomiendo.	2
-1008	2025-09-15 17:56:55.742644	184	Me encantÔö£Ôöé, la recomiendo.	2
-1009	2025-09-15 17:56:55.742644	185	Me encantÔö£Ôöé, la recomiendo.	2
-1010	2025-09-15 17:56:55.742644	186	Me encantÔö£Ôöé, la recomiendo.	2
-1011	2025-09-15 17:56:55.742644	187	Me encantÔö£Ôöé, la recomiendo.	2
-1012	2025-09-15 17:56:55.742644	188	Me encantÔö£Ôöé, la recomiendo.	2
-1013	2025-09-15 17:56:55.742644	189	Me encantÔö£Ôöé, la recomiendo.	2
-1014	2025-09-15 17:56:55.742644	190	Me encantÔö£Ôöé, la recomiendo.	2
-1015	2025-09-15 17:56:55.742644	191	Me encantÔö£Ôöé, la recomiendo.	2
-1016	2025-09-15 17:56:55.742644	192	Me encantÔö£Ôöé, la recomiendo.	2
-1017	2025-09-15 17:56:55.742644	193	Me encantÔö£Ôöé, la recomiendo.	2
-1018	2025-09-15 17:56:55.742644	194	Me encantÔö£Ôöé, la recomiendo.	2
-1019	2025-09-15 17:56:55.742644	195	Me encantÔö£Ôöé, la recomiendo.	2
-1020	2025-09-15 17:56:55.742644	196	Me encantÔö£Ôöé, la recomiendo.	2
-1021	2025-09-15 17:56:55.742644	197	Me encantÔö£Ôöé, la recomiendo.	2
-1022	2025-09-15 17:56:55.742644	198	Me encantÔö£Ôöé, la recomiendo.	2
-1023	2025-09-15 17:56:55.742644	199	Me encantÔö£Ôöé, la recomiendo.	2
-1024	2025-09-15 17:56:55.742644	200	Me encantÔö£Ôöé, la recomiendo.	2
-1025	2025-09-15 17:56:55.742644	201	Me encantÔö£Ôöé, la recomiendo.	2
-1026	2025-09-15 17:56:55.742644	202	Me encantÔö£Ôöé, la recomiendo.	2
-1027	2025-09-15 17:56:55.742644	203	Me encantÔö£Ôöé, la recomiendo.	2
-1028	2025-09-15 17:56:55.742644	204	Me encantÔö£Ôöé, la recomiendo.	2
-1029	2025-09-15 17:56:55.742644	205	Me encantÔö£Ôöé, la recomiendo.	2
-1030	2025-09-15 17:56:55.742644	206	Me encantÔö£Ôöé, la recomiendo.	2
-1031	2025-09-15 17:56:55.742644	207	Me encantÔö£Ôöé, la recomiendo.	2
-1032	2025-09-15 17:56:55.742644	208	Me encantÔö£Ôöé, la recomiendo.	2
-1033	2025-09-15 17:56:55.742644	209	Me encantÔö£Ôöé, la recomiendo.	2
-1034	2025-09-15 17:56:55.742644	210	Me encantÔö£Ôöé, la recomiendo.	2
-1035	2025-09-15 17:56:55.742644	211	Me encantÔö£Ôöé, la recomiendo.	2
-1036	2025-09-15 17:56:55.742644	212	Me encantÔö£Ôöé, la recomiendo.	2
-1037	2025-09-15 17:56:55.742644	213	Me encantÔö£Ôöé, la recomiendo.	2
-1038	2025-09-15 17:56:55.742644	214	Me encantÔö£Ôöé, la recomiendo.	2
-1039	2025-09-15 17:56:55.742644	215	Me encantÔö£Ôöé, la recomiendo.	2
-1040	2025-09-15 17:56:55.742644	216	Me encantÔö£Ôöé, la recomiendo.	2
-1041	2025-09-15 17:56:55.742644	217	Me encantÔö£Ôöé, la recomiendo.	2
-1042	2025-09-15 17:56:55.742644	218	Me encantÔö£Ôöé, la recomiendo.	2
-1043	2025-09-15 17:56:55.742644	219	Me encantÔö£Ôöé, la recomiendo.	2
-1044	2025-09-15 17:56:55.742644	220	Me encantÔö£Ôöé, la recomiendo.	2
-1045	2025-09-15 17:56:55.742644	221	Me encantÔö£Ôöé, la recomiendo.	2
-1046	2025-09-15 17:56:55.742644	222	Me encantÔö£Ôöé, la recomiendo.	2
-1047	2025-09-15 17:56:55.742644	223	Me encantÔö£Ôöé, la recomiendo.	2
-1048	2025-09-15 17:56:55.742644	224	Me encantÔö£Ôöé, la recomiendo.	2
-1049	2025-09-15 17:56:55.742644	225	Me encantÔö£Ôöé, la recomiendo.	2
-1050	2025-09-15 17:56:55.742644	226	Me encantÔö£Ôöé, la recomiendo.	2
-1051	2025-09-15 17:56:55.742644	227	Me encantÔö£Ôöé, la recomiendo.	2
-1052	2025-09-15 17:56:55.742644	228	Me encantÔö£Ôöé, la recomiendo.	2
-1053	2025-09-15 17:56:55.742644	229	Me encantÔö£Ôöé, la recomiendo.	2
-1054	2025-09-15 17:56:55.742644	230	Me encantÔö£Ôöé, la recomiendo.	2
-1055	2025-09-15 17:56:55.742644	231	Me encantÔö£Ôöé, la recomiendo.	2
-1056	2025-09-15 17:56:55.742644	232	Me encantÔö£Ôöé, la recomiendo.	2
-1057	2025-09-15 17:56:55.742644	233	Me encantÔö£Ôöé, la recomiendo.	2
-1058	2025-09-15 17:56:55.742644	234	Me encantÔö£Ôöé, la recomiendo.	2
-1059	2025-09-15 17:56:55.742644	235	Me encantÔö£Ôöé, la recomiendo.	2
-1060	2025-09-15 17:56:55.742644	236	Me encantÔö£Ôöé, la recomiendo.	2
-1061	2025-09-15 17:56:55.742644	237	Me encantÔö£Ôöé, la recomiendo.	2
-1062	2025-09-15 17:56:55.742644	238	Me encantÔö£Ôöé, la recomiendo.	2
-1063	2025-09-15 17:56:55.742644	239	Me encantÔö£Ôöé, la recomiendo.	2
-1064	2025-09-15 17:56:55.742644	240	Me encantÔö£Ôöé, la recomiendo.	2
-1065	2025-09-15 17:56:55.742644	241	Me encantÔö£Ôöé, la recomiendo.	2
-1066	2025-09-15 17:56:55.742644	242	Me encantÔö£Ôöé, la recomiendo.	2
-1067	2025-09-15 17:56:55.742644	243	Me encantÔö£Ôöé, la recomiendo.	2
-1068	2025-09-15 17:56:55.742644	244	Me encantÔö£Ôöé, la recomiendo.	2
-1069	2025-09-15 17:56:55.742644	245	Me encantÔö£Ôöé, la recomiendo.	2
-1070	2025-09-15 17:56:55.742644	246	Me encantÔö£Ôöé, la recomiendo.	2
-1071	2025-09-15 17:56:55.742644	247	Me encantÔö£Ôöé, la recomiendo.	2
-1072	2025-09-15 17:56:55.742644	248	Me encantÔö£Ôöé, la recomiendo.	2
-1073	2025-09-15 17:56:55.742644	249	Me encantÔö£Ôöé, la recomiendo.	2
-1074	2025-09-15 17:56:55.742644	250	Me encantÔö£Ôöé, la recomiendo.	2
-1075	2025-09-15 17:56:55.742644	251	Me encantÔö£Ôöé, la recomiendo.	2
-1076	2025-09-15 17:56:55.742644	252	Me encantÔö£Ôöé, la recomiendo.	2
-1077	2025-09-15 17:56:55.742644	253	Me encantÔö£Ôöé, la recomiendo.	2
-1078	2025-09-15 17:56:55.742644	254	Me encantÔö£Ôöé, la recomiendo.	2
-1079	2025-09-15 17:56:55.742644	255	Me encantÔö£Ôöé, la recomiendo.	2
-1080	2025-09-15 17:56:55.742644	256	Me encantÔö£Ôöé, la recomiendo.	2
-1081	2025-09-15 17:56:55.742644	257	Me encantÔö£Ôöé, la recomiendo.	2
-1082	2025-09-15 17:56:55.742644	258	Me encantÔö£Ôöé, la recomiendo.	2
-1083	2025-09-15 17:56:55.742644	259	Me encantÔö£Ôöé, la recomiendo.	2
-1084	2025-09-15 17:56:55.742644	260	Me encantÔö£Ôöé, la recomiendo.	2
-1085	2025-09-15 17:56:55.742644	261	Me encantÔö£Ôöé, la recomiendo.	2
-1086	2025-09-15 17:56:55.742644	262	Me encantÔö£Ôöé, la recomiendo.	2
-1087	2025-09-15 17:56:55.742644	263	Me encantÔö£Ôöé, la recomiendo.	2
-1088	2025-09-15 17:56:55.742644	264	Me encantÔö£Ôöé, la recomiendo.	2
-1089	2025-09-15 17:56:55.742644	265	Me encantÔö£Ôöé, la recomiendo.	2
-1090	2025-09-15 17:56:55.742644	266	Me encantÔö£Ôöé, la recomiendo.	2
-1091	2025-09-15 17:56:55.742644	267	Me encantÔö£Ôöé, la recomiendo.	2
-1092	2025-09-15 17:56:55.742644	268	Me encantÔö£Ôöé, la recomiendo.	2
-1093	2025-09-15 17:56:55.742644	269	Me encantÔö£Ôöé, la recomiendo.	2
-1094	2025-09-15 17:56:55.742644	270	Me encantÔö£Ôöé, la recomiendo.	2
-1095	2025-09-15 17:56:55.742644	271	Me encantÔö£Ôöé, la recomiendo.	2
-1096	2025-09-15 17:56:55.742644	272	Me encantÔö£Ôöé, la recomiendo.	2
-1097	2025-09-15 17:56:55.742644	273	Me encantÔö£Ôöé, la recomiendo.	2
-1098	2025-09-15 17:56:55.742644	274	Me encantÔö£Ôöé, la recomiendo.	2
-1099	2025-09-15 17:56:55.742644	275	Me encantÔö£Ôöé, la recomiendo.	2
-1100	2025-09-15 17:56:55.742644	276	Me encantÔö£Ôöé, la recomiendo.	2
-1101	2025-09-15 17:56:55.742644	277	Me encantÔö£Ôöé, la recomiendo.	2
-1102	2025-09-15 17:56:55.742644	278	Me encantÔö£Ôöé, la recomiendo.	2
-1103	2025-09-15 17:56:55.742644	279	Me encantÔö£Ôöé, la recomiendo.	2
-1104	2025-09-15 17:56:55.742644	280	Me encantÔö£Ôöé, la recomiendo.	2
-1105	2025-09-15 17:56:55.742644	281	Me encantÔö£Ôöé, la recomiendo.	2
-1106	2025-09-15 17:56:55.742644	282	Me encantÔö£Ôöé, la recomiendo.	2
-1107	2025-09-15 17:56:55.742644	283	Me encantÔö£Ôöé, la recomiendo.	2
-1108	2025-09-15 17:56:55.742644	284	Me encantÔö£Ôöé, la recomiendo.	2
-1109	2025-09-15 17:56:55.742644	285	Me encantÔö£Ôöé, la recomiendo.	2
-1110	2025-09-15 17:56:55.742644	286	Me encantÔö£Ôöé, la recomiendo.	2
-1111	2025-09-15 17:56:55.742644	287	Me encantÔö£Ôöé, la recomiendo.	2
-1112	2025-09-15 17:56:55.742644	288	Me encantÔö£Ôöé, la recomiendo.	2
-1113	2025-09-15 17:56:55.742644	289	Me encantÔö£Ôöé, la recomiendo.	2
-1114	2025-09-15 17:56:55.742644	290	Me encantÔö£Ôöé, la recomiendo.	2
-1115	2025-09-15 17:56:55.742644	291	Me encantÔö£Ôöé, la recomiendo.	2
-1116	2025-09-15 17:56:55.742644	292	Me encantÔö£Ôöé, la recomiendo.	2
-1117	2025-09-15 17:56:55.742644	293	Me encantÔö£Ôöé, la recomiendo.	2
-1118	2025-09-15 17:56:55.742644	294	Me encantÔö£Ôöé, la recomiendo.	2
-1119	2025-09-15 17:56:55.742644	295	Me encantÔö£Ôöé, la recomiendo.	2
-1120	2025-09-15 17:56:55.742644	296	Me encantÔö£Ôöé, la recomiendo.	2
-1121	2025-09-15 17:56:55.742644	297	Me encantÔö£Ôöé, la recomiendo.	2
-1122	2025-09-15 17:56:55.742644	298	Me encantÔö£Ôöé, la recomiendo.	2
-1123	2025-09-15 17:56:55.742644	299	Me encantÔö£Ôöé, la recomiendo.	2
-1124	2025-09-15 17:56:55.742644	300	Me encantÔö£Ôöé, la recomiendo.	2
-1125	2025-09-15 17:56:55.742644	301	Me encantÔö£Ôöé, la recomiendo.	2
-1126	2025-09-15 17:56:55.742644	302	Me encantÔö£Ôöé, la recomiendo.	2
-1127	2025-09-15 17:56:55.742644	303	Me encantÔö£Ôöé, la recomiendo.	2
-1128	2025-09-15 17:56:55.742644	304	Me encantÔö£Ôöé, la recomiendo.	2
-1129	2025-09-15 17:56:55.742644	305	Me encantÔö£Ôöé, la recomiendo.	2
-1130	2025-09-15 17:56:55.742644	306	Me encantÔö£Ôöé, la recomiendo.	2
-1131	2025-09-15 17:56:55.742644	307	Me encantÔö£Ôöé, la recomiendo.	2
-1132	2025-09-15 17:56:55.742644	308	Me encantÔö£Ôöé, la recomiendo.	2
-1133	2025-09-15 17:56:55.742644	309	Me encantÔö£Ôöé, la recomiendo.	2
-1134	2025-09-15 17:56:55.742644	310	Me encantÔö£Ôöé, la recomiendo.	2
-1135	2025-09-15 17:56:55.742644	311	Me encantÔö£Ôöé, la recomiendo.	2
-1136	2025-09-15 17:56:55.742644	312	Me encantÔö£Ôöé, la recomiendo.	2
-1137	2025-09-15 17:56:55.742644	313	Me encantÔö£Ôöé, la recomiendo.	2
-1138	2025-09-15 17:56:55.742644	314	Me encantÔö£Ôöé, la recomiendo.	2
-1139	2025-09-15 17:56:55.742644	315	Me encantÔö£Ôöé, la recomiendo.	2
-1140	2025-09-15 17:56:55.742644	316	Me encantÔö£Ôöé, la recomiendo.	2
-1141	2025-09-15 17:56:55.742644	317	Me encantÔö£Ôöé, la recomiendo.	2
-1142	2025-09-15 17:56:55.742644	318	Me encantÔö£Ôöé, la recomiendo.	2
-1143	2025-09-15 17:56:55.742644	319	Me encantÔö£Ôöé, la recomiendo.	2
-1144	2025-09-15 17:56:55.742644	320	Me encantÔö£Ôöé, la recomiendo.	2
-1145	2025-09-15 17:56:55.742644	321	Me encantÔö£Ôöé, la recomiendo.	2
-1146	2025-09-15 17:56:55.742644	322	Me encantÔö£Ôöé, la recomiendo.	2
-1147	2025-09-15 17:56:55.742644	323	Me encantÔö£Ôöé, la recomiendo.	2
-1148	2025-09-15 17:56:55.742644	324	Me encantÔö£Ôöé, la recomiendo.	2
-1149	2025-09-15 17:56:55.742644	325	Me encantÔö£Ôöé, la recomiendo.	2
-1150	2025-09-15 17:56:55.742644	326	Me encantÔö£Ôöé, la recomiendo.	2
-1151	2025-09-15 17:56:55.742644	327	Me encantÔö£Ôöé, la recomiendo.	2
-1152	2025-09-15 17:56:55.742644	328	Me encantÔö£Ôöé, la recomiendo.	2
-1153	2025-09-15 17:56:55.742644	329	Me encantÔö£Ôöé, la recomiendo.	2
-1154	2025-09-15 17:56:55.742644	330	Me encantÔö£Ôöé, la recomiendo.	2
-1155	2025-09-15 17:56:55.742644	331	Me encantÔö£Ôöé, la recomiendo.	2
-1156	2025-09-15 17:56:55.742644	332	Me encantÔö£Ôöé, la recomiendo.	2
-1157	2025-09-15 17:56:55.742644	333	Me encantÔö£Ôöé, la recomiendo.	2
-1158	2025-09-15 17:56:55.742644	334	Me encantÔö£Ôöé, la recomiendo.	2
-1159	2025-09-15 17:56:55.742644	335	Me encantÔö£Ôöé, la recomiendo.	2
-1160	2025-09-15 17:56:55.742644	336	Me encantÔö£Ôöé, la recomiendo.	2
-1161	2025-09-15 17:56:55.742644	337	Me encantÔö£Ôöé, la recomiendo.	2
-1162	2025-09-15 17:56:55.742644	338	Me encantÔö£Ôöé, la recomiendo.	2
-1163	2025-09-15 17:56:55.742644	339	Me encantÔö£Ôöé, la recomiendo.	2
-1164	2025-09-15 17:56:55.742644	340	Me encantÔö£Ôöé, la recomiendo.	2
-1165	2025-09-15 17:56:55.742644	341	Me encantÔö£Ôöé, la recomiendo.	2
-1166	2025-09-15 17:56:55.742644	342	Me encantÔö£Ôöé, la recomiendo.	2
-1167	2025-09-15 17:56:55.742644	343	Me encantÔö£Ôöé, la recomiendo.	2
-1168	2025-09-15 17:56:55.742644	344	Me encantÔö£Ôöé, la recomiendo.	2
-1169	2025-09-15 17:56:55.742644	345	Me encantÔö£Ôöé, la recomiendo.	2
-1170	2025-09-15 17:56:55.742644	346	Me encantÔö£Ôöé, la recomiendo.	2
-1171	2025-09-15 17:56:55.742644	347	Me encantÔö£Ôöé, la recomiendo.	2
-1172	2025-09-15 17:56:55.742644	348	Me encantÔö£Ôöé, la recomiendo.	2
-1173	2025-09-15 17:56:55.742644	349	Me encantÔö£Ôöé, la recomiendo.	2
-1174	2025-09-15 17:56:55.742644	350	Me encantÔö£Ôöé, la recomiendo.	2
-1175	2025-09-15 17:56:55.742644	351	Me encantÔö£Ôöé, la recomiendo.	2
-1176	2025-09-15 17:56:55.742644	352	Me encantÔö£Ôöé, la recomiendo.	2
-1177	2025-09-15 17:56:55.742644	353	Me encantÔö£Ôöé, la recomiendo.	2
-1178	2025-09-15 17:56:55.742644	354	Me encantÔö£Ôöé, la recomiendo.	2
-1179	2025-09-15 17:56:55.742644	355	Me encantÔö£Ôöé, la recomiendo.	2
-1180	2025-09-15 17:56:55.742644	356	Me encantÔö£Ôöé, la recomiendo.	2
-1181	2025-09-15 17:56:55.742644	357	Me encantÔö£Ôöé, la recomiendo.	2
-1182	2025-09-15 17:56:55.742644	358	Me encantÔö£Ôöé, la recomiendo.	2
-1183	2025-09-15 17:56:55.742644	359	Me encantÔö£Ôöé, la recomiendo.	2
-1184	2025-09-15 17:56:55.742644	360	Me encantÔö£Ôöé, la recomiendo.	2
-1185	2025-09-15 17:56:55.742644	361	Me encantÔö£Ôöé, la recomiendo.	2
-1186	2025-09-15 17:56:55.742644	362	Me encantÔö£Ôöé, la recomiendo.	2
-1187	2025-09-15 17:56:55.742644	363	Me encantÔö£Ôöé, la recomiendo.	2
-1188	2025-09-15 17:56:55.742644	364	Me encantÔö£Ôöé, la recomiendo.	2
-1189	2025-09-15 17:56:55.742644	365	Me encantÔö£Ôöé, la recomiendo.	2
-1190	2025-09-15 17:56:55.742644	366	Me encantÔö£Ôöé, la recomiendo.	2
-1191	2025-09-15 17:56:55.742644	367	Me encantÔö£Ôöé, la recomiendo.	2
-1192	2025-09-15 17:56:55.742644	368	Me encantÔö£Ôöé, la recomiendo.	2
-1193	2025-09-15 17:56:55.742644	369	Me encantÔö£Ôöé, la recomiendo.	2
-1194	2025-09-15 17:56:55.742644	370	Me encantÔö£Ôöé, la recomiendo.	2
-1195	2025-09-15 17:56:55.742644	371	Me encantÔö£Ôöé, la recomiendo.	2
-1196	2025-09-15 17:56:55.742644	372	Me encantÔö£Ôöé, la recomiendo.	2
-1197	2025-09-15 17:56:55.742644	373	Me encantÔö£Ôöé, la recomiendo.	2
-1198	2025-09-15 17:56:55.742644	374	Me encantÔö£Ôöé, la recomiendo.	2
-1199	2025-09-15 17:56:55.742644	375	Me encantÔö£Ôöé, la recomiendo.	2
-1200	2025-09-15 17:56:55.742644	376	Me encantÔö£Ôöé, la recomiendo.	2
-1201	2025-09-15 17:56:55.742644	377	Me encantÔö£Ôöé, la recomiendo.	2
-1202	2025-09-15 17:56:55.742644	378	Me encantÔö£Ôöé, la recomiendo.	2
-1203	2025-09-15 17:56:55.742644	379	Me encantÔö£Ôöé, la recomiendo.	2
-1204	2025-09-15 17:56:55.742644	380	Me encantÔö£Ôöé, la recomiendo.	2
-1205	2025-09-15 17:56:55.742644	381	Me encantÔö£Ôöé, la recomiendo.	2
-1206	2025-09-15 17:56:55.742644	382	Me encantÔö£Ôöé, la recomiendo.	2
-1207	2025-09-15 17:56:55.742644	383	Me encantÔö£Ôöé, la recomiendo.	2
-1208	2025-09-15 17:56:55.742644	384	Me encantÔö£Ôöé, la recomiendo.	2
-1209	2025-09-15 17:56:55.742644	385	Me encantÔö£Ôöé, la recomiendo.	2
-1210	2025-09-15 17:56:55.742644	386	Me encantÔö£Ôöé, la recomiendo.	2
-1211	2025-09-15 17:56:55.742644	387	Me encantÔö£Ôöé, la recomiendo.	2
-1212	2025-09-15 17:56:55.742644	388	Me encantÔö£Ôöé, la recomiendo.	2
-1213	2025-09-15 17:56:55.742644	389	Me encantÔö£Ôöé, la recomiendo.	2
-1214	2025-09-15 17:56:55.742644	390	Me encantÔö£Ôöé, la recomiendo.	2
-1215	2025-09-15 17:56:55.742644	391	Me encantÔö£Ôöé, la recomiendo.	2
-1216	2025-09-15 17:56:55.742644	392	Me encantÔö£Ôöé, la recomiendo.	2
-1217	2025-09-15 17:56:55.742644	393	Me encantÔö£Ôöé, la recomiendo.	2
-1218	2025-09-15 17:56:55.742644	394	Me encantÔö£Ôöé, la recomiendo.	2
-1219	2025-09-15 17:56:55.742644	395	Me encantÔö£Ôöé, la recomiendo.	2
-1220	2025-09-15 17:56:55.742644	396	Me encantÔö£Ôöé, la recomiendo.	2
-1221	2025-09-15 17:56:55.742644	397	Me encantÔö£Ôöé, la recomiendo.	2
-1222	2025-09-15 17:56:55.742644	398	Me encantÔö£Ôöé, la recomiendo.	2
-1223	2025-09-15 17:56:55.742644	399	Me encantÔö£Ôöé, la recomiendo.	2
-1224	2025-09-15 17:56:55.742644	400	Me encantÔö£Ôöé, la recomiendo.	2
-1225	2025-09-15 17:56:55.742644	401	Me encantÔö£Ôöé, la recomiendo.	2
-1226	2025-09-15 17:56:55.742644	402	Me encantÔö£Ôöé, la recomiendo.	2
-1227	2025-09-15 17:56:55.742644	403	Me encantÔö£Ôöé, la recomiendo.	2
-1228	2025-09-15 17:56:55.742644	404	Me encantÔö£Ôöé, la recomiendo.	2
-1229	2025-09-15 17:56:55.742644	405	Me encantÔö£Ôöé, la recomiendo.	2
-1230	2025-09-15 17:56:55.742644	406	Me encantÔö£Ôöé, la recomiendo.	2
-1231	2025-09-15 17:56:55.742644	407	Me encantÔö£Ôöé, la recomiendo.	2
-1232	2025-09-15 17:56:55.742644	408	Me encantÔö£Ôöé, la recomiendo.	2
-1233	2025-09-15 17:56:55.742644	409	Me encantÔö£Ôöé, la recomiendo.	2
-1234	2025-09-15 17:56:55.742644	410	Me encantÔö£Ôöé, la recomiendo.	2
-1235	2025-09-15 17:56:55.742644	411	Me encantÔö£Ôöé, la recomiendo.	2
-1236	2025-09-15 17:56:55.742644	412	Me encantÔö£Ôöé, la recomiendo.	2
-1237	2025-09-15 17:56:55.742644	413	Me encantÔö£Ôöé, la recomiendo.	2
-1238	2025-09-15 17:56:55.742644	414	Me encantÔö£Ôöé, la recomiendo.	2
-1239	2025-09-15 17:56:55.742644	415	Me encantÔö£Ôöé, la recomiendo.	2
-1240	2025-09-15 17:56:55.742644	416	Me encantÔö£Ôöé, la recomiendo.	2
-1241	2025-09-15 17:56:55.742644	417	Me encantÔö£Ôöé, la recomiendo.	2
-1242	2025-09-15 17:56:55.742644	418	Me encantÔö£Ôöé, la recomiendo.	2
-1243	2025-09-15 17:56:55.742644	419	Me encantÔö£Ôöé, la recomiendo.	2
-1244	2025-09-15 17:56:55.742644	420	Me encantÔö£Ôöé, la recomiendo.	2
-1245	2025-09-15 17:56:55.742644	421	Me encantÔö£Ôöé, la recomiendo.	2
-1246	2025-09-15 17:56:55.742644	422	Me encantÔö£Ôöé, la recomiendo.	2
-1247	2025-09-15 17:56:55.742644	423	Me encantÔö£Ôöé, la recomiendo.	2
-1248	2025-09-15 17:56:55.742644	424	Me encantÔö£Ôöé, la recomiendo.	2
-1249	2025-09-15 17:56:55.742644	425	Me encantÔö£Ôöé, la recomiendo.	2
-1250	2025-09-15 17:56:55.742644	426	Me encantÔö£Ôöé, la recomiendo.	2
-1251	2025-09-15 17:56:55.742644	427	Me encantÔö£Ôöé, la recomiendo.	2
-1252	2025-09-15 17:56:55.742644	428	Me encantÔö£Ôöé, la recomiendo.	2
-1253	2025-09-15 17:56:55.742644	429	Me encantÔö£Ôöé, la recomiendo.	2
-1254	2025-09-15 17:56:55.742644	430	Me encantÔö£Ôöé, la recomiendo.	2
-1255	2025-09-15 17:56:55.742644	431	Me encantÔö£Ôöé, la recomiendo.	2
-1256	2025-09-15 17:56:55.742644	432	Me encantÔö£Ôöé, la recomiendo.	2
-1257	2025-09-15 17:56:55.742644	433	Me encantÔö£Ôöé, la recomiendo.	2
-1258	2025-09-15 17:56:55.742644	434	Me encantÔö£Ôöé, la recomiendo.	2
-1259	2025-09-15 17:56:55.742644	435	Me encantÔö£Ôöé, la recomiendo.	2
-1260	2025-09-15 17:56:55.742644	436	Me encantÔö£Ôöé, la recomiendo.	2
-1261	2025-09-15 17:56:55.742644	437	Me encantÔö£Ôöé, la recomiendo.	2
-1262	2025-09-15 17:56:55.742644	438	Me encantÔö£Ôöé, la recomiendo.	2
-1263	2025-09-15 17:56:55.742644	439	Me encantÔö£Ôöé, la recomiendo.	2
-1264	2025-09-15 17:56:55.742644	440	Me encantÔö£Ôöé, la recomiendo.	2
-1265	2025-09-15 17:56:55.742644	441	Me encantÔö£Ôöé, la recomiendo.	2
-1266	2025-09-15 17:56:55.742644	442	Me encantÔö£Ôöé, la recomiendo.	2
-1267	2025-09-15 17:56:55.742644	443	Me encantÔö£Ôöé, la recomiendo.	2
-1268	2025-09-15 17:56:55.742644	444	Me encantÔö£Ôöé, la recomiendo.	2
-1269	2025-09-15 17:56:55.742644	445	Me encantÔö£Ôöé, la recomiendo.	2
-1270	2025-09-15 17:56:55.742644	446	Me encantÔö£Ôöé, la recomiendo.	2
-1271	2025-09-15 17:56:55.742644	447	Me encantÔö£Ôöé, la recomiendo.	2
-1272	2025-09-15 17:56:55.742644	448	Me encantÔö£Ôöé, la recomiendo.	2
-1273	2025-09-15 17:56:55.742644	449	Me encantÔö£Ôöé, la recomiendo.	2
-1274	2025-09-15 17:56:55.742644	450	Me encantÔö£Ôöé, la recomiendo.	2
-1275	2025-09-15 17:56:55.742644	451	Me encantÔö£Ôöé, la recomiendo.	2
-1276	2025-09-15 17:56:55.742644	452	Me encantÔö£Ôöé, la recomiendo.	2
-1277	2025-09-15 17:56:55.742644	453	Me encantÔö£Ôöé, la recomiendo.	2
-1278	2025-09-15 17:56:55.742644	454	Me encantÔö£Ôöé, la recomiendo.	2
-1279	2025-09-15 17:56:55.742644	455	Me encantÔö£Ôöé, la recomiendo.	2
-1280	2025-09-15 17:56:55.742644	456	Me encantÔö£Ôöé, la recomiendo.	2
-1281	2025-09-15 17:56:55.742644	457	Me encantÔö£Ôöé, la recomiendo.	2
-1282	2025-09-15 17:56:55.742644	458	Me encantÔö£Ôöé, la recomiendo.	2
-1283	2025-09-15 17:56:55.742644	459	Me encantÔö£Ôöé, la recomiendo.	2
-1284	2025-09-15 17:56:55.742644	460	Me encantÔö£Ôöé, la recomiendo.	2
-1285	2025-09-15 17:56:55.742644	461	Me encantÔö£Ôöé, la recomiendo.	2
-1286	2025-09-15 17:56:55.742644	462	Me encantÔö£Ôöé, la recomiendo.	2
-1287	2025-09-15 17:56:55.742644	463	Me encantÔö£Ôöé, la recomiendo.	2
-1288	2025-09-15 17:56:55.742644	464	Me encantÔö£Ôöé, la recomiendo.	2
-1289	2025-09-15 17:56:55.742644	465	Me encantÔö£Ôöé, la recomiendo.	2
-1290	2025-09-15 17:56:55.742644	466	Me encantÔö£Ôöé, la recomiendo.	2
-1291	2025-09-15 17:56:55.742644	467	Me encantÔö£Ôöé, la recomiendo.	2
-1292	2025-09-15 17:56:55.742644	468	Me encantÔö£Ôöé, la recomiendo.	2
-1293	2025-09-15 17:56:55.742644	469	Me encantÔö£Ôöé, la recomiendo.	2
-1294	2025-09-15 17:56:55.742644	470	Me encantÔö£Ôöé, la recomiendo.	2
-1295	2025-09-15 17:56:55.742644	471	Me encantÔö£Ôöé, la recomiendo.	2
-1296	2025-09-15 17:56:55.742644	472	Me encantÔö£Ôöé, la recomiendo.	2
-1297	2025-09-15 17:56:55.742644	473	Me encantÔö£Ôöé, la recomiendo.	2
-1298	2025-09-15 17:56:55.742644	474	Me encantÔö£Ôöé, la recomiendo.	2
-1299	2025-09-15 17:56:55.742644	475	Me encantÔö£Ôöé, la recomiendo.	2
-1300	2025-09-15 17:56:55.742644	476	Me encantÔö£Ôöé, la recomiendo.	2
-1301	2025-09-15 17:56:55.742644	477	Me encantÔö£Ôöé, la recomiendo.	2
-1302	2025-09-15 17:56:55.742644	478	Me encantÔö£Ôöé, la recomiendo.	2
-1303	2025-09-15 17:56:55.742644	479	Me encantÔö£Ôöé, la recomiendo.	2
-1304	2025-09-15 17:56:55.742644	480	Me encantÔö£Ôöé, la recomiendo.	2
-1305	2025-09-15 17:56:55.742644	481	Me encantÔö£Ôöé, la recomiendo.	2
-1306	2025-09-15 17:56:55.742644	482	Me encantÔö£Ôöé, la recomiendo.	2
-1307	2025-09-15 17:56:55.742644	483	Me encantÔö£Ôöé, la recomiendo.	2
-1308	2025-09-15 17:56:55.742644	484	Me encantÔö£Ôöé, la recomiendo.	2
-1309	2025-09-15 17:56:55.742644	485	Me encantÔö£Ôöé, la recomiendo.	2
-1310	2025-09-15 17:56:55.742644	486	Me encantÔö£Ôöé, la recomiendo.	2
-1311	2025-09-15 17:56:55.742644	487	Me encantÔö£Ôöé, la recomiendo.	2
-1312	2025-09-15 17:56:55.742644	488	Me encantÔö£Ôöé, la recomiendo.	2
-1313	2025-09-15 17:56:55.742644	489	Me encantÔö£Ôöé, la recomiendo.	2
-1314	2025-09-15 17:56:55.742644	490	Me encantÔö£Ôöé, la recomiendo.	2
-1315	2025-09-15 17:56:55.742644	491	Me encantÔö£Ôöé, la recomiendo.	2
-1316	2025-09-15 17:56:55.742644	492	Me encantÔö£Ôöé, la recomiendo.	2
-1317	2025-09-15 17:56:55.742644	493	Me encantÔö£Ôöé, la recomiendo.	2
-1318	2025-09-15 17:56:55.742644	494	Me encantÔö£Ôöé, la recomiendo.	2
-1319	2025-09-15 17:56:55.742644	495	Me encantÔö£Ôöé, la recomiendo.	2
-1320	2025-09-15 17:56:55.742644	496	Me encantÔö£Ôöé, la recomiendo.	2
-1321	2025-09-15 17:56:55.742644	497	Me encantÔö£Ôöé, la recomiendo.	2
-1322	2025-09-15 17:56:55.742644	498	Me encantÔö£Ôöé, la recomiendo.	2
-1323	2025-09-15 17:56:55.742644	499	Me encantÔö£Ôöé, la recomiendo.	2
-1324	2025-09-15 17:56:55.742644	500	Me encantÔö£Ôöé, la recomiendo.	2
-1325	2025-09-15 17:56:55.742644	501	Me encantÔö£Ôöé, la recomiendo.	2
-1326	2025-09-15 17:56:55.742644	502	Me encantÔö£Ôöé, la recomiendo.	2
-1327	2025-09-15 17:56:55.742644	503	Me encantÔö£Ôöé, la recomiendo.	2
-1328	2025-09-15 17:56:55.742644	504	Me encantÔö£Ôöé, la recomiendo.	2
-1329	2025-09-15 17:56:55.742644	505	Me encantÔö£Ôöé, la recomiendo.	2
-1330	2025-09-15 17:56:55.742644	506	Me encantÔö£Ôöé, la recomiendo.	2
-1331	2025-09-15 17:56:55.742644	507	Me encantÔö£Ôöé, la recomiendo.	2
-1332	2025-09-15 17:56:55.742644	508	Me encantÔö£Ôöé, la recomiendo.	2
-1333	2025-09-15 17:56:55.742644	509	Me encantÔö£Ôöé, la recomiendo.	2
-1334	2025-09-15 17:56:55.742644	510	Me encantÔö£Ôöé, la recomiendo.	2
-1335	2025-09-15 17:56:55.742644	511	Me encantÔö£Ôöé, la recomiendo.	2
-1336	2025-09-15 17:56:55.742644	512	Me encantÔö£Ôöé, la recomiendo.	2
-1337	2025-09-15 17:56:55.742644	513	Me encantÔö£Ôöé, la recomiendo.	2
-1338	2025-09-15 17:56:55.742644	514	Me encantÔö£Ôöé, la recomiendo.	2
-1339	2025-09-15 17:56:55.742644	515	Me encantÔö£Ôöé, la recomiendo.	2
-1340	2025-09-15 17:56:55.742644	516	Me encantÔö£Ôöé, la recomiendo.	2
-1341	2025-09-15 17:56:55.742644	517	Me encantÔö£Ôöé, la recomiendo.	2
-1342	2025-09-15 17:56:55.742644	518	Me encantÔö£Ôöé, la recomiendo.	2
-1343	2025-09-15 17:56:55.742644	519	Me encantÔö£Ôöé, la recomiendo.	2
-1344	2025-09-15 17:56:55.742644	520	Me encantÔö£Ôöé, la recomiendo.	2
-1345	2025-09-15 17:56:55.742644	521	Me encantÔö£Ôöé, la recomiendo.	2
-1346	2025-09-15 17:56:55.742644	522	Me encantÔö£Ôöé, la recomiendo.	2
-1347	2025-09-15 17:56:55.742644	523	Me encantÔö£Ôöé, la recomiendo.	2
-1348	2025-09-15 17:56:55.742644	524	Me encantÔö£Ôöé, la recomiendo.	2
-1349	2025-09-15 17:56:55.742644	525	Me encantÔö£Ôöé, la recomiendo.	2
-1350	2025-09-15 17:56:55.742644	526	Me encantÔö£Ôöé, la recomiendo.	2
-1351	2025-09-15 17:56:55.742644	527	Me encantÔö£Ôöé, la recomiendo.	2
-1352	2025-09-15 17:56:55.742644	528	Me encantÔö£Ôöé, la recomiendo.	2
-1353	2025-09-15 17:56:55.742644	529	Me encantÔö£Ôöé, la recomiendo.	2
-1354	2025-09-15 17:56:55.742644	530	Me encantÔö£Ôöé, la recomiendo.	2
-1355	2025-09-15 17:56:55.742644	531	Me encantÔö£Ôöé, la recomiendo.	2
-1356	2025-09-15 17:56:55.742644	532	Me encantÔö£Ôöé, la recomiendo.	2
-1357	2025-09-15 17:56:55.742644	533	Me encantÔö£Ôöé, la recomiendo.	2
-1358	2025-09-15 17:56:55.742644	534	Me encantÔö£Ôöé, la recomiendo.	2
-1359	2025-09-15 17:56:55.742644	535	Me encantÔö£Ôöé, la recomiendo.	2
-1360	2025-09-15 17:56:55.742644	536	Me encantÔö£Ôöé, la recomiendo.	2
-1361	2025-09-15 17:56:55.742644	537	Me encantÔö£Ôöé, la recomiendo.	2
-1362	2025-09-15 17:56:55.742644	538	Me encantÔö£Ôöé, la recomiendo.	2
-1363	2025-09-15 17:56:55.742644	539	Me encantÔö£Ôöé, la recomiendo.	2
-1364	2025-09-15 17:56:55.742644	540	Me encantÔö£Ôöé, la recomiendo.	2
-1365	2025-09-15 17:56:55.742644	541	Me encantÔö£Ôöé, la recomiendo.	2
-1366	2025-09-15 17:56:55.742644	542	Me encantÔö£Ôöé, la recomiendo.	2
-1367	2025-09-15 17:56:55.742644	543	Me encantÔö£Ôöé, la recomiendo.	2
-1368	2025-09-15 17:56:55.742644	544	Me encantÔö£Ôöé, la recomiendo.	2
-1369	2025-09-15 17:56:55.742644	545	Me encantÔö£Ôöé, la recomiendo.	2
-1370	2025-09-15 17:56:55.742644	546	Me encantÔö£Ôöé, la recomiendo.	2
-1371	2025-09-15 17:56:55.742644	547	Me encantÔö£Ôöé, la recomiendo.	2
-1372	2025-09-15 17:56:55.742644	548	Me encantÔö£Ôöé, la recomiendo.	2
-1373	2025-09-15 17:56:55.742644	549	Me encantÔö£Ôöé, la recomiendo.	2
-1374	2025-09-15 17:56:55.742644	550	Me encantÔö£Ôöé, la recomiendo.	2
-1375	2025-09-15 17:56:55.742644	551	Me encantÔö£Ôöé, la recomiendo.	2
-1376	2025-09-15 17:56:55.742644	552	Me encantÔö£Ôöé, la recomiendo.	2
-1377	2025-09-15 17:56:55.742644	553	Me encantÔö£Ôöé, la recomiendo.	2
-1378	2025-09-15 17:56:55.742644	554	Me encantÔö£Ôöé, la recomiendo.	2
-1379	2025-09-15 17:56:55.742644	555	Me encantÔö£Ôöé, la recomiendo.	2
-1380	2025-09-15 17:56:55.742644	556	Me encantÔö£Ôöé, la recomiendo.	2
-1381	2025-09-15 17:56:55.742644	557	Me encantÔö£Ôöé, la recomiendo.	2
-1382	2025-09-15 17:56:55.742644	558	Me encantÔö£Ôöé, la recomiendo.	2
-1383	2025-09-15 17:56:55.742644	559	Me encantÔö£Ôöé, la recomiendo.	2
-1384	2025-09-15 17:56:55.742644	560	Me encantÔö£Ôöé, la recomiendo.	2
-1385	2025-09-15 17:56:55.742644	561	Me encantÔö£Ôöé, la recomiendo.	2
-1386	2025-09-15 17:56:55.742644	562	Me encantÔö£Ôöé, la recomiendo.	2
-1387	2025-09-15 17:56:55.742644	563	Me encantÔö£Ôöé, la recomiendo.	2
-1388	2025-09-15 17:56:55.742644	564	Me encantÔö£Ôöé, la recomiendo.	2
-1389	2025-09-15 17:56:55.742644	565	Me encantÔö£Ôöé, la recomiendo.	2
-1390	2025-09-15 17:56:55.742644	566	Me encantÔö£Ôöé, la recomiendo.	2
-1391	2025-09-15 17:56:55.742644	567	Me encantÔö£Ôöé, la recomiendo.	2
-1392	2025-09-15 17:56:55.742644	568	Me encantÔö£Ôöé, la recomiendo.	2
-1393	2025-09-15 17:56:55.742644	569	Me encantÔö£Ôöé, la recomiendo.	2
-1394	2025-09-15 17:56:55.742644	570	Me encantÔö£Ôöé, la recomiendo.	2
-1395	2025-09-15 17:56:55.742644	571	Me encantÔö£Ôöé, la recomiendo.	2
-1396	2025-09-15 17:56:55.742644	572	Me encantÔö£Ôöé, la recomiendo.	2
-1397	2025-09-15 17:56:55.742644	573	Me encantÔö£Ôöé, la recomiendo.	2
-1398	2025-09-15 17:56:55.742644	574	Me encantÔö£Ôöé, la recomiendo.	2
-1399	2025-09-15 17:56:55.742644	575	Me encantÔö£Ôöé, la recomiendo.	2
-1400	2025-09-15 17:56:55.742644	576	Me encantÔö£Ôöé, la recomiendo.	2
-1401	2025-09-15 17:56:55.742644	577	Me encantÔö£Ôöé, la recomiendo.	2
-1402	2025-09-15 17:56:55.742644	578	Me encantÔö£Ôöé, la recomiendo.	2
-1403	2025-09-15 17:56:55.742644	579	Me encantÔö£Ôöé, la recomiendo.	2
-1404	2025-09-15 17:56:55.742644	580	Me encantÔö£Ôöé, la recomiendo.	2
-1405	2025-09-15 17:56:55.742644	581	Me encantÔö£Ôöé, la recomiendo.	2
-1406	2025-09-15 17:56:55.742644	582	Me encantÔö£Ôöé, la recomiendo.	2
-1407	2025-09-15 17:56:55.742644	583	Me encantÔö£Ôöé, la recomiendo.	2
-1408	2025-09-15 17:56:55.742644	584	Me encantÔö£Ôöé, la recomiendo.	2
-1409	2025-09-15 17:56:55.742644	585	Me encantÔö£Ôöé, la recomiendo.	2
-1410	2025-09-15 17:56:55.742644	586	Me encantÔö£Ôöé, la recomiendo.	2
-1411	2025-09-15 17:56:55.742644	587	Me encantÔö£Ôöé, la recomiendo.	2
-1412	2025-09-15 17:56:55.742644	588	Me encantÔö£Ôöé, la recomiendo.	2
-1413	2025-09-15 17:56:55.742644	589	Me encantÔö£Ôöé, la recomiendo.	2
-1414	2025-09-15 17:56:55.742644	590	Me encantÔö£Ôöé, la recomiendo.	2
-1415	2025-09-15 17:56:55.742644	591	Me encantÔö£Ôöé, la recomiendo.	2
-1416	2025-09-15 17:56:55.742644	592	Me encantÔö£Ôöé, la recomiendo.	2
-1417	2025-09-15 17:56:55.742644	593	Me encantÔö£Ôöé, la recomiendo.	2
-1418	2025-09-15 17:56:55.742644	594	Me encantÔö£Ôöé, la recomiendo.	2
-1419	2025-09-15 17:56:55.742644	595	Me encantÔö£Ôöé, la recomiendo.	2
-1420	2025-09-15 17:56:55.742644	596	Me encantÔö£Ôöé, la recomiendo.	2
-1421	2025-09-15 17:56:55.742644	597	Me encantÔö£Ôöé, la recomiendo.	2
-1422	2025-09-15 17:56:55.742644	598	Me encantÔö£Ôöé, la recomiendo.	2
-1423	2025-09-15 17:56:55.742644	599	Me encantÔö£Ôöé, la recomiendo.	2
-1424	2025-09-15 17:56:55.742644	600	Me encantÔö£Ôöé, la recomiendo.	2
-1425	2025-09-15 17:56:55.742644	601	Me encantÔö£Ôöé, la recomiendo.	2
-1426	2025-09-15 17:56:55.742644	602	Me encantÔö£Ôöé, la recomiendo.	2
-1427	2025-09-15 17:56:55.742644	603	Me encantÔö£Ôöé, la recomiendo.	2
-1428	2025-09-15 17:56:55.742644	604	Me encantÔö£Ôöé, la recomiendo.	2
-1429	2025-09-15 17:56:55.742644	605	Me encantÔö£Ôöé, la recomiendo.	2
-1430	2025-09-15 17:56:55.742644	606	Me encantÔö£Ôöé, la recomiendo.	2
-1431	2025-09-15 17:56:55.742644	607	Me encantÔö£Ôöé, la recomiendo.	2
-1432	2025-09-15 17:56:55.742644	608	Me encantÔö£Ôöé, la recomiendo.	2
-1433	2025-09-15 17:56:55.742644	609	Me encantÔö£Ôöé, la recomiendo.	2
-1434	2025-09-15 17:56:55.742644	610	Me encantÔö£Ôöé, la recomiendo.	2
-1435	2025-09-15 17:56:55.742644	611	Me encantÔö£Ôöé, la recomiendo.	2
-1436	2025-09-15 17:56:55.742644	612	Me encantÔö£Ôöé, la recomiendo.	2
-1437	2025-09-15 17:56:55.742644	613	Me encantÔö£Ôöé, la recomiendo.	2
-1438	2025-09-15 17:56:55.742644	614	Me encantÔö£Ôöé, la recomiendo.	2
-1439	2025-09-15 17:56:55.742644	615	Me encantÔö£Ôöé, la recomiendo.	2
-1440	2025-09-15 17:56:55.742644	616	Me encantÔö£Ôöé, la recomiendo.	2
-1441	2025-09-15 17:56:55.742644	617	Me encantÔö£Ôöé, la recomiendo.	2
-1442	2025-09-15 17:56:55.742644	618	Me encantÔö£Ôöé, la recomiendo.	2
-1443	2025-09-15 17:56:55.742644	619	Me encantÔö£Ôöé, la recomiendo.	2
-1444	2025-09-15 17:56:55.742644	620	Me encantÔö£Ôöé, la recomiendo.	2
-1445	2025-09-15 17:56:55.742644	621	Me encantÔö£Ôöé, la recomiendo.	2
-1446	2025-09-15 17:56:55.742644	622	Me encantÔö£Ôöé, la recomiendo.	2
-1447	2025-09-15 17:56:55.742644	623	Me encantÔö£Ôöé, la recomiendo.	2
-1448	2025-09-15 17:56:55.742644	624	Me encantÔö£Ôöé, la recomiendo.	2
-1449	2025-09-15 17:56:55.742644	625	Me encantÔö£Ôöé, la recomiendo.	2
-1450	2025-09-15 17:56:55.742644	626	Me encantÔö£Ôöé, la recomiendo.	2
-1451	2025-09-15 17:56:55.742644	627	Me encantÔö£Ôöé, la recomiendo.	2
-1452	2025-09-15 17:56:55.742644	628	Me encantÔö£Ôöé, la recomiendo.	2
-1453	2025-09-15 17:56:55.742644	629	Me encantÔö£Ôöé, la recomiendo.	2
-1454	2025-09-15 17:56:55.742644	630	Me encantÔö£Ôöé, la recomiendo.	2
-1455	2025-09-15 17:56:55.742644	631	Me encantÔö£Ôöé, la recomiendo.	2
-1456	2025-09-15 17:56:55.742644	632	Me encantÔö£Ôöé, la recomiendo.	2
-1457	2025-09-15 17:56:55.742644	633	Me encantÔö£Ôöé, la recomiendo.	2
-1458	2025-09-15 17:56:55.742644	634	Me encantÔö£Ôöé, la recomiendo.	2
-1459	2025-09-15 17:56:55.742644	635	Me encantÔö£Ôöé, la recomiendo.	2
-1460	2025-09-15 17:56:55.742644	636	Me encantÔö£Ôöé, la recomiendo.	2
-1461	2025-09-15 17:56:55.742644	637	Me encantÔö£Ôöé, la recomiendo.	2
-1462	2025-09-15 17:56:55.742644	638	Me encantÔö£Ôöé, la recomiendo.	2
-1463	2025-09-15 17:56:55.742644	639	Me encantÔö£Ôöé, la recomiendo.	2
-1464	2025-09-15 17:56:55.742644	640	Me encantÔö£Ôöé, la recomiendo.	2
+825	2025-09-15 17:56:55.742644	1	Me encant????????????, la recomiendo.	2
+826	2025-09-15 17:56:55.742644	2	Me encant????????????, la recomiendo.	2
+827	2025-09-15 17:56:55.742644	3	Me encant????????????, la recomiendo.	2
+828	2025-09-15 17:56:55.742644	4	Me encant????????????, la recomiendo.	2
+829	2025-09-15 17:56:55.742644	5	Me encant????????????, la recomiendo.	2
+830	2025-09-15 17:56:55.742644	6	Me encant????????????, la recomiendo.	2
+831	2025-09-15 17:56:55.742644	7	Me encant????????????, la recomiendo.	2
+832	2025-09-15 17:56:55.742644	8	Me encant????????????, la recomiendo.	2
+833	2025-09-15 17:56:55.742644	9	Me encant????????????, la recomiendo.	2
+834	2025-09-15 17:56:55.742644	10	Me encant????????????, la recomiendo.	2
+835	2025-09-15 17:56:55.742644	11	Me encant????????????, la recomiendo.	2
+836	2025-09-15 17:56:55.742644	12	Me encant????????????, la recomiendo.	2
+837	2025-09-15 17:56:55.742644	13	Me encant????????????, la recomiendo.	2
+838	2025-09-15 17:56:55.742644	14	Me encant????????????, la recomiendo.	2
+839	2025-09-15 17:56:55.742644	15	Me encant????????????, la recomiendo.	2
+840	2025-09-15 17:56:55.742644	16	Me encant????????????, la recomiendo.	2
+841	2025-09-15 17:56:55.742644	17	Me encant????????????, la recomiendo.	2
+842	2025-09-15 17:56:55.742644	18	Me encant????????????, la recomiendo.	2
+843	2025-09-15 17:56:55.742644	19	Me encant????????????, la recomiendo.	2
+844	2025-09-15 17:56:55.742644	20	Me encant????????????, la recomiendo.	2
+845	2025-09-15 17:56:55.742644	21	Me encant????????????, la recomiendo.	2
+846	2025-09-15 17:56:55.742644	22	Me encant????????????, la recomiendo.	2
+847	2025-09-15 17:56:55.742644	23	Me encant????????????, la recomiendo.	2
+848	2025-09-15 17:56:55.742644	24	Me encant????????????, la recomiendo.	2
+849	2025-09-15 17:56:55.742644	25	Me encant????????????, la recomiendo.	2
+850	2025-09-15 17:56:55.742644	26	Me encant????????????, la recomiendo.	2
+851	2025-09-15 17:56:55.742644	27	Me encant????????????, la recomiendo.	2
+852	2025-09-15 17:56:55.742644	28	Me encant????????????, la recomiendo.	2
+853	2025-09-15 17:56:55.742644	29	Me encant????????????, la recomiendo.	2
+854	2025-09-15 17:56:55.742644	30	Me encant????????????, la recomiendo.	2
+855	2025-09-15 17:56:55.742644	31	Me encant????????????, la recomiendo.	2
+856	2025-09-15 17:56:55.742644	32	Me encant????????????, la recomiendo.	2
+857	2025-09-15 17:56:55.742644	33	Me encant????????????, la recomiendo.	2
+858	2025-09-15 17:56:55.742644	34	Me encant????????????, la recomiendo.	2
+859	2025-09-15 17:56:55.742644	35	Me encant????????????, la recomiendo.	2
+860	2025-09-15 17:56:55.742644	36	Me encant????????????, la recomiendo.	2
+861	2025-09-15 17:56:55.742644	37	Me encant????????????, la recomiendo.	2
+862	2025-09-15 17:56:55.742644	38	Me encant????????????, la recomiendo.	2
+863	2025-09-15 17:56:55.742644	39	Me encant????????????, la recomiendo.	2
+864	2025-09-15 17:56:55.742644	40	Me encant????????????, la recomiendo.	2
+865	2025-09-15 17:56:55.742644	41	Me encant????????????, la recomiendo.	2
+866	2025-09-15 17:56:55.742644	42	Me encant????????????, la recomiendo.	2
+867	2025-09-15 17:56:55.742644	43	Me encant????????????, la recomiendo.	2
+868	2025-09-15 17:56:55.742644	44	Me encant????????????, la recomiendo.	2
+869	2025-09-15 17:56:55.742644	45	Me encant????????????, la recomiendo.	2
+870	2025-09-15 17:56:55.742644	46	Me encant????????????, la recomiendo.	2
+871	2025-09-15 17:56:55.742644	47	Me encant????????????, la recomiendo.	2
+872	2025-09-15 17:56:55.742644	48	Me encant????????????, la recomiendo.	2
+873	2025-09-15 17:56:55.742644	49	Me encant????????????, la recomiendo.	2
+874	2025-09-15 17:56:55.742644	50	Me encant????????????, la recomiendo.	2
+875	2025-09-15 17:56:55.742644	51	Me encant????????????, la recomiendo.	2
+876	2025-09-15 17:56:55.742644	52	Me encant????????????, la recomiendo.	2
+877	2025-09-15 17:56:55.742644	53	Me encant????????????, la recomiendo.	2
+878	2025-09-15 17:56:55.742644	54	Me encant????????????, la recomiendo.	2
+879	2025-09-15 17:56:55.742644	55	Me encant????????????, la recomiendo.	2
+880	2025-09-15 17:56:55.742644	56	Me encant????????????, la recomiendo.	2
+881	2025-09-15 17:56:55.742644	57	Me encant????????????, la recomiendo.	2
+882	2025-09-15 17:56:55.742644	58	Me encant????????????, la recomiendo.	2
+883	2025-09-15 17:56:55.742644	59	Me encant????????????, la recomiendo.	2
+884	2025-09-15 17:56:55.742644	60	Me encant????????????, la recomiendo.	2
+885	2025-09-15 17:56:55.742644	61	Me encant????????????, la recomiendo.	2
+886	2025-09-15 17:56:55.742644	62	Me encant????????????, la recomiendo.	2
+887	2025-09-15 17:56:55.742644	63	Me encant????????????, la recomiendo.	2
+888	2025-09-15 17:56:55.742644	64	Me encant????????????, la recomiendo.	2
+889	2025-09-15 17:56:55.742644	65	Me encant????????????, la recomiendo.	2
+890	2025-09-15 17:56:55.742644	66	Me encant????????????, la recomiendo.	2
+891	2025-09-15 17:56:55.742644	67	Me encant????????????, la recomiendo.	2
+892	2025-09-15 17:56:55.742644	68	Me encant????????????, la recomiendo.	2
+893	2025-09-15 17:56:55.742644	69	Me encant????????????, la recomiendo.	2
+894	2025-09-15 17:56:55.742644	70	Me encant????????????, la recomiendo.	2
+895	2025-09-15 17:56:55.742644	71	Me encant????????????, la recomiendo.	2
+896	2025-09-15 17:56:55.742644	72	Me encant????????????, la recomiendo.	2
+897	2025-09-15 17:56:55.742644	73	Me encant????????????, la recomiendo.	2
+898	2025-09-15 17:56:55.742644	74	Me encant????????????, la recomiendo.	2
+899	2025-09-15 17:56:55.742644	75	Me encant????????????, la recomiendo.	2
+900	2025-09-15 17:56:55.742644	76	Me encant????????????, la recomiendo.	2
+901	2025-09-15 17:56:55.742644	77	Me encant????????????, la recomiendo.	2
+902	2025-09-15 17:56:55.742644	78	Me encant????????????, la recomiendo.	2
+903	2025-09-15 17:56:55.742644	79	Me encant????????????, la recomiendo.	2
+904	2025-09-15 17:56:55.742644	80	Me encant????????????, la recomiendo.	2
+905	2025-09-15 17:56:55.742644	81	Me encant????????????, la recomiendo.	2
+906	2025-09-15 17:56:55.742644	82	Me encant????????????, la recomiendo.	2
+907	2025-09-15 17:56:55.742644	83	Me encant????????????, la recomiendo.	2
+908	2025-09-15 17:56:55.742644	84	Me encant????????????, la recomiendo.	2
+909	2025-09-15 17:56:55.742644	85	Me encant????????????, la recomiendo.	2
+910	2025-09-15 17:56:55.742644	86	Me encant????????????, la recomiendo.	2
+911	2025-09-15 17:56:55.742644	87	Me encant????????????, la recomiendo.	2
+912	2025-09-15 17:56:55.742644	88	Me encant????????????, la recomiendo.	2
+913	2025-09-15 17:56:55.742644	89	Me encant????????????, la recomiendo.	2
+914	2025-09-15 17:56:55.742644	90	Me encant????????????, la recomiendo.	2
+915	2025-09-15 17:56:55.742644	91	Me encant????????????, la recomiendo.	2
+916	2025-09-15 17:56:55.742644	92	Me encant????????????, la recomiendo.	2
+917	2025-09-15 17:56:55.742644	93	Me encant????????????, la recomiendo.	2
+918	2025-09-15 17:56:55.742644	94	Me encant????????????, la recomiendo.	2
+919	2025-09-15 17:56:55.742644	95	Me encant????????????, la recomiendo.	2
+920	2025-09-15 17:56:55.742644	96	Me encant????????????, la recomiendo.	2
+921	2025-09-15 17:56:55.742644	97	Me encant????????????, la recomiendo.	2
+922	2025-09-15 17:56:55.742644	98	Me encant????????????, la recomiendo.	2
+923	2025-09-15 17:56:55.742644	99	Me encant????????????, la recomiendo.	2
+924	2025-09-15 17:56:55.742644	100	Me encant????????????, la recomiendo.	2
+925	2025-09-15 17:56:55.742644	101	Me encant????????????, la recomiendo.	2
+926	2025-09-15 17:56:55.742644	102	Me encant????????????, la recomiendo.	2
+927	2025-09-15 17:56:55.742644	103	Me encant????????????, la recomiendo.	2
+928	2025-09-15 17:56:55.742644	104	Me encant????????????, la recomiendo.	2
+929	2025-09-15 17:56:55.742644	105	Me encant????????????, la recomiendo.	2
+930	2025-09-15 17:56:55.742644	106	Me encant????????????, la recomiendo.	2
+931	2025-09-15 17:56:55.742644	107	Me encant????????????, la recomiendo.	2
+932	2025-09-15 17:56:55.742644	108	Me encant????????????, la recomiendo.	2
+933	2025-09-15 17:56:55.742644	109	Me encant????????????, la recomiendo.	2
+934	2025-09-15 17:56:55.742644	110	Me encant????????????, la recomiendo.	2
+935	2025-09-15 17:56:55.742644	111	Me encant????????????, la recomiendo.	2
+936	2025-09-15 17:56:55.742644	112	Me encant????????????, la recomiendo.	2
+937	2025-09-15 17:56:55.742644	113	Me encant????????????, la recomiendo.	2
+938	2025-09-15 17:56:55.742644	114	Me encant????????????, la recomiendo.	2
+939	2025-09-15 17:56:55.742644	115	Me encant????????????, la recomiendo.	2
+940	2025-09-15 17:56:55.742644	116	Me encant????????????, la recomiendo.	2
+941	2025-09-15 17:56:55.742644	117	Me encant????????????, la recomiendo.	2
+942	2025-09-15 17:56:55.742644	118	Me encant????????????, la recomiendo.	2
+943	2025-09-15 17:56:55.742644	119	Me encant????????????, la recomiendo.	2
+944	2025-09-15 17:56:55.742644	120	Me encant????????????, la recomiendo.	2
+945	2025-09-15 17:56:55.742644	121	Me encant????????????, la recomiendo.	2
+946	2025-09-15 17:56:55.742644	122	Me encant????????????, la recomiendo.	2
+947	2025-09-15 17:56:55.742644	123	Me encant????????????, la recomiendo.	2
+948	2025-09-15 17:56:55.742644	124	Me encant????????????, la recomiendo.	2
+949	2025-09-15 17:56:55.742644	125	Me encant????????????, la recomiendo.	2
+950	2025-09-15 17:56:55.742644	126	Me encant????????????, la recomiendo.	2
+951	2025-09-15 17:56:55.742644	127	Me encant????????????, la recomiendo.	2
+952	2025-09-15 17:56:55.742644	128	Me encant????????????, la recomiendo.	2
+953	2025-09-15 17:56:55.742644	129	Me encant????????????, la recomiendo.	2
+954	2025-09-15 17:56:55.742644	130	Me encant????????????, la recomiendo.	2
+955	2025-09-15 17:56:55.742644	131	Me encant????????????, la recomiendo.	2
+956	2025-09-15 17:56:55.742644	132	Me encant????????????, la recomiendo.	2
+957	2025-09-15 17:56:55.742644	133	Me encant????????????, la recomiendo.	2
+958	2025-09-15 17:56:55.742644	134	Me encant????????????, la recomiendo.	2
+959	2025-09-15 17:56:55.742644	135	Me encant????????????, la recomiendo.	2
+960	2025-09-15 17:56:55.742644	136	Me encant????????????, la recomiendo.	2
+961	2025-09-15 17:56:55.742644	137	Me encant????????????, la recomiendo.	2
+962	2025-09-15 17:56:55.742644	138	Me encant????????????, la recomiendo.	2
+963	2025-09-15 17:56:55.742644	139	Me encant????????????, la recomiendo.	2
+964	2025-09-15 17:56:55.742644	140	Me encant????????????, la recomiendo.	2
+965	2025-09-15 17:56:55.742644	141	Me encant????????????, la recomiendo.	2
+966	2025-09-15 17:56:55.742644	142	Me encant????????????, la recomiendo.	2
+967	2025-09-15 17:56:55.742644	143	Me encant????????????, la recomiendo.	2
+968	2025-09-15 17:56:55.742644	144	Me encant????????????, la recomiendo.	2
+969	2025-09-15 17:56:55.742644	145	Me encant????????????, la recomiendo.	2
+970	2025-09-15 17:56:55.742644	146	Me encant????????????, la recomiendo.	2
+971	2025-09-15 17:56:55.742644	147	Me encant????????????, la recomiendo.	2
+972	2025-09-15 17:56:55.742644	148	Me encant????????????, la recomiendo.	2
+973	2025-09-15 17:56:55.742644	149	Me encant????????????, la recomiendo.	2
+974	2025-09-15 17:56:55.742644	150	Me encant????????????, la recomiendo.	2
+975	2025-09-15 17:56:55.742644	151	Me encant????????????, la recomiendo.	2
+976	2025-09-15 17:56:55.742644	152	Me encant????????????, la recomiendo.	2
+977	2025-09-15 17:56:55.742644	153	Me encant????????????, la recomiendo.	2
+978	2025-09-15 17:56:55.742644	154	Me encant????????????, la recomiendo.	2
+979	2025-09-15 17:56:55.742644	155	Me encant????????????, la recomiendo.	2
+980	2025-09-15 17:56:55.742644	156	Me encant????????????, la recomiendo.	2
+981	2025-09-15 17:56:55.742644	157	Me encant????????????, la recomiendo.	2
+982	2025-09-15 17:56:55.742644	158	Me encant????????????, la recomiendo.	2
+983	2025-09-15 17:56:55.742644	159	Me encant????????????, la recomiendo.	2
+984	2025-09-15 17:56:55.742644	160	Me encant????????????, la recomiendo.	2
+985	2025-09-15 17:56:55.742644	161	Me encant????????????, la recomiendo.	2
+986	2025-09-15 17:56:55.742644	162	Me encant????????????, la recomiendo.	2
+987	2025-09-15 17:56:55.742644	163	Me encant????????????, la recomiendo.	2
+988	2025-09-15 17:56:55.742644	164	Me encant????????????, la recomiendo.	2
+989	2025-09-15 17:56:55.742644	165	Me encant????????????, la recomiendo.	2
+990	2025-09-15 17:56:55.742644	166	Me encant????????????, la recomiendo.	2
+991	2025-09-15 17:56:55.742644	167	Me encant????????????, la recomiendo.	2
+992	2025-09-15 17:56:55.742644	168	Me encant????????????, la recomiendo.	2
+993	2025-09-15 17:56:55.742644	169	Me encant????????????, la recomiendo.	2
+994	2025-09-15 17:56:55.742644	170	Me encant????????????, la recomiendo.	2
+995	2025-09-15 17:56:55.742644	171	Me encant????????????, la recomiendo.	2
+996	2025-09-15 17:56:55.742644	172	Me encant????????????, la recomiendo.	2
+997	2025-09-15 17:56:55.742644	173	Me encant????????????, la recomiendo.	2
+998	2025-09-15 17:56:55.742644	174	Me encant????????????, la recomiendo.	2
+999	2025-09-15 17:56:55.742644	175	Me encant????????????, la recomiendo.	2
+1000	2025-09-15 17:56:55.742644	176	Me encant????????????, la recomiendo.	2
+1001	2025-09-15 17:56:55.742644	177	Me encant????????????, la recomiendo.	2
+1002	2025-09-15 17:56:55.742644	178	Me encant????????????, la recomiendo.	2
+185	2025-09-15 17:56:55.742644	1	\N	1
+1003	2025-09-15 17:56:55.742644	179	Me encant????????????, la recomiendo.	2
+1004	2025-09-15 17:56:55.742644	180	Me encant????????????, la recomiendo.	2
+1005	2025-09-15 17:56:55.742644	181	Me encant????????????, la recomiendo.	2
+1006	2025-09-15 17:56:55.742644	182	Me encant????????????, la recomiendo.	2
+1007	2025-09-15 17:56:55.742644	183	Me encant????????????, la recomiendo.	2
+1008	2025-09-15 17:56:55.742644	184	Me encant????????????, la recomiendo.	2
+1009	2025-09-15 17:56:55.742644	185	Me encant????????????, la recomiendo.	2
+1010	2025-09-15 17:56:55.742644	186	Me encant????????????, la recomiendo.	2
+1011	2025-09-15 17:56:55.742644	187	Me encant????????????, la recomiendo.	2
+1012	2025-09-15 17:56:55.742644	188	Me encant????????????, la recomiendo.	2
+1013	2025-09-15 17:56:55.742644	189	Me encant????????????, la recomiendo.	2
+1014	2025-09-15 17:56:55.742644	190	Me encant????????????, la recomiendo.	2
+1015	2025-09-15 17:56:55.742644	191	Me encant????????????, la recomiendo.	2
+1016	2025-09-15 17:56:55.742644	192	Me encant????????????, la recomiendo.	2
+1017	2025-09-15 17:56:55.742644	193	Me encant????????????, la recomiendo.	2
+1018	2025-09-15 17:56:55.742644	194	Me encant????????????, la recomiendo.	2
+1019	2025-09-15 17:56:55.742644	195	Me encant????????????, la recomiendo.	2
+1020	2025-09-15 17:56:55.742644	196	Me encant????????????, la recomiendo.	2
+1021	2025-09-15 17:56:55.742644	197	Me encant????????????, la recomiendo.	2
+1022	2025-09-15 17:56:55.742644	198	Me encant????????????, la recomiendo.	2
+1023	2025-09-15 17:56:55.742644	199	Me encant????????????, la recomiendo.	2
+1024	2025-09-15 17:56:55.742644	200	Me encant????????????, la recomiendo.	2
+1025	2025-09-15 17:56:55.742644	201	Me encant????????????, la recomiendo.	2
+1026	2025-09-15 17:56:55.742644	202	Me encant????????????, la recomiendo.	2
+1027	2025-09-15 17:56:55.742644	203	Me encant????????????, la recomiendo.	2
+1028	2025-09-15 17:56:55.742644	204	Me encant????????????, la recomiendo.	2
+1029	2025-09-15 17:56:55.742644	205	Me encant????????????, la recomiendo.	2
+1030	2025-09-15 17:56:55.742644	206	Me encant????????????, la recomiendo.	2
+1031	2025-09-15 17:56:55.742644	207	Me encant????????????, la recomiendo.	2
+1032	2025-09-15 17:56:55.742644	208	Me encant????????????, la recomiendo.	2
+1033	2025-09-15 17:56:55.742644	209	Me encant????????????, la recomiendo.	2
+1034	2025-09-15 17:56:55.742644	210	Me encant????????????, la recomiendo.	2
+1035	2025-09-15 17:56:55.742644	211	Me encant????????????, la recomiendo.	2
+1036	2025-09-15 17:56:55.742644	212	Me encant????????????, la recomiendo.	2
+1037	2025-09-15 17:56:55.742644	213	Me encant????????????, la recomiendo.	2
+1038	2025-09-15 17:56:55.742644	214	Me encant????????????, la recomiendo.	2
+1039	2025-09-15 17:56:55.742644	215	Me encant????????????, la recomiendo.	2
+1040	2025-09-15 17:56:55.742644	216	Me encant????????????, la recomiendo.	2
+1041	2025-09-15 17:56:55.742644	217	Me encant????????????, la recomiendo.	2
+1042	2025-09-15 17:56:55.742644	218	Me encant????????????, la recomiendo.	2
+1043	2025-09-15 17:56:55.742644	219	Me encant????????????, la recomiendo.	2
+1044	2025-09-15 17:56:55.742644	220	Me encant????????????, la recomiendo.	2
+1045	2025-09-15 17:56:55.742644	221	Me encant????????????, la recomiendo.	2
+1046	2025-09-15 17:56:55.742644	222	Me encant????????????, la recomiendo.	2
+1047	2025-09-15 17:56:55.742644	223	Me encant????????????, la recomiendo.	2
+1048	2025-09-15 17:56:55.742644	224	Me encant????????????, la recomiendo.	2
+1049	2025-09-15 17:56:55.742644	225	Me encant????????????, la recomiendo.	2
+1050	2025-09-15 17:56:55.742644	226	Me encant????????????, la recomiendo.	2
+1051	2025-09-15 17:56:55.742644	227	Me encant????????????, la recomiendo.	2
+1052	2025-09-15 17:56:55.742644	228	Me encant????????????, la recomiendo.	2
+1053	2025-09-15 17:56:55.742644	229	Me encant????????????, la recomiendo.	2
+1054	2025-09-15 17:56:55.742644	230	Me encant????????????, la recomiendo.	2
+1055	2025-09-15 17:56:55.742644	231	Me encant????????????, la recomiendo.	2
+1056	2025-09-15 17:56:55.742644	232	Me encant????????????, la recomiendo.	2
+1057	2025-09-15 17:56:55.742644	233	Me encant????????????, la recomiendo.	2
+1058	2025-09-15 17:56:55.742644	234	Me encant????????????, la recomiendo.	2
+1059	2025-09-15 17:56:55.742644	235	Me encant????????????, la recomiendo.	2
+1060	2025-09-15 17:56:55.742644	236	Me encant????????????, la recomiendo.	2
+1061	2025-09-15 17:56:55.742644	237	Me encant????????????, la recomiendo.	2
+1062	2025-09-15 17:56:55.742644	238	Me encant????????????, la recomiendo.	2
+1063	2025-09-15 17:56:55.742644	239	Me encant????????????, la recomiendo.	2
+1064	2025-09-15 17:56:55.742644	240	Me encant????????????, la recomiendo.	2
+1065	2025-09-15 17:56:55.742644	241	Me encant????????????, la recomiendo.	2
+1066	2025-09-15 17:56:55.742644	242	Me encant????????????, la recomiendo.	2
+1067	2025-09-15 17:56:55.742644	243	Me encant????????????, la recomiendo.	2
+1068	2025-09-15 17:56:55.742644	244	Me encant????????????, la recomiendo.	2
+1069	2025-09-15 17:56:55.742644	245	Me encant????????????, la recomiendo.	2
+1070	2025-09-15 17:56:55.742644	246	Me encant????????????, la recomiendo.	2
+1071	2025-09-15 17:56:55.742644	247	Me encant????????????, la recomiendo.	2
+1072	2025-09-15 17:56:55.742644	248	Me encant????????????, la recomiendo.	2
+1073	2025-09-15 17:56:55.742644	249	Me encant????????????, la recomiendo.	2
+1074	2025-09-15 17:56:55.742644	250	Me encant????????????, la recomiendo.	2
+1075	2025-09-15 17:56:55.742644	251	Me encant????????????, la recomiendo.	2
+1076	2025-09-15 17:56:55.742644	252	Me encant????????????, la recomiendo.	2
+1077	2025-09-15 17:56:55.742644	253	Me encant????????????, la recomiendo.	2
+1078	2025-09-15 17:56:55.742644	254	Me encant????????????, la recomiendo.	2
+1079	2025-09-15 17:56:55.742644	255	Me encant????????????, la recomiendo.	2
+1080	2025-09-15 17:56:55.742644	256	Me encant????????????, la recomiendo.	2
+1081	2025-09-15 17:56:55.742644	257	Me encant????????????, la recomiendo.	2
+1082	2025-09-15 17:56:55.742644	258	Me encant????????????, la recomiendo.	2
+1083	2025-09-15 17:56:55.742644	259	Me encant????????????, la recomiendo.	2
+1084	2025-09-15 17:56:55.742644	260	Me encant????????????, la recomiendo.	2
+1085	2025-09-15 17:56:55.742644	261	Me encant????????????, la recomiendo.	2
+1086	2025-09-15 17:56:55.742644	262	Me encant????????????, la recomiendo.	2
+1087	2025-09-15 17:56:55.742644	263	Me encant????????????, la recomiendo.	2
+1088	2025-09-15 17:56:55.742644	264	Me encant????????????, la recomiendo.	2
+1089	2025-09-15 17:56:55.742644	265	Me encant????????????, la recomiendo.	2
+1090	2025-09-15 17:56:55.742644	266	Me encant????????????, la recomiendo.	2
+1091	2025-09-15 17:56:55.742644	267	Me encant????????????, la recomiendo.	2
+1092	2025-09-15 17:56:55.742644	268	Me encant????????????, la recomiendo.	2
+1093	2025-09-15 17:56:55.742644	269	Me encant????????????, la recomiendo.	2
+1094	2025-09-15 17:56:55.742644	270	Me encant????????????, la recomiendo.	2
+1095	2025-09-15 17:56:55.742644	271	Me encant????????????, la recomiendo.	2
+1096	2025-09-15 17:56:55.742644	272	Me encant????????????, la recomiendo.	2
+1097	2025-09-15 17:56:55.742644	273	Me encant????????????, la recomiendo.	2
+1098	2025-09-15 17:56:55.742644	274	Me encant????????????, la recomiendo.	2
+1099	2025-09-15 17:56:55.742644	275	Me encant????????????, la recomiendo.	2
+1100	2025-09-15 17:56:55.742644	276	Me encant????????????, la recomiendo.	2
+1101	2025-09-15 17:56:55.742644	277	Me encant????????????, la recomiendo.	2
+1102	2025-09-15 17:56:55.742644	278	Me encant????????????, la recomiendo.	2
+1103	2025-09-15 17:56:55.742644	279	Me encant????????????, la recomiendo.	2
+1104	2025-09-15 17:56:55.742644	280	Me encant????????????, la recomiendo.	2
+1105	2025-09-15 17:56:55.742644	281	Me encant????????????, la recomiendo.	2
+1106	2025-09-15 17:56:55.742644	282	Me encant????????????, la recomiendo.	2
+1107	2025-09-15 17:56:55.742644	283	Me encant????????????, la recomiendo.	2
+1108	2025-09-15 17:56:55.742644	284	Me encant????????????, la recomiendo.	2
+1109	2025-09-15 17:56:55.742644	285	Me encant????????????, la recomiendo.	2
+1110	2025-09-15 17:56:55.742644	286	Me encant????????????, la recomiendo.	2
+1111	2025-09-15 17:56:55.742644	287	Me encant????????????, la recomiendo.	2
+1112	2025-09-15 17:56:55.742644	288	Me encant????????????, la recomiendo.	2
+1113	2025-09-15 17:56:55.742644	289	Me encant????????????, la recomiendo.	2
+1114	2025-09-15 17:56:55.742644	290	Me encant????????????, la recomiendo.	2
+1115	2025-09-15 17:56:55.742644	291	Me encant????????????, la recomiendo.	2
+1116	2025-09-15 17:56:55.742644	292	Me encant????????????, la recomiendo.	2
+1117	2025-09-15 17:56:55.742644	293	Me encant????????????, la recomiendo.	2
+1118	2025-09-15 17:56:55.742644	294	Me encant????????????, la recomiendo.	2
+1119	2025-09-15 17:56:55.742644	295	Me encant????????????, la recomiendo.	2
+1120	2025-09-15 17:56:55.742644	296	Me encant????????????, la recomiendo.	2
+1121	2025-09-15 17:56:55.742644	297	Me encant????????????, la recomiendo.	2
+1122	2025-09-15 17:56:55.742644	298	Me encant????????????, la recomiendo.	2
+1123	2025-09-15 17:56:55.742644	299	Me encant????????????, la recomiendo.	2
+1124	2025-09-15 17:56:55.742644	300	Me encant????????????, la recomiendo.	2
+1125	2025-09-15 17:56:55.742644	301	Me encant????????????, la recomiendo.	2
+1126	2025-09-15 17:56:55.742644	302	Me encant????????????, la recomiendo.	2
+1127	2025-09-15 17:56:55.742644	303	Me encant????????????, la recomiendo.	2
+1128	2025-09-15 17:56:55.742644	304	Me encant????????????, la recomiendo.	2
+1129	2025-09-15 17:56:55.742644	305	Me encant????????????, la recomiendo.	2
+1130	2025-09-15 17:56:55.742644	306	Me encant????????????, la recomiendo.	2
+1131	2025-09-15 17:56:55.742644	307	Me encant????????????, la recomiendo.	2
+1132	2025-09-15 17:56:55.742644	308	Me encant????????????, la recomiendo.	2
+1133	2025-09-15 17:56:55.742644	309	Me encant????????????, la recomiendo.	2
+1134	2025-09-15 17:56:55.742644	310	Me encant????????????, la recomiendo.	2
+1135	2025-09-15 17:56:55.742644	311	Me encant????????????, la recomiendo.	2
+1136	2025-09-15 17:56:55.742644	312	Me encant????????????, la recomiendo.	2
+1137	2025-09-15 17:56:55.742644	313	Me encant????????????, la recomiendo.	2
+1138	2025-09-15 17:56:55.742644	314	Me encant????????????, la recomiendo.	2
+1139	2025-09-15 17:56:55.742644	315	Me encant????????????, la recomiendo.	2
+1140	2025-09-15 17:56:55.742644	316	Me encant????????????, la recomiendo.	2
+1141	2025-09-15 17:56:55.742644	317	Me encant????????????, la recomiendo.	2
+1142	2025-09-15 17:56:55.742644	318	Me encant????????????, la recomiendo.	2
+1143	2025-09-15 17:56:55.742644	319	Me encant????????????, la recomiendo.	2
+1144	2025-09-15 17:56:55.742644	320	Me encant????????????, la recomiendo.	2
+1145	2025-09-15 17:56:55.742644	321	Me encant????????????, la recomiendo.	2
+1146	2025-09-15 17:56:55.742644	322	Me encant????????????, la recomiendo.	2
+1147	2025-09-15 17:56:55.742644	323	Me encant????????????, la recomiendo.	2
+1148	2025-09-15 17:56:55.742644	324	Me encant????????????, la recomiendo.	2
+1149	2025-09-15 17:56:55.742644	325	Me encant????????????, la recomiendo.	2
+1150	2025-09-15 17:56:55.742644	326	Me encant????????????, la recomiendo.	2
+1151	2025-09-15 17:56:55.742644	327	Me encant????????????, la recomiendo.	2
+1152	2025-09-15 17:56:55.742644	328	Me encant????????????, la recomiendo.	2
+1153	2025-09-15 17:56:55.742644	329	Me encant????????????, la recomiendo.	2
+1154	2025-09-15 17:56:55.742644	330	Me encant????????????, la recomiendo.	2
+1155	2025-09-15 17:56:55.742644	331	Me encant????????????, la recomiendo.	2
+1156	2025-09-15 17:56:55.742644	332	Me encant????????????, la recomiendo.	2
+1157	2025-09-15 17:56:55.742644	333	Me encant????????????, la recomiendo.	2
+1158	2025-09-15 17:56:55.742644	334	Me encant????????????, la recomiendo.	2
+1159	2025-09-15 17:56:55.742644	335	Me encant????????????, la recomiendo.	2
+1160	2025-09-15 17:56:55.742644	336	Me encant????????????, la recomiendo.	2
+1161	2025-09-15 17:56:55.742644	337	Me encant????????????, la recomiendo.	2
+1162	2025-09-15 17:56:55.742644	338	Me encant????????????, la recomiendo.	2
+1163	2025-09-15 17:56:55.742644	339	Me encant????????????, la recomiendo.	2
+1164	2025-09-15 17:56:55.742644	340	Me encant????????????, la recomiendo.	2
+1165	2025-09-15 17:56:55.742644	341	Me encant????????????, la recomiendo.	2
+1166	2025-09-15 17:56:55.742644	342	Me encant????????????, la recomiendo.	2
+1167	2025-09-15 17:56:55.742644	343	Me encant????????????, la recomiendo.	2
+1168	2025-09-15 17:56:55.742644	344	Me encant????????????, la recomiendo.	2
+1169	2025-09-15 17:56:55.742644	345	Me encant????????????, la recomiendo.	2
+1170	2025-09-15 17:56:55.742644	346	Me encant????????????, la recomiendo.	2
+1171	2025-09-15 17:56:55.742644	347	Me encant????????????, la recomiendo.	2
+1172	2025-09-15 17:56:55.742644	348	Me encant????????????, la recomiendo.	2
+1173	2025-09-15 17:56:55.742644	349	Me encant????????????, la recomiendo.	2
+1174	2025-09-15 17:56:55.742644	350	Me encant????????????, la recomiendo.	2
+1175	2025-09-15 17:56:55.742644	351	Me encant????????????, la recomiendo.	2
+1176	2025-09-15 17:56:55.742644	352	Me encant????????????, la recomiendo.	2
+1177	2025-09-15 17:56:55.742644	353	Me encant????????????, la recomiendo.	2
+1178	2025-09-15 17:56:55.742644	354	Me encant????????????, la recomiendo.	2
+1179	2025-09-15 17:56:55.742644	355	Me encant????????????, la recomiendo.	2
+1180	2025-09-15 17:56:55.742644	356	Me encant????????????, la recomiendo.	2
+1181	2025-09-15 17:56:55.742644	357	Me encant????????????, la recomiendo.	2
+1182	2025-09-15 17:56:55.742644	358	Me encant????????????, la recomiendo.	2
+1183	2025-09-15 17:56:55.742644	359	Me encant????????????, la recomiendo.	2
+1184	2025-09-15 17:56:55.742644	360	Me encant????????????, la recomiendo.	2
+1185	2025-09-15 17:56:55.742644	361	Me encant????????????, la recomiendo.	2
+1186	2025-09-15 17:56:55.742644	362	Me encant????????????, la recomiendo.	2
+1187	2025-09-15 17:56:55.742644	363	Me encant????????????, la recomiendo.	2
+1188	2025-09-15 17:56:55.742644	364	Me encant????????????, la recomiendo.	2
+1189	2025-09-15 17:56:55.742644	365	Me encant????????????, la recomiendo.	2
+1190	2025-09-15 17:56:55.742644	366	Me encant????????????, la recomiendo.	2
+1191	2025-09-15 17:56:55.742644	367	Me encant????????????, la recomiendo.	2
+1192	2025-09-15 17:56:55.742644	368	Me encant????????????, la recomiendo.	2
+1193	2025-09-15 17:56:55.742644	369	Me encant????????????, la recomiendo.	2
+1194	2025-09-15 17:56:55.742644	370	Me encant????????????, la recomiendo.	2
+1195	2025-09-15 17:56:55.742644	371	Me encant????????????, la recomiendo.	2
+1196	2025-09-15 17:56:55.742644	372	Me encant????????????, la recomiendo.	2
+1197	2025-09-15 17:56:55.742644	373	Me encant????????????, la recomiendo.	2
+1198	2025-09-15 17:56:55.742644	374	Me encant????????????, la recomiendo.	2
+1199	2025-09-15 17:56:55.742644	375	Me encant????????????, la recomiendo.	2
+1200	2025-09-15 17:56:55.742644	376	Me encant????????????, la recomiendo.	2
+1201	2025-09-15 17:56:55.742644	377	Me encant????????????, la recomiendo.	2
+1202	2025-09-15 17:56:55.742644	378	Me encant????????????, la recomiendo.	2
+1203	2025-09-15 17:56:55.742644	379	Me encant????????????, la recomiendo.	2
+1204	2025-09-15 17:56:55.742644	380	Me encant????????????, la recomiendo.	2
+1205	2025-09-15 17:56:55.742644	381	Me encant????????????, la recomiendo.	2
+1206	2025-09-15 17:56:55.742644	382	Me encant????????????, la recomiendo.	2
+1207	2025-09-15 17:56:55.742644	383	Me encant????????????, la recomiendo.	2
+1208	2025-09-15 17:56:55.742644	384	Me encant????????????, la recomiendo.	2
+1209	2025-09-15 17:56:55.742644	385	Me encant????????????, la recomiendo.	2
+1210	2025-09-15 17:56:55.742644	386	Me encant????????????, la recomiendo.	2
+1211	2025-09-15 17:56:55.742644	387	Me encant????????????, la recomiendo.	2
+1212	2025-09-15 17:56:55.742644	388	Me encant????????????, la recomiendo.	2
+1213	2025-09-15 17:56:55.742644	389	Me encant????????????, la recomiendo.	2
+1214	2025-09-15 17:56:55.742644	390	Me encant????????????, la recomiendo.	2
+1215	2025-09-15 17:56:55.742644	391	Me encant????????????, la recomiendo.	2
+1216	2025-09-15 17:56:55.742644	392	Me encant????????????, la recomiendo.	2
+1217	2025-09-15 17:56:55.742644	393	Me encant????????????, la recomiendo.	2
+1218	2025-09-15 17:56:55.742644	394	Me encant????????????, la recomiendo.	2
+1219	2025-09-15 17:56:55.742644	395	Me encant????????????, la recomiendo.	2
+1220	2025-09-15 17:56:55.742644	396	Me encant????????????, la recomiendo.	2
+1221	2025-09-15 17:56:55.742644	397	Me encant????????????, la recomiendo.	2
+1222	2025-09-15 17:56:55.742644	398	Me encant????????????, la recomiendo.	2
+1223	2025-09-15 17:56:55.742644	399	Me encant????????????, la recomiendo.	2
+1224	2025-09-15 17:56:55.742644	400	Me encant????????????, la recomiendo.	2
+1225	2025-09-15 17:56:55.742644	401	Me encant????????????, la recomiendo.	2
+1226	2025-09-15 17:56:55.742644	402	Me encant????????????, la recomiendo.	2
+1227	2025-09-15 17:56:55.742644	403	Me encant????????????, la recomiendo.	2
+1228	2025-09-15 17:56:55.742644	404	Me encant????????????, la recomiendo.	2
+1229	2025-09-15 17:56:55.742644	405	Me encant????????????, la recomiendo.	2
+1230	2025-09-15 17:56:55.742644	406	Me encant????????????, la recomiendo.	2
+1231	2025-09-15 17:56:55.742644	407	Me encant????????????, la recomiendo.	2
+1232	2025-09-15 17:56:55.742644	408	Me encant????????????, la recomiendo.	2
+1233	2025-09-15 17:56:55.742644	409	Me encant????????????, la recomiendo.	2
+1234	2025-09-15 17:56:55.742644	410	Me encant????????????, la recomiendo.	2
+1235	2025-09-15 17:56:55.742644	411	Me encant????????????, la recomiendo.	2
+1236	2025-09-15 17:56:55.742644	412	Me encant????????????, la recomiendo.	2
+1237	2025-09-15 17:56:55.742644	413	Me encant????????????, la recomiendo.	2
+1238	2025-09-15 17:56:55.742644	414	Me encant????????????, la recomiendo.	2
+1239	2025-09-15 17:56:55.742644	415	Me encant????????????, la recomiendo.	2
+1240	2025-09-15 17:56:55.742644	416	Me encant????????????, la recomiendo.	2
+1241	2025-09-15 17:56:55.742644	417	Me encant????????????, la recomiendo.	2
+1242	2025-09-15 17:56:55.742644	418	Me encant????????????, la recomiendo.	2
+1243	2025-09-15 17:56:55.742644	419	Me encant????????????, la recomiendo.	2
+1244	2025-09-15 17:56:55.742644	420	Me encant????????????, la recomiendo.	2
+1245	2025-09-15 17:56:55.742644	421	Me encant????????????, la recomiendo.	2
+1246	2025-09-15 17:56:55.742644	422	Me encant????????????, la recomiendo.	2
+1247	2025-09-15 17:56:55.742644	423	Me encant????????????, la recomiendo.	2
+1248	2025-09-15 17:56:55.742644	424	Me encant????????????, la recomiendo.	2
+1249	2025-09-15 17:56:55.742644	425	Me encant????????????, la recomiendo.	2
+1250	2025-09-15 17:56:55.742644	426	Me encant????????????, la recomiendo.	2
+1251	2025-09-15 17:56:55.742644	427	Me encant????????????, la recomiendo.	2
+1252	2025-09-15 17:56:55.742644	428	Me encant????????????, la recomiendo.	2
+1253	2025-09-15 17:56:55.742644	429	Me encant????????????, la recomiendo.	2
+1254	2025-09-15 17:56:55.742644	430	Me encant????????????, la recomiendo.	2
+1255	2025-09-15 17:56:55.742644	431	Me encant????????????, la recomiendo.	2
+1256	2025-09-15 17:56:55.742644	432	Me encant????????????, la recomiendo.	2
+1257	2025-09-15 17:56:55.742644	433	Me encant????????????, la recomiendo.	2
+1258	2025-09-15 17:56:55.742644	434	Me encant????????????, la recomiendo.	2
+1259	2025-09-15 17:56:55.742644	435	Me encant????????????, la recomiendo.	2
+1260	2025-09-15 17:56:55.742644	436	Me encant????????????, la recomiendo.	2
+1261	2025-09-15 17:56:55.742644	437	Me encant????????????, la recomiendo.	2
+1262	2025-09-15 17:56:55.742644	438	Me encant????????????, la recomiendo.	2
+1263	2025-09-15 17:56:55.742644	439	Me encant????????????, la recomiendo.	2
+1264	2025-09-15 17:56:55.742644	440	Me encant????????????, la recomiendo.	2
+1265	2025-09-15 17:56:55.742644	441	Me encant????????????, la recomiendo.	2
+1266	2025-09-15 17:56:55.742644	442	Me encant????????????, la recomiendo.	2
+1267	2025-09-15 17:56:55.742644	443	Me encant????????????, la recomiendo.	2
+1268	2025-09-15 17:56:55.742644	444	Me encant????????????, la recomiendo.	2
+1269	2025-09-15 17:56:55.742644	445	Me encant????????????, la recomiendo.	2
+1270	2025-09-15 17:56:55.742644	446	Me encant????????????, la recomiendo.	2
+1271	2025-09-15 17:56:55.742644	447	Me encant????????????, la recomiendo.	2
+1272	2025-09-15 17:56:55.742644	448	Me encant????????????, la recomiendo.	2
+1273	2025-09-15 17:56:55.742644	449	Me encant????????????, la recomiendo.	2
+1274	2025-09-15 17:56:55.742644	450	Me encant????????????, la recomiendo.	2
+1275	2025-09-15 17:56:55.742644	451	Me encant????????????, la recomiendo.	2
+1276	2025-09-15 17:56:55.742644	452	Me encant????????????, la recomiendo.	2
+1277	2025-09-15 17:56:55.742644	453	Me encant????????????, la recomiendo.	2
+1278	2025-09-15 17:56:55.742644	454	Me encant????????????, la recomiendo.	2
+1279	2025-09-15 17:56:55.742644	455	Me encant????????????, la recomiendo.	2
+1280	2025-09-15 17:56:55.742644	456	Me encant????????????, la recomiendo.	2
+1281	2025-09-15 17:56:55.742644	457	Me encant????????????, la recomiendo.	2
+1282	2025-09-15 17:56:55.742644	458	Me encant????????????, la recomiendo.	2
+1283	2025-09-15 17:56:55.742644	459	Me encant????????????, la recomiendo.	2
+1284	2025-09-15 17:56:55.742644	460	Me encant????????????, la recomiendo.	2
+1285	2025-09-15 17:56:55.742644	461	Me encant????????????, la recomiendo.	2
+1286	2025-09-15 17:56:55.742644	462	Me encant????????????, la recomiendo.	2
+1287	2025-09-15 17:56:55.742644	463	Me encant????????????, la recomiendo.	2
+1288	2025-09-15 17:56:55.742644	464	Me encant????????????, la recomiendo.	2
+1289	2025-09-15 17:56:55.742644	465	Me encant????????????, la recomiendo.	2
+1290	2025-09-15 17:56:55.742644	466	Me encant????????????, la recomiendo.	2
+1291	2025-09-15 17:56:55.742644	467	Me encant????????????, la recomiendo.	2
+1292	2025-09-15 17:56:55.742644	468	Me encant????????????, la recomiendo.	2
+1293	2025-09-15 17:56:55.742644	469	Me encant????????????, la recomiendo.	2
+1294	2025-09-15 17:56:55.742644	470	Me encant????????????, la recomiendo.	2
+1295	2025-09-15 17:56:55.742644	471	Me encant????????????, la recomiendo.	2
+1296	2025-09-15 17:56:55.742644	472	Me encant????????????, la recomiendo.	2
+1297	2025-09-15 17:56:55.742644	473	Me encant????????????, la recomiendo.	2
+1298	2025-09-15 17:56:55.742644	474	Me encant????????????, la recomiendo.	2
+1299	2025-09-15 17:56:55.742644	475	Me encant????????????, la recomiendo.	2
+1300	2025-09-15 17:56:55.742644	476	Me encant????????????, la recomiendo.	2
+1301	2025-09-15 17:56:55.742644	477	Me encant????????????, la recomiendo.	2
+1302	2025-09-15 17:56:55.742644	478	Me encant????????????, la recomiendo.	2
+1303	2025-09-15 17:56:55.742644	479	Me encant????????????, la recomiendo.	2
+1304	2025-09-15 17:56:55.742644	480	Me encant????????????, la recomiendo.	2
+1305	2025-09-15 17:56:55.742644	481	Me encant????????????, la recomiendo.	2
+1306	2025-09-15 17:56:55.742644	482	Me encant????????????, la recomiendo.	2
+1307	2025-09-15 17:56:55.742644	483	Me encant????????????, la recomiendo.	2
+1308	2025-09-15 17:56:55.742644	484	Me encant????????????, la recomiendo.	2
+1309	2025-09-15 17:56:55.742644	485	Me encant????????????, la recomiendo.	2
+1310	2025-09-15 17:56:55.742644	486	Me encant????????????, la recomiendo.	2
+1311	2025-09-15 17:56:55.742644	487	Me encant????????????, la recomiendo.	2
+1312	2025-09-15 17:56:55.742644	488	Me encant????????????, la recomiendo.	2
+1313	2025-09-15 17:56:55.742644	489	Me encant????????????, la recomiendo.	2
+1314	2025-09-15 17:56:55.742644	490	Me encant????????????, la recomiendo.	2
+1315	2025-09-15 17:56:55.742644	491	Me encant????????????, la recomiendo.	2
+1316	2025-09-15 17:56:55.742644	492	Me encant????????????, la recomiendo.	2
+1317	2025-09-15 17:56:55.742644	493	Me encant????????????, la recomiendo.	2
+1318	2025-09-15 17:56:55.742644	494	Me encant????????????, la recomiendo.	2
+1319	2025-09-15 17:56:55.742644	495	Me encant????????????, la recomiendo.	2
+1320	2025-09-15 17:56:55.742644	496	Me encant????????????, la recomiendo.	2
+1321	2025-09-15 17:56:55.742644	497	Me encant????????????, la recomiendo.	2
+1322	2025-09-15 17:56:55.742644	498	Me encant????????????, la recomiendo.	2
+1323	2025-09-15 17:56:55.742644	499	Me encant????????????, la recomiendo.	2
+1324	2025-09-15 17:56:55.742644	500	Me encant????????????, la recomiendo.	2
+1325	2025-09-15 17:56:55.742644	501	Me encant????????????, la recomiendo.	2
+1326	2025-09-15 17:56:55.742644	502	Me encant????????????, la recomiendo.	2
+1327	2025-09-15 17:56:55.742644	503	Me encant????????????, la recomiendo.	2
+1328	2025-09-15 17:56:55.742644	504	Me encant????????????, la recomiendo.	2
+1329	2025-09-15 17:56:55.742644	505	Me encant????????????, la recomiendo.	2
+1330	2025-09-15 17:56:55.742644	506	Me encant????????????, la recomiendo.	2
+1331	2025-09-15 17:56:55.742644	507	Me encant????????????, la recomiendo.	2
+1332	2025-09-15 17:56:55.742644	508	Me encant????????????, la recomiendo.	2
+1333	2025-09-15 17:56:55.742644	509	Me encant????????????, la recomiendo.	2
+1334	2025-09-15 17:56:55.742644	510	Me encant????????????, la recomiendo.	2
+1335	2025-09-15 17:56:55.742644	511	Me encant????????????, la recomiendo.	2
+1336	2025-09-15 17:56:55.742644	512	Me encant????????????, la recomiendo.	2
+1337	2025-09-15 17:56:55.742644	513	Me encant????????????, la recomiendo.	2
+1338	2025-09-15 17:56:55.742644	514	Me encant????????????, la recomiendo.	2
+1339	2025-09-15 17:56:55.742644	515	Me encant????????????, la recomiendo.	2
+1340	2025-09-15 17:56:55.742644	516	Me encant????????????, la recomiendo.	2
+1341	2025-09-15 17:56:55.742644	517	Me encant????????????, la recomiendo.	2
+1342	2025-09-15 17:56:55.742644	518	Me encant????????????, la recomiendo.	2
+1343	2025-09-15 17:56:55.742644	519	Me encant????????????, la recomiendo.	2
+1344	2025-09-15 17:56:55.742644	520	Me encant????????????, la recomiendo.	2
+1345	2025-09-15 17:56:55.742644	521	Me encant????????????, la recomiendo.	2
+1346	2025-09-15 17:56:55.742644	522	Me encant????????????, la recomiendo.	2
+1347	2025-09-15 17:56:55.742644	523	Me encant????????????, la recomiendo.	2
+1348	2025-09-15 17:56:55.742644	524	Me encant????????????, la recomiendo.	2
+1349	2025-09-15 17:56:55.742644	525	Me encant????????????, la recomiendo.	2
+1350	2025-09-15 17:56:55.742644	526	Me encant????????????, la recomiendo.	2
+1351	2025-09-15 17:56:55.742644	527	Me encant????????????, la recomiendo.	2
+1352	2025-09-15 17:56:55.742644	528	Me encant????????????, la recomiendo.	2
+1353	2025-09-15 17:56:55.742644	529	Me encant????????????, la recomiendo.	2
+1354	2025-09-15 17:56:55.742644	530	Me encant????????????, la recomiendo.	2
+1355	2025-09-15 17:56:55.742644	531	Me encant????????????, la recomiendo.	2
+1356	2025-09-15 17:56:55.742644	532	Me encant????????????, la recomiendo.	2
+1357	2025-09-15 17:56:55.742644	533	Me encant????????????, la recomiendo.	2
+1358	2025-09-15 17:56:55.742644	534	Me encant????????????, la recomiendo.	2
+1359	2025-09-15 17:56:55.742644	535	Me encant????????????, la recomiendo.	2
+1360	2025-09-15 17:56:55.742644	536	Me encant????????????, la recomiendo.	2
+1361	2025-09-15 17:56:55.742644	537	Me encant????????????, la recomiendo.	2
+1362	2025-09-15 17:56:55.742644	538	Me encant????????????, la recomiendo.	2
+1363	2025-09-15 17:56:55.742644	539	Me encant????????????, la recomiendo.	2
+1364	2025-09-15 17:56:55.742644	540	Me encant????????????, la recomiendo.	2
+1365	2025-09-15 17:56:55.742644	541	Me encant????????????, la recomiendo.	2
+1366	2025-09-15 17:56:55.742644	542	Me encant????????????, la recomiendo.	2
+1367	2025-09-15 17:56:55.742644	543	Me encant????????????, la recomiendo.	2
+1368	2025-09-15 17:56:55.742644	544	Me encant????????????, la recomiendo.	2
+1369	2025-09-15 17:56:55.742644	545	Me encant????????????, la recomiendo.	2
+1370	2025-09-15 17:56:55.742644	546	Me encant????????????, la recomiendo.	2
+1371	2025-09-15 17:56:55.742644	547	Me encant????????????, la recomiendo.	2
+1372	2025-09-15 17:56:55.742644	548	Me encant????????????, la recomiendo.	2
+1373	2025-09-15 17:56:55.742644	549	Me encant????????????, la recomiendo.	2
+1374	2025-09-15 17:56:55.742644	550	Me encant????????????, la recomiendo.	2
+1375	2025-09-15 17:56:55.742644	551	Me encant????????????, la recomiendo.	2
+1376	2025-09-15 17:56:55.742644	552	Me encant????????????, la recomiendo.	2
+1377	2025-09-15 17:56:55.742644	553	Me encant????????????, la recomiendo.	2
+1378	2025-09-15 17:56:55.742644	554	Me encant????????????, la recomiendo.	2
+1379	2025-09-15 17:56:55.742644	555	Me encant????????????, la recomiendo.	2
+1380	2025-09-15 17:56:55.742644	556	Me encant????????????, la recomiendo.	2
+1381	2025-09-15 17:56:55.742644	557	Me encant????????????, la recomiendo.	2
+1382	2025-09-15 17:56:55.742644	558	Me encant????????????, la recomiendo.	2
+1383	2025-09-15 17:56:55.742644	559	Me encant????????????, la recomiendo.	2
+1384	2025-09-15 17:56:55.742644	560	Me encant????????????, la recomiendo.	2
+1385	2025-09-15 17:56:55.742644	561	Me encant????????????, la recomiendo.	2
+1386	2025-09-15 17:56:55.742644	562	Me encant????????????, la recomiendo.	2
+1387	2025-09-15 17:56:55.742644	563	Me encant????????????, la recomiendo.	2
+1388	2025-09-15 17:56:55.742644	564	Me encant????????????, la recomiendo.	2
+1389	2025-09-15 17:56:55.742644	565	Me encant????????????, la recomiendo.	2
+1390	2025-09-15 17:56:55.742644	566	Me encant????????????, la recomiendo.	2
+1391	2025-09-15 17:56:55.742644	567	Me encant????????????, la recomiendo.	2
+1392	2025-09-15 17:56:55.742644	568	Me encant????????????, la recomiendo.	2
+1393	2025-09-15 17:56:55.742644	569	Me encant????????????, la recomiendo.	2
+1394	2025-09-15 17:56:55.742644	570	Me encant????????????, la recomiendo.	2
+1395	2025-09-15 17:56:55.742644	571	Me encant????????????, la recomiendo.	2
+1396	2025-09-15 17:56:55.742644	572	Me encant????????????, la recomiendo.	2
+1397	2025-09-15 17:56:55.742644	573	Me encant????????????, la recomiendo.	2
+1398	2025-09-15 17:56:55.742644	574	Me encant????????????, la recomiendo.	2
+1399	2025-09-15 17:56:55.742644	575	Me encant????????????, la recomiendo.	2
+1400	2025-09-15 17:56:55.742644	576	Me encant????????????, la recomiendo.	2
+1401	2025-09-15 17:56:55.742644	577	Me encant????????????, la recomiendo.	2
+1402	2025-09-15 17:56:55.742644	578	Me encant????????????, la recomiendo.	2
+1403	2025-09-15 17:56:55.742644	579	Me encant????????????, la recomiendo.	2
+1404	2025-09-15 17:56:55.742644	580	Me encant????????????, la recomiendo.	2
+1405	2025-09-15 17:56:55.742644	581	Me encant????????????, la recomiendo.	2
+1406	2025-09-15 17:56:55.742644	582	Me encant????????????, la recomiendo.	2
+1407	2025-09-15 17:56:55.742644	583	Me encant????????????, la recomiendo.	2
+1408	2025-09-15 17:56:55.742644	584	Me encant????????????, la recomiendo.	2
+1409	2025-09-15 17:56:55.742644	585	Me encant????????????, la recomiendo.	2
+1410	2025-09-15 17:56:55.742644	586	Me encant????????????, la recomiendo.	2
+1411	2025-09-15 17:56:55.742644	587	Me encant????????????, la recomiendo.	2
+1412	2025-09-15 17:56:55.742644	588	Me encant????????????, la recomiendo.	2
+1413	2025-09-15 17:56:55.742644	589	Me encant????????????, la recomiendo.	2
+1414	2025-09-15 17:56:55.742644	590	Me encant????????????, la recomiendo.	2
+1415	2025-09-15 17:56:55.742644	591	Me encant????????????, la recomiendo.	2
+1416	2025-09-15 17:56:55.742644	592	Me encant????????????, la recomiendo.	2
+1417	2025-09-15 17:56:55.742644	593	Me encant????????????, la recomiendo.	2
+1418	2025-09-15 17:56:55.742644	594	Me encant????????????, la recomiendo.	2
+1419	2025-09-15 17:56:55.742644	595	Me encant????????????, la recomiendo.	2
+1420	2025-09-15 17:56:55.742644	596	Me encant????????????, la recomiendo.	2
+1421	2025-09-15 17:56:55.742644	597	Me encant????????????, la recomiendo.	2
+1422	2025-09-15 17:56:55.742644	598	Me encant????????????, la recomiendo.	2
+1423	2025-09-15 17:56:55.742644	599	Me encant????????????, la recomiendo.	2
+1424	2025-09-15 17:56:55.742644	600	Me encant????????????, la recomiendo.	2
+1425	2025-09-15 17:56:55.742644	601	Me encant????????????, la recomiendo.	2
+1426	2025-09-15 17:56:55.742644	602	Me encant????????????, la recomiendo.	2
+1427	2025-09-15 17:56:55.742644	603	Me encant????????????, la recomiendo.	2
+1428	2025-09-15 17:56:55.742644	604	Me encant????????????, la recomiendo.	2
+1429	2025-09-15 17:56:55.742644	605	Me encant????????????, la recomiendo.	2
+1430	2025-09-15 17:56:55.742644	606	Me encant????????????, la recomiendo.	2
+1431	2025-09-15 17:56:55.742644	607	Me encant????????????, la recomiendo.	2
+1432	2025-09-15 17:56:55.742644	608	Me encant????????????, la recomiendo.	2
+1433	2025-09-15 17:56:55.742644	609	Me encant????????????, la recomiendo.	2
+1434	2025-09-15 17:56:55.742644	610	Me encant????????????, la recomiendo.	2
+1435	2025-09-15 17:56:55.742644	611	Me encant????????????, la recomiendo.	2
+1436	2025-09-15 17:56:55.742644	612	Me encant????????????, la recomiendo.	2
+1437	2025-09-15 17:56:55.742644	613	Me encant????????????, la recomiendo.	2
+1438	2025-09-15 17:56:55.742644	614	Me encant????????????, la recomiendo.	2
+1439	2025-09-15 17:56:55.742644	615	Me encant????????????, la recomiendo.	2
+1440	2025-09-15 17:56:55.742644	616	Me encant????????????, la recomiendo.	2
+1441	2025-09-15 17:56:55.742644	617	Me encant????????????, la recomiendo.	2
+1442	2025-09-15 17:56:55.742644	618	Me encant????????????, la recomiendo.	2
+1443	2025-09-15 17:56:55.742644	619	Me encant????????????, la recomiendo.	2
+1444	2025-09-15 17:56:55.742644	620	Me encant????????????, la recomiendo.	2
+1445	2025-09-15 17:56:55.742644	621	Me encant????????????, la recomiendo.	2
+1446	2025-09-15 17:56:55.742644	622	Me encant????????????, la recomiendo.	2
+1447	2025-09-15 17:56:55.742644	623	Me encant????????????, la recomiendo.	2
+1448	2025-09-15 17:56:55.742644	624	Me encant????????????, la recomiendo.	2
+1449	2025-09-15 17:56:55.742644	625	Me encant????????????, la recomiendo.	2
+1450	2025-09-15 17:56:55.742644	626	Me encant????????????, la recomiendo.	2
+1451	2025-09-15 17:56:55.742644	627	Me encant????????????, la recomiendo.	2
+1452	2025-09-15 17:56:55.742644	628	Me encant????????????, la recomiendo.	2
+1453	2025-09-15 17:56:55.742644	629	Me encant????????????, la recomiendo.	2
+1454	2025-09-15 17:56:55.742644	630	Me encant????????????, la recomiendo.	2
+1455	2025-09-15 17:56:55.742644	631	Me encant????????????, la recomiendo.	2
+1456	2025-09-15 17:56:55.742644	632	Me encant????????????, la recomiendo.	2
+1457	2025-09-15 17:56:55.742644	633	Me encant????????????, la recomiendo.	2
+1458	2025-09-15 17:56:55.742644	634	Me encant????????????, la recomiendo.	2
+1459	2025-09-15 17:56:55.742644	635	Me encant????????????, la recomiendo.	2
+1460	2025-09-15 17:56:55.742644	636	Me encant????????????, la recomiendo.	2
+1461	2025-09-15 17:56:55.742644	637	Me encant????????????, la recomiendo.	2
+1462	2025-09-15 17:56:55.742644	638	Me encant????????????, la recomiendo.	2
+1463	2025-09-15 17:56:55.742644	639	Me encant????????????, la recomiendo.	2
+1464	2025-09-15 17:56:55.742644	640	Me encant????????????, la recomiendo.	2
 1466	2025-10-08 03:44:07.872318	15	Comentario editado final: Excelente receta, muy facil de seguir y con ingredientes accesibles. La recomiendo mucho!	3
+1467	2025-10-19 14:28:38.485718	1	Comentario modificado sin fechaCreacion	1
+1468	2025-10-19 15:01:35.965735	1	Comentario prueba admin E2E - editado correctamente	1
+1469	2025-10-19 15:04:53.051704	3	Comentario_publico_E2E	1
+1470	2025-10-19 15:05:00.595007	3	Comentario_publico_E2E_editado	1
+1471	2025-10-19 15:12:39.280072	4	E2E_CRUD_Comentario_receta4	1
+1473	2025-10-19 15:23:25.422057	5	E2E_CRUD_Comentario_receta5	1
+1475	2025-10-20 19:36:47.545562	1	Comentario E2E modificado	1
+1476	2025-10-20 19:41:44.320968	1	Comentario E2E modificado	1
 \.
 
 
@@ -1978,6 +1937,12 @@ COPY public.donacion (id_donacion, amount, currency, fecha_actualizacion, fecha_
 1	100	USD	2025-10-08 03:39:29.191631	2025-10-08 03:39:29.191623	15	3	PENDING	\N	04d2dd9b-8ed1-4e1c-9065-1fbb97d994f2
 2	100	USD	2025-10-09 00:49:10.040734	2025-10-09 00:49:10.040683	12	\N	PENDING	\N	e8f7820f-c32a-4146-ac83-e94c4d2133d4
 3	100	USD	2025-10-09 00:49:44.584834	2025-10-09 00:49:44.5848	12	\N	PENDING	\N	c24f2503-87be-4b72-9651-4b0d847b3a00
+4	2500	CLP	2025-10-19 18:13:53.87271	2025-10-19 18:13:53.87271	1	1	TEST	\N	\N
+5	2000	CLP	2025-10-19 18:19:00.638936	2025-10-19 18:19:00.638936	1	1	TEST	\N	\N
+6	100	USD	2025-10-20 11:17:06.648275	2025-10-20 11:17:06.648275	1	1	TEST	\N	\N
+7	100	USD	2025-10-20 19:03:19.614311	2025-10-20 19:03:19.614311	1	1	TEST	\N	\N
+8	100	USD	2025-10-20 19:24:18.560868	2025-10-20 19:24:18.560868	1	1	PENDING	\N	\N
+9	1000	USD	2025-10-21 01:27:47.430362	2025-10-21 01:27:47.430362	1	1	PENDING	\N	\N
 \.
 
 
@@ -3267,6 +3232,15 @@ COPY public.estrella (id_estrella, fecha_creacion, valor, id_receta, id_usr) FRO
 1279	2025-09-15 17:56:55.742644	4	373	1
 1280	2025-09-15 17:56:55.742644	5	498	2
 1282	\N	5	648	15
+1283	2025-10-19 14:44:44.367129	4	1	1
+1284	2025-10-19 14:46:40.802639	4	1	1
+1285	2025-10-19 15:04:53.601535	5	3	1
+1286	2025-10-19 15:05:36.757212	5	3	1
+1287	2025-10-19 17:46:49.57097	4	1	1
+1288	2025-10-19 17:49:18.941908	4	1	1
+1289	2025-10-19 17:54:14.587973	4	1	1
+1290	2025-10-20 23:40:29.508241	4	1	1
+1293	2025-10-21 01:27:47.395944	4	1	1
 \.
 
 
@@ -3275,7 +3249,6 @@ COPY public.estrella (id_estrella, fecha_creacion, valor, id_receta, id_usr) FRO
 --
 
 COPY public.favorito (id_fav, fecha_creacion, id_receta, id_usr) FROM stdin;
-1	2025-09-15 17:56:55.742644	1	1
 2	2025-09-15 17:56:55.742644	2	1
 3	2025-09-15 17:56:55.742644	3	1
 4	2025-09-15 17:56:55.742644	4	1
@@ -4046,85 +4019,85 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 118	pasta	24
 119	queso	24
 120	sal	24
-121	azÔö£Ôòæcar	25
+121	az????????????car	25
 122	harina	25
 123	huevo	25
 124	leche	25
 125	mantequilla	25
-126	azÔö£Ôòæcar	26
+126	az????????????car	26
 127	harina	26
 128	huevo	26
 129	leche	26
 130	mantequilla	26
-131	azÔö£Ôòæcar	27
+131	az????????????car	27
 132	harina	27
 133	huevo	27
 134	leche	27
 135	mantequilla	27
-136	azÔö£Ôòæcar	28
+136	az????????????car	28
 137	harina	28
 138	huevo	28
 139	leche	28
 140	mantequilla	28
-141	azÔö£Ôòæcar	29
+141	az????????????car	29
 142	harina	29
 143	huevo	29
 144	leche	29
 145	mantequilla	29
-146	azÔö£Ôòæcar	30
+146	az????????????car	30
 147	harina	30
 148	huevo	30
 149	leche	30
 150	mantequilla	30
-151	azÔö£Ôòæcar	31
+151	az????????????car	31
 152	harina	31
 153	huevo	31
 154	leche	31
 155	mantequilla	31
-156	azÔö£Ôòæcar	32
+156	az????????????car	32
 157	harina	32
 158	huevo	32
 159	leche	32
 160	mantequilla	32
 161	agua	33
-162	azÔö£Ôòæcar	33
+162	az????????????car	33
 163	hielo	33
-164	limÔö£Ôöén	33
+164	lim????????????n	33
 165	menta	33
 166	agua	34
-167	azÔö£Ôòæcar	34
+167	az????????????car	34
 168	hielo	34
-169	limÔö£Ôöén	34
+169	lim????????????n	34
 170	menta	34
 171	agua	35
-172	azÔö£Ôòæcar	35
+172	az????????????car	35
 173	hielo	35
-174	limÔö£Ôöén	35
+174	lim????????????n	35
 175	menta	35
 176	agua	36
-177	azÔö£Ôòæcar	36
+177	az????????????car	36
 178	hielo	36
-179	limÔö£Ôöén	36
+179	lim????????????n	36
 180	menta	36
 181	agua	37
-182	azÔö£Ôòæcar	37
+182	az????????????car	37
 183	hielo	37
-184	limÔö£Ôöén	37
+184	lim????????????n	37
 185	menta	37
 186	agua	38
-187	azÔö£Ôòæcar	38
+187	az????????????car	38
 188	hielo	38
-189	limÔö£Ôöén	38
+189	lim????????????n	38
 190	menta	38
 191	agua	39
-192	azÔö£Ôòæcar	39
+192	az????????????car	39
 193	hielo	39
-194	limÔö£Ôöén	39
+194	lim????????????n	39
 195	menta	39
 196	agua	40
-197	azÔö£Ôòæcar	40
+197	az????????????car	40
 198	hielo	40
-199	limÔö£Ôöén	40
+199	lim????????????n	40
 200	menta	40
 201	aceite	41
 202	cebolla	41
@@ -4206,42 +4179,42 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 278	pimienta	56
 279	pollo	56
 280	sal	56
-281	ajonjolÔö£┬í	57
+281	ajonjol???????????	57
 282	pimiento	57
 283	salsa de soja	57
 284	tofu	57
 285	verduras	57
-286	ajonjolÔö£┬í	58
+286	ajonjol???????????	58
 287	pimiento	58
 288	salsa de soja	58
 289	tofu	58
 290	verduras	58
-291	ajonjolÔö£┬í	59
+291	ajonjol???????????	59
 292	pimiento	59
 293	salsa de soja	59
 294	tofu	59
 295	verduras	59
-296	ajonjolÔö£┬í	60
+296	ajonjol???????????	60
 297	pimiento	60
 298	salsa de soja	60
 299	tofu	60
 300	verduras	60
-301	ajonjolÔö£┬í	61
+301	ajonjol???????????	61
 302	pimiento	61
 303	salsa de soja	61
 304	tofu	61
 305	verduras	61
-306	ajonjolÔö£┬í	62
+306	ajonjol???????????	62
 307	pimiento	62
 308	salsa de soja	62
 309	tofu	62
 310	verduras	62
-311	ajonjolÔö£┬í	63
+311	ajonjol???????????	63
 312	pimiento	63
 313	salsa de soja	63
 314	tofu	63
 315	verduras	63
-316	ajonjolÔö£┬í	64
+316	ajonjol???????????	64
 317	pimiento	64
 318	salsa de soja	64
 319	tofu	64
@@ -4366,85 +4339,85 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 438	pasta	88
 439	queso	88
 440	sal	88
-441	azÔö£Ôòæcar	89
+441	az????????????car	89
 442	harina	89
 443	huevo	89
 444	leche	89
 445	mantequilla	89
-446	azÔö£Ôòæcar	90
+446	az????????????car	90
 447	harina	90
 448	huevo	90
 449	leche	90
 450	mantequilla	90
-451	azÔö£Ôòæcar	91
+451	az????????????car	91
 452	harina	91
 453	huevo	91
 454	leche	91
 455	mantequilla	91
-456	azÔö£Ôòæcar	92
+456	az????????????car	92
 457	harina	92
 458	huevo	92
 459	leche	92
 460	mantequilla	92
-461	azÔö£Ôòæcar	93
+461	az????????????car	93
 462	harina	93
 463	huevo	93
 464	leche	93
 465	mantequilla	93
-466	azÔö£Ôòæcar	94
+466	az????????????car	94
 467	harina	94
 468	huevo	94
 469	leche	94
 470	mantequilla	94
-471	azÔö£Ôòæcar	95
+471	az????????????car	95
 472	harina	95
 473	huevo	95
 474	leche	95
 475	mantequilla	95
-476	azÔö£Ôòæcar	96
+476	az????????????car	96
 477	harina	96
 478	huevo	96
 479	leche	96
 480	mantequilla	96
 481	agua	97
-482	azÔö£Ôòæcar	97
+482	az????????????car	97
 483	hielo	97
-484	limÔö£Ôöén	97
+484	lim????????????n	97
 485	menta	97
 486	agua	98
-487	azÔö£Ôòæcar	98
+487	az????????????car	98
 488	hielo	98
-489	limÔö£Ôöén	98
+489	lim????????????n	98
 490	menta	98
 491	agua	99
-492	azÔö£Ôòæcar	99
+492	az????????????car	99
 493	hielo	99
-494	limÔö£Ôöén	99
+494	lim????????????n	99
 495	menta	99
 496	agua	100
-497	azÔö£Ôòæcar	100
+497	az????????????car	100
 498	hielo	100
-499	limÔö£Ôöén	100
+499	lim????????????n	100
 500	menta	100
 501	agua	101
-502	azÔö£Ôòæcar	101
+502	az????????????car	101
 503	hielo	101
-504	limÔö£Ôöén	101
+504	lim????????????n	101
 505	menta	101
 506	agua	102
-507	azÔö£Ôòæcar	102
+507	az????????????car	102
 508	hielo	102
-509	limÔö£Ôöén	102
+509	lim????????????n	102
 510	menta	102
 511	agua	103
-512	azÔö£Ôòæcar	103
+512	az????????????car	103
 513	hielo	103
-514	limÔö£Ôöén	103
+514	lim????????????n	103
 515	menta	103
 516	agua	104
-517	azÔö£Ôòæcar	104
+517	az????????????car	104
 518	hielo	104
-519	limÔö£Ôöén	104
+519	lim????????????n	104
 520	menta	104
 521	aceite	105
 522	cebolla	105
@@ -4526,42 +4499,42 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 598	pimienta	120
 599	pollo	120
 600	sal	120
-601	ajonjolÔö£┬í	121
+601	ajonjol???????????	121
 602	pimiento	121
 603	salsa de soja	121
 604	tofu	121
 605	verduras	121
-606	ajonjolÔö£┬í	122
+606	ajonjol???????????	122
 607	pimiento	122
 608	salsa de soja	122
 609	tofu	122
 610	verduras	122
-611	ajonjolÔö£┬í	123
+611	ajonjol???????????	123
 612	pimiento	123
 613	salsa de soja	123
 614	tofu	123
 615	verduras	123
-616	ajonjolÔö£┬í	124
+616	ajonjol???????????	124
 617	pimiento	124
 618	salsa de soja	124
 619	tofu	124
 620	verduras	124
-621	ajonjolÔö£┬í	125
+621	ajonjol???????????	125
 622	pimiento	125
 623	salsa de soja	125
 624	tofu	125
 625	verduras	125
-626	ajonjolÔö£┬í	126
+626	ajonjol???????????	126
 627	pimiento	126
 628	salsa de soja	126
 629	tofu	126
 630	verduras	126
-631	ajonjolÔö£┬í	127
+631	ajonjol???????????	127
 632	pimiento	127
 633	salsa de soja	127
 634	tofu	127
 635	verduras	127
-636	ajonjolÔö£┬í	128
+636	ajonjol???????????	128
 637	pimiento	128
 638	salsa de soja	128
 639	tofu	128
@@ -4686,85 +4659,85 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 758	pasta	152
 759	queso	152
 760	sal	152
-761	azÔö£Ôòæcar	153
+761	az????????????car	153
 762	harina	153
 763	huevo	153
 764	leche	153
 765	mantequilla	153
-766	azÔö£Ôòæcar	154
+766	az????????????car	154
 767	harina	154
 768	huevo	154
 769	leche	154
 770	mantequilla	154
-771	azÔö£Ôòæcar	155
+771	az????????????car	155
 772	harina	155
 773	huevo	155
 774	leche	155
 775	mantequilla	155
-776	azÔö£Ôòæcar	156
+776	az????????????car	156
 777	harina	156
 778	huevo	156
 779	leche	156
 780	mantequilla	156
-781	azÔö£Ôòæcar	157
+781	az????????????car	157
 782	harina	157
 783	huevo	157
 784	leche	157
 785	mantequilla	157
-786	azÔö£Ôòæcar	158
+786	az????????????car	158
 787	harina	158
 788	huevo	158
 789	leche	158
 790	mantequilla	158
-791	azÔö£Ôòæcar	159
+791	az????????????car	159
 792	harina	159
 793	huevo	159
 794	leche	159
 795	mantequilla	159
-796	azÔö£Ôòæcar	160
+796	az????????????car	160
 797	harina	160
 798	huevo	160
 799	leche	160
 800	mantequilla	160
 801	agua	161
-802	azÔö£Ôòæcar	161
+802	az????????????car	161
 803	hielo	161
-804	limÔö£Ôöén	161
+804	lim????????????n	161
 805	menta	161
 806	agua	162
-807	azÔö£Ôòæcar	162
+807	az????????????car	162
 808	hielo	162
-809	limÔö£Ôöén	162
+809	lim????????????n	162
 810	menta	162
 811	agua	163
-812	azÔö£Ôòæcar	163
+812	az????????????car	163
 813	hielo	163
-814	limÔö£Ôöén	163
+814	lim????????????n	163
 815	menta	163
 816	agua	164
-817	azÔö£Ôòæcar	164
+817	az????????????car	164
 818	hielo	164
-819	limÔö£Ôöén	164
+819	lim????????????n	164
 820	menta	164
 821	agua	165
-822	azÔö£Ôòæcar	165
+822	az????????????car	165
 823	hielo	165
-824	limÔö£Ôöén	165
+824	lim????????????n	165
 825	menta	165
 826	agua	166
-827	azÔö£Ôòæcar	166
+827	az????????????car	166
 828	hielo	166
-829	limÔö£Ôöén	166
+829	lim????????????n	166
 830	menta	166
 831	agua	167
-832	azÔö£Ôòæcar	167
+832	az????????????car	167
 833	hielo	167
-834	limÔö£Ôöén	167
+834	lim????????????n	167
 835	menta	167
 836	agua	168
-837	azÔö£Ôòæcar	168
+837	az????????????car	168
 838	hielo	168
-839	limÔö£Ôöén	168
+839	lim????????????n	168
 840	menta	168
 841	aceite	169
 842	cebolla	169
@@ -4846,42 +4819,42 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 918	pimienta	184
 919	pollo	184
 920	sal	184
-921	ajonjolÔö£┬í	185
+921	ajonjol???????????	185
 922	pimiento	185
 923	salsa de soja	185
 924	tofu	185
 925	verduras	185
-926	ajonjolÔö£┬í	186
+926	ajonjol???????????	186
 927	pimiento	186
 928	salsa de soja	186
 929	tofu	186
 930	verduras	186
-931	ajonjolÔö£┬í	187
+931	ajonjol???????????	187
 932	pimiento	187
 933	salsa de soja	187
 934	tofu	187
 935	verduras	187
-936	ajonjolÔö£┬í	188
+936	ajonjol???????????	188
 937	pimiento	188
 938	salsa de soja	188
 939	tofu	188
 940	verduras	188
-941	ajonjolÔö£┬í	189
+941	ajonjol???????????	189
 942	pimiento	189
 943	salsa de soja	189
 944	tofu	189
 945	verduras	189
-946	ajonjolÔö£┬í	190
+946	ajonjol???????????	190
 947	pimiento	190
 948	salsa de soja	190
 949	tofu	190
 950	verduras	190
-951	ajonjolÔö£┬í	191
+951	ajonjol???????????	191
 952	pimiento	191
 953	salsa de soja	191
 954	tofu	191
 955	verduras	191
-956	ajonjolÔö£┬í	192
+956	ajonjol???????????	192
 957	pimiento	192
 958	salsa de soja	192
 959	tofu	192
@@ -5006,85 +4979,85 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 1078	pasta	216
 1079	queso	216
 1080	sal	216
-1081	azÔö£Ôòæcar	217
+1081	az????????????car	217
 1082	harina	217
 1083	huevo	217
 1084	leche	217
 1085	mantequilla	217
-1086	azÔö£Ôòæcar	218
+1086	az????????????car	218
 1087	harina	218
 1088	huevo	218
 1089	leche	218
 1090	mantequilla	218
-1091	azÔö£Ôòæcar	219
+1091	az????????????car	219
 1092	harina	219
 1093	huevo	219
 1094	leche	219
 1095	mantequilla	219
-1096	azÔö£Ôòæcar	220
+1096	az????????????car	220
 1097	harina	220
 1098	huevo	220
 1099	leche	220
 1100	mantequilla	220
-1101	azÔö£Ôòæcar	221
+1101	az????????????car	221
 1102	harina	221
 1103	huevo	221
 1104	leche	221
 1105	mantequilla	221
-1106	azÔö£Ôòæcar	222
+1106	az????????????car	222
 1107	harina	222
 1108	huevo	222
 1109	leche	222
 1110	mantequilla	222
-1111	azÔö£Ôòæcar	223
+1111	az????????????car	223
 1112	harina	223
 1113	huevo	223
 1114	leche	223
 1115	mantequilla	223
-1116	azÔö£Ôòæcar	224
+1116	az????????????car	224
 1117	harina	224
 1118	huevo	224
 1119	leche	224
 1120	mantequilla	224
 1121	agua	225
-1122	azÔö£Ôòæcar	225
+1122	az????????????car	225
 1123	hielo	225
-1124	limÔö£Ôöén	225
+1124	lim????????????n	225
 1125	menta	225
 1126	agua	226
-1127	azÔö£Ôòæcar	226
+1127	az????????????car	226
 1128	hielo	226
-1129	limÔö£Ôöén	226
+1129	lim????????????n	226
 1130	menta	226
 1131	agua	227
-1132	azÔö£Ôòæcar	227
+1132	az????????????car	227
 1133	hielo	227
-1134	limÔö£Ôöén	227
+1134	lim????????????n	227
 1135	menta	227
 1136	agua	228
-1137	azÔö£Ôòæcar	228
+1137	az????????????car	228
 1138	hielo	228
-1139	limÔö£Ôöén	228
+1139	lim????????????n	228
 1140	menta	228
 1141	agua	229
-1142	azÔö£Ôòæcar	229
+1142	az????????????car	229
 1143	hielo	229
-1144	limÔö£Ôöén	229
+1144	lim????????????n	229
 1145	menta	229
 1146	agua	230
-1147	azÔö£Ôòæcar	230
+1147	az????????????car	230
 1148	hielo	230
-1149	limÔö£Ôöén	230
+1149	lim????????????n	230
 1150	menta	230
 1151	agua	231
-1152	azÔö£Ôòæcar	231
+1152	az????????????car	231
 1153	hielo	231
-1154	limÔö£Ôöén	231
+1154	lim????????????n	231
 1155	menta	231
 1156	agua	232
-1157	azÔö£Ôòæcar	232
+1157	az????????????car	232
 1158	hielo	232
-1159	limÔö£Ôöén	232
+1159	lim????????????n	232
 1160	menta	232
 1161	aceite	233
 1162	cebolla	233
@@ -5166,42 +5139,42 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 1238	pimienta	248
 1239	pollo	248
 1240	sal	248
-1241	ajonjolÔö£┬í	249
+1241	ajonjol???????????	249
 1242	pimiento	249
 1243	salsa de soja	249
 1244	tofu	249
 1245	verduras	249
-1246	ajonjolÔö£┬í	250
+1246	ajonjol???????????	250
 1247	pimiento	250
 1248	salsa de soja	250
 1249	tofu	250
 1250	verduras	250
-1251	ajonjolÔö£┬í	251
+1251	ajonjol???????????	251
 1252	pimiento	251
 1253	salsa de soja	251
 1254	tofu	251
 1255	verduras	251
-1256	ajonjolÔö£┬í	252
+1256	ajonjol???????????	252
 1257	pimiento	252
 1258	salsa de soja	252
 1259	tofu	252
 1260	verduras	252
-1261	ajonjolÔö£┬í	253
+1261	ajonjol???????????	253
 1262	pimiento	253
 1263	salsa de soja	253
 1264	tofu	253
 1265	verduras	253
-1266	ajonjolÔö£┬í	254
+1266	ajonjol???????????	254
 1267	pimiento	254
 1268	salsa de soja	254
 1269	tofu	254
 1270	verduras	254
-1271	ajonjolÔö£┬í	255
+1271	ajonjol???????????	255
 1272	pimiento	255
 1273	salsa de soja	255
 1274	tofu	255
 1275	verduras	255
-1276	ajonjolÔö£┬í	256
+1276	ajonjol???????????	256
 1277	pimiento	256
 1278	salsa de soja	256
 1279	tofu	256
@@ -5326,85 +5299,85 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 1398	pasta	280
 1399	queso	280
 1400	sal	280
-1401	azÔö£Ôòæcar	281
+1401	az????????????car	281
 1402	harina	281
 1403	huevo	281
 1404	leche	281
 1405	mantequilla	281
-1406	azÔö£Ôòæcar	282
+1406	az????????????car	282
 1407	harina	282
 1408	huevo	282
 1409	leche	282
 1410	mantequilla	282
-1411	azÔö£Ôòæcar	283
+1411	az????????????car	283
 1412	harina	283
 1413	huevo	283
 1414	leche	283
 1415	mantequilla	283
-1416	azÔö£Ôòæcar	284
+1416	az????????????car	284
 1417	harina	284
 1418	huevo	284
 1419	leche	284
 1420	mantequilla	284
-1421	azÔö£Ôòæcar	285
+1421	az????????????car	285
 1422	harina	285
 1423	huevo	285
 1424	leche	285
 1425	mantequilla	285
-1426	azÔö£Ôòæcar	286
+1426	az????????????car	286
 1427	harina	286
 1428	huevo	286
 1429	leche	286
 1430	mantequilla	286
-1431	azÔö£Ôòæcar	287
+1431	az????????????car	287
 1432	harina	287
 1433	huevo	287
 1434	leche	287
 1435	mantequilla	287
-1436	azÔö£Ôòæcar	288
+1436	az????????????car	288
 1437	harina	288
 1438	huevo	288
 1439	leche	288
 1440	mantequilla	288
 1441	agua	289
-1442	azÔö£Ôòæcar	289
+1442	az????????????car	289
 1443	hielo	289
-1444	limÔö£Ôöén	289
+1444	lim????????????n	289
 1445	menta	289
 1446	agua	290
-1447	azÔö£Ôòæcar	290
+1447	az????????????car	290
 1448	hielo	290
-1449	limÔö£Ôöén	290
+1449	lim????????????n	290
 1450	menta	290
 1451	agua	291
-1452	azÔö£Ôòæcar	291
+1452	az????????????car	291
 1453	hielo	291
-1454	limÔö£Ôöén	291
+1454	lim????????????n	291
 1455	menta	291
 1456	agua	292
-1457	azÔö£Ôòæcar	292
+1457	az????????????car	292
 1458	hielo	292
-1459	limÔö£Ôöén	292
+1459	lim????????????n	292
 1460	menta	292
 1461	agua	293
-1462	azÔö£Ôòæcar	293
+1462	az????????????car	293
 1463	hielo	293
-1464	limÔö£Ôöén	293
+1464	lim????????????n	293
 1465	menta	293
 1466	agua	294
-1467	azÔö£Ôòæcar	294
+1467	az????????????car	294
 1468	hielo	294
-1469	limÔö£Ôöén	294
+1469	lim????????????n	294
 1470	menta	294
 1471	agua	295
-1472	azÔö£Ôòæcar	295
+1472	az????????????car	295
 1473	hielo	295
-1474	limÔö£Ôöén	295
+1474	lim????????????n	295
 1475	menta	295
 1476	agua	296
-1477	azÔö£Ôòæcar	296
+1477	az????????????car	296
 1478	hielo	296
-1479	limÔö£Ôöén	296
+1479	lim????????????n	296
 1480	menta	296
 1481	aceite	297
 1482	cebolla	297
@@ -5486,42 +5459,42 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 1558	pimienta	312
 1559	pollo	312
 1560	sal	312
-1561	ajonjolÔö£┬í	313
+1561	ajonjol???????????	313
 1562	pimiento	313
 1563	salsa de soja	313
 1564	tofu	313
 1565	verduras	313
-1566	ajonjolÔö£┬í	314
+1566	ajonjol???????????	314
 1567	pimiento	314
 1568	salsa de soja	314
 1569	tofu	314
 1570	verduras	314
-1571	ajonjolÔö£┬í	315
+1571	ajonjol???????????	315
 1572	pimiento	315
 1573	salsa de soja	315
 1574	tofu	315
 1575	verduras	315
-1576	ajonjolÔö£┬í	316
+1576	ajonjol???????????	316
 1577	pimiento	316
 1578	salsa de soja	316
 1579	tofu	316
 1580	verduras	316
-1581	ajonjolÔö£┬í	317
+1581	ajonjol???????????	317
 1582	pimiento	317
 1583	salsa de soja	317
 1584	tofu	317
 1585	verduras	317
-1586	ajonjolÔö£┬í	318
+1586	ajonjol???????????	318
 1587	pimiento	318
 1588	salsa de soja	318
 1589	tofu	318
 1590	verduras	318
-1591	ajonjolÔö£┬í	319
+1591	ajonjol???????????	319
 1592	pimiento	319
 1593	salsa de soja	319
 1594	tofu	319
 1595	verduras	319
-1596	ajonjolÔö£┬í	320
+1596	ajonjol???????????	320
 1597	pimiento	320
 1598	salsa de soja	320
 1599	tofu	320
@@ -5646,85 +5619,85 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 1718	pasta	344
 1719	queso	344
 1720	sal	344
-1721	azÔö£Ôòæcar	345
+1721	az????????????car	345
 1722	harina	345
 1723	huevo	345
 1724	leche	345
 1725	mantequilla	345
-1726	azÔö£Ôòæcar	346
+1726	az????????????car	346
 1727	harina	346
 1728	huevo	346
 1729	leche	346
 1730	mantequilla	346
-1731	azÔö£Ôòæcar	347
+1731	az????????????car	347
 1732	harina	347
 1733	huevo	347
 1734	leche	347
 1735	mantequilla	347
-1736	azÔö£Ôòæcar	348
+1736	az????????????car	348
 1737	harina	348
 1738	huevo	348
 1739	leche	348
 1740	mantequilla	348
-1741	azÔö£Ôòæcar	349
+1741	az????????????car	349
 1742	harina	349
 1743	huevo	349
 1744	leche	349
 1745	mantequilla	349
-1746	azÔö£Ôòæcar	350
+1746	az????????????car	350
 1747	harina	350
 1748	huevo	350
 1749	leche	350
 1750	mantequilla	350
-1751	azÔö£Ôòæcar	351
+1751	az????????????car	351
 1752	harina	351
 1753	huevo	351
 1754	leche	351
 1755	mantequilla	351
-1756	azÔö£Ôòæcar	352
+1756	az????????????car	352
 1757	harina	352
 1758	huevo	352
 1759	leche	352
 1760	mantequilla	352
 1761	agua	353
-1762	azÔö£Ôòæcar	353
+1762	az????????????car	353
 1763	hielo	353
-1764	limÔö£Ôöén	353
+1764	lim????????????n	353
 1765	menta	353
 1766	agua	354
-1767	azÔö£Ôòæcar	354
+1767	az????????????car	354
 1768	hielo	354
-1769	limÔö£Ôöén	354
+1769	lim????????????n	354
 1770	menta	354
 1771	agua	355
-1772	azÔö£Ôòæcar	355
+1772	az????????????car	355
 1773	hielo	355
-1774	limÔö£Ôöén	355
+1774	lim????????????n	355
 1775	menta	355
 1776	agua	356
-1777	azÔö£Ôòæcar	356
+1777	az????????????car	356
 1778	hielo	356
-1779	limÔö£Ôöén	356
+1779	lim????????????n	356
 1780	menta	356
 1781	agua	357
-1782	azÔö£Ôòæcar	357
+1782	az????????????car	357
 1783	hielo	357
-1784	limÔö£Ôöén	357
+1784	lim????????????n	357
 1785	menta	357
 1786	agua	358
-1787	azÔö£Ôòæcar	358
+1787	az????????????car	358
 1788	hielo	358
-1789	limÔö£Ôöén	358
+1789	lim????????????n	358
 1790	menta	358
 1791	agua	359
-1792	azÔö£Ôòæcar	359
+1792	az????????????car	359
 1793	hielo	359
-1794	limÔö£Ôöén	359
+1794	lim????????????n	359
 1795	menta	359
 1796	agua	360
-1797	azÔö£Ôòæcar	360
+1797	az????????????car	360
 1798	hielo	360
-1799	limÔö£Ôöén	360
+1799	lim????????????n	360
 1800	menta	360
 1801	aceite	361
 1802	cebolla	361
@@ -5806,42 +5779,42 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 1878	pimienta	376
 1879	pollo	376
 1880	sal	376
-1881	ajonjolÔö£┬í	377
+1881	ajonjol???????????	377
 1882	pimiento	377
 1883	salsa de soja	377
 1884	tofu	377
 1885	verduras	377
-1886	ajonjolÔö£┬í	378
+1886	ajonjol???????????	378
 1887	pimiento	378
 1888	salsa de soja	378
 1889	tofu	378
 1890	verduras	378
-1891	ajonjolÔö£┬í	379
+1891	ajonjol???????????	379
 1892	pimiento	379
 1893	salsa de soja	379
 1894	tofu	379
 1895	verduras	379
-1896	ajonjolÔö£┬í	380
+1896	ajonjol???????????	380
 1897	pimiento	380
 1898	salsa de soja	380
 1899	tofu	380
 1900	verduras	380
-1901	ajonjolÔö£┬í	381
+1901	ajonjol???????????	381
 1902	pimiento	381
 1903	salsa de soja	381
 1904	tofu	381
 1905	verduras	381
-1906	ajonjolÔö£┬í	382
+1906	ajonjol???????????	382
 1907	pimiento	382
 1908	salsa de soja	382
 1909	tofu	382
 1910	verduras	382
-1911	ajonjolÔö£┬í	383
+1911	ajonjol???????????	383
 1912	pimiento	383
 1913	salsa de soja	383
 1914	tofu	383
 1915	verduras	383
-1916	ajonjolÔö£┬í	384
+1916	ajonjol???????????	384
 1917	pimiento	384
 1918	salsa de soja	384
 1919	tofu	384
@@ -5966,85 +5939,85 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 2038	pasta	408
 2039	queso	408
 2040	sal	408
-2041	azÔö£Ôòæcar	409
+2041	az????????????car	409
 2042	harina	409
 2043	huevo	409
 2044	leche	409
 2045	mantequilla	409
-2046	azÔö£Ôòæcar	410
+2046	az????????????car	410
 2047	harina	410
 2048	huevo	410
 2049	leche	410
 2050	mantequilla	410
-2051	azÔö£Ôòæcar	411
+2051	az????????????car	411
 2052	harina	411
 2053	huevo	411
 2054	leche	411
 2055	mantequilla	411
-2056	azÔö£Ôòæcar	412
+2056	az????????????car	412
 2057	harina	412
 2058	huevo	412
 2059	leche	412
 2060	mantequilla	412
-2061	azÔö£Ôòæcar	413
+2061	az????????????car	413
 2062	harina	413
 2063	huevo	413
 2064	leche	413
 2065	mantequilla	413
-2066	azÔö£Ôòæcar	414
+2066	az????????????car	414
 2067	harina	414
 2068	huevo	414
 2069	leche	414
 2070	mantequilla	414
-2071	azÔö£Ôòæcar	415
+2071	az????????????car	415
 2072	harina	415
 2073	huevo	415
 2074	leche	415
 2075	mantequilla	415
-2076	azÔö£Ôòæcar	416
+2076	az????????????car	416
 2077	harina	416
 2078	huevo	416
 2079	leche	416
 2080	mantequilla	416
 2081	agua	417
-2082	azÔö£Ôòæcar	417
+2082	az????????????car	417
 2083	hielo	417
-2084	limÔö£Ôöén	417
+2084	lim????????????n	417
 2085	menta	417
 2086	agua	418
-2087	azÔö£Ôòæcar	418
+2087	az????????????car	418
 2088	hielo	418
-2089	limÔö£Ôöén	418
+2089	lim????????????n	418
 2090	menta	418
 2091	agua	419
-2092	azÔö£Ôòæcar	419
+2092	az????????????car	419
 2093	hielo	419
-2094	limÔö£Ôöén	419
+2094	lim????????????n	419
 2095	menta	419
 2096	agua	420
-2097	azÔö£Ôòæcar	420
+2097	az????????????car	420
 2098	hielo	420
-2099	limÔö£Ôöén	420
+2099	lim????????????n	420
 2100	menta	420
 2101	agua	421
-2102	azÔö£Ôòæcar	421
+2102	az????????????car	421
 2103	hielo	421
-2104	limÔö£Ôöén	421
+2104	lim????????????n	421
 2105	menta	421
 2106	agua	422
-2107	azÔö£Ôòæcar	422
+2107	az????????????car	422
 2108	hielo	422
-2109	limÔö£Ôöén	422
+2109	lim????????????n	422
 2110	menta	422
 2111	agua	423
-2112	azÔö£Ôòæcar	423
+2112	az????????????car	423
 2113	hielo	423
-2114	limÔö£Ôöén	423
+2114	lim????????????n	423
 2115	menta	423
 2116	agua	424
-2117	azÔö£Ôòæcar	424
+2117	az????????????car	424
 2118	hielo	424
-2119	limÔö£Ôöén	424
+2119	lim????????????n	424
 2120	menta	424
 2121	aceite	425
 2122	cebolla	425
@@ -6126,42 +6099,42 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 2198	pimienta	440
 2199	pollo	440
 2200	sal	440
-2201	ajonjolÔö£┬í	441
+2201	ajonjol???????????	441
 2202	pimiento	441
 2203	salsa de soja	441
 2204	tofu	441
 2205	verduras	441
-2206	ajonjolÔö£┬í	442
+2206	ajonjol???????????	442
 2207	pimiento	442
 2208	salsa de soja	442
 2209	tofu	442
 2210	verduras	442
-2211	ajonjolÔö£┬í	443
+2211	ajonjol???????????	443
 2212	pimiento	443
 2213	salsa de soja	443
 2214	tofu	443
 2215	verduras	443
-2216	ajonjolÔö£┬í	444
+2216	ajonjol???????????	444
 2217	pimiento	444
 2218	salsa de soja	444
 2219	tofu	444
 2220	verduras	444
-2221	ajonjolÔö£┬í	445
+2221	ajonjol???????????	445
 2222	pimiento	445
 2223	salsa de soja	445
 2224	tofu	445
 2225	verduras	445
-2226	ajonjolÔö£┬í	446
+2226	ajonjol???????????	446
 2227	pimiento	446
 2228	salsa de soja	446
 2229	tofu	446
 2230	verduras	446
-2231	ajonjolÔö£┬í	447
+2231	ajonjol???????????	447
 2232	pimiento	447
 2233	salsa de soja	447
 2234	tofu	447
 2235	verduras	447
-2236	ajonjolÔö£┬í	448
+2236	ajonjol???????????	448
 2237	pimiento	448
 2238	salsa de soja	448
 2239	tofu	448
@@ -6286,85 +6259,85 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 2358	pasta	472
 2359	queso	472
 2360	sal	472
-2361	azÔö£Ôòæcar	473
+2361	az????????????car	473
 2362	harina	473
 2363	huevo	473
 2364	leche	473
 2365	mantequilla	473
-2366	azÔö£Ôòæcar	474
+2366	az????????????car	474
 2367	harina	474
 2368	huevo	474
 2369	leche	474
 2370	mantequilla	474
-2371	azÔö£Ôòæcar	475
+2371	az????????????car	475
 2372	harina	475
 2373	huevo	475
 2374	leche	475
 2375	mantequilla	475
-2376	azÔö£Ôòæcar	476
+2376	az????????????car	476
 2377	harina	476
 2378	huevo	476
 2379	leche	476
 2380	mantequilla	476
-2381	azÔö£Ôòæcar	477
+2381	az????????????car	477
 2382	harina	477
 2383	huevo	477
 2384	leche	477
 2385	mantequilla	477
-2386	azÔö£Ôòæcar	478
+2386	az????????????car	478
 2387	harina	478
 2388	huevo	478
 2389	leche	478
 2390	mantequilla	478
-2391	azÔö£Ôòæcar	479
+2391	az????????????car	479
 2392	harina	479
 2393	huevo	479
 2394	leche	479
 2395	mantequilla	479
-2396	azÔö£Ôòæcar	480
+2396	az????????????car	480
 2397	harina	480
 2398	huevo	480
 2399	leche	480
 2400	mantequilla	480
 2401	agua	481
-2402	azÔö£Ôòæcar	481
+2402	az????????????car	481
 2403	hielo	481
-2404	limÔö£Ôöén	481
+2404	lim????????????n	481
 2405	menta	481
 2406	agua	482
-2407	azÔö£Ôòæcar	482
+2407	az????????????car	482
 2408	hielo	482
-2409	limÔö£Ôöén	482
+2409	lim????????????n	482
 2410	menta	482
 2411	agua	483
-2412	azÔö£Ôòæcar	483
+2412	az????????????car	483
 2413	hielo	483
-2414	limÔö£Ôöén	483
+2414	lim????????????n	483
 2415	menta	483
 2416	agua	484
-2417	azÔö£Ôòæcar	484
+2417	az????????????car	484
 2418	hielo	484
-2419	limÔö£Ôöén	484
+2419	lim????????????n	484
 2420	menta	484
 2421	agua	485
-2422	azÔö£Ôòæcar	485
+2422	az????????????car	485
 2423	hielo	485
-2424	limÔö£Ôöén	485
+2424	lim????????????n	485
 2425	menta	485
 2426	agua	486
-2427	azÔö£Ôòæcar	486
+2427	az????????????car	486
 2428	hielo	486
-2429	limÔö£Ôöén	486
+2429	lim????????????n	486
 2430	menta	486
 2431	agua	487
-2432	azÔö£Ôòæcar	487
+2432	az????????????car	487
 2433	hielo	487
-2434	limÔö£Ôöén	487
+2434	lim????????????n	487
 2435	menta	487
 2436	agua	488
-2437	azÔö£Ôòæcar	488
+2437	az????????????car	488
 2438	hielo	488
-2439	limÔö£Ôöén	488
+2439	lim????????????n	488
 2440	menta	488
 2441	aceite	489
 2442	cebolla	489
@@ -6446,42 +6419,42 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 2518	pimienta	504
 2519	pollo	504
 2520	sal	504
-2521	ajonjolÔö£┬í	505
+2521	ajonjol???????????	505
 2522	pimiento	505
 2523	salsa de soja	505
 2524	tofu	505
 2525	verduras	505
-2526	ajonjolÔö£┬í	506
+2526	ajonjol???????????	506
 2527	pimiento	506
 2528	salsa de soja	506
 2529	tofu	506
 2530	verduras	506
-2531	ajonjolÔö£┬í	507
+2531	ajonjol???????????	507
 2532	pimiento	507
 2533	salsa de soja	507
 2534	tofu	507
 2535	verduras	507
-2536	ajonjolÔö£┬í	508
+2536	ajonjol???????????	508
 2537	pimiento	508
 2538	salsa de soja	508
 2539	tofu	508
 2540	verduras	508
-2541	ajonjolÔö£┬í	509
+2541	ajonjol???????????	509
 2542	pimiento	509
 2543	salsa de soja	509
 2544	tofu	509
 2545	verduras	509
-2546	ajonjolÔö£┬í	510
+2546	ajonjol???????????	510
 2547	pimiento	510
 2548	salsa de soja	510
 2549	tofu	510
 2550	verduras	510
-2551	ajonjolÔö£┬í	511
+2551	ajonjol???????????	511
 2552	pimiento	511
 2553	salsa de soja	511
 2554	tofu	511
 2555	verduras	511
-2556	ajonjolÔö£┬í	512
+2556	ajonjol???????????	512
 2557	pimiento	512
 2558	salsa de soja	512
 2559	tofu	512
@@ -6606,85 +6579,85 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 2678	pasta	536
 2679	queso	536
 2680	sal	536
-2681	azÔö£Ôòæcar	537
+2681	az????????????car	537
 2682	harina	537
 2683	huevo	537
 2684	leche	537
 2685	mantequilla	537
-2686	azÔö£Ôòæcar	538
+2686	az????????????car	538
 2687	harina	538
 2688	huevo	538
 2689	leche	538
 2690	mantequilla	538
-2691	azÔö£Ôòæcar	539
+2691	az????????????car	539
 2692	harina	539
 2693	huevo	539
 2694	leche	539
 2695	mantequilla	539
-2696	azÔö£Ôòæcar	540
+2696	az????????????car	540
 2697	harina	540
 2698	huevo	540
 2699	leche	540
 2700	mantequilla	540
-2701	azÔö£Ôòæcar	541
+2701	az????????????car	541
 2702	harina	541
 2703	huevo	541
 2704	leche	541
 2705	mantequilla	541
-2706	azÔö£Ôòæcar	542
+2706	az????????????car	542
 2707	harina	542
 2708	huevo	542
 2709	leche	542
 2710	mantequilla	542
-2711	azÔö£Ôòæcar	543
+2711	az????????????car	543
 2712	harina	543
 2713	huevo	543
 2714	leche	543
 2715	mantequilla	543
-2716	azÔö£Ôòæcar	544
+2716	az????????????car	544
 2717	harina	544
 2718	huevo	544
 2719	leche	544
 2720	mantequilla	544
 2721	agua	545
-2722	azÔö£Ôòæcar	545
+2722	az????????????car	545
 2723	hielo	545
-2724	limÔö£Ôöén	545
+2724	lim????????????n	545
 2725	menta	545
 2726	agua	546
-2727	azÔö£Ôòæcar	546
+2727	az????????????car	546
 2728	hielo	546
-2729	limÔö£Ôöén	546
+2729	lim????????????n	546
 2730	menta	546
 2731	agua	547
-2732	azÔö£Ôòæcar	547
+2732	az????????????car	547
 2733	hielo	547
-2734	limÔö£Ôöén	547
+2734	lim????????????n	547
 2735	menta	547
 2736	agua	548
-2737	azÔö£Ôòæcar	548
+2737	az????????????car	548
 2738	hielo	548
-2739	limÔö£Ôöén	548
+2739	lim????????????n	548
 2740	menta	548
 2741	agua	549
-2742	azÔö£Ôòæcar	549
+2742	az????????????car	549
 2743	hielo	549
-2744	limÔö£Ôöén	549
+2744	lim????????????n	549
 2745	menta	549
 2746	agua	550
-2747	azÔö£Ôòæcar	550
+2747	az????????????car	550
 2748	hielo	550
-2749	limÔö£Ôöén	550
+2749	lim????????????n	550
 2750	menta	550
 2751	agua	551
-2752	azÔö£Ôòæcar	551
+2752	az????????????car	551
 2753	hielo	551
-2754	limÔö£Ôöén	551
+2754	lim????????????n	551
 2755	menta	551
 2756	agua	552
-2757	azÔö£Ôòæcar	552
+2757	az????????????car	552
 2758	hielo	552
-2759	limÔö£Ôöén	552
+2759	lim????????????n	552
 2760	menta	552
 2761	aceite	553
 2762	cebolla	553
@@ -6766,42 +6739,42 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 2838	pimienta	568
 2839	pollo	568
 2840	sal	568
-2841	ajonjolÔö£┬í	569
+2841	ajonjol???????????	569
 2842	pimiento	569
 2843	salsa de soja	569
 2844	tofu	569
 2845	verduras	569
-2846	ajonjolÔö£┬í	570
+2846	ajonjol???????????	570
 2847	pimiento	570
 2848	salsa de soja	570
 2849	tofu	570
 2850	verduras	570
-2851	ajonjolÔö£┬í	571
+2851	ajonjol???????????	571
 2852	pimiento	571
 2853	salsa de soja	571
 2854	tofu	571
 2855	verduras	571
-2856	ajonjolÔö£┬í	572
+2856	ajonjol???????????	572
 2857	pimiento	572
 2858	salsa de soja	572
 2859	tofu	572
 2860	verduras	572
-2861	ajonjolÔö£┬í	573
+2861	ajonjol???????????	573
 2862	pimiento	573
 2863	salsa de soja	573
 2864	tofu	573
 2865	verduras	573
-2866	ajonjolÔö£┬í	574
+2866	ajonjol???????????	574
 2867	pimiento	574
 2868	salsa de soja	574
 2869	tofu	574
 2870	verduras	574
-2871	ajonjolÔö£┬í	575
+2871	ajonjol???????????	575
 2872	pimiento	575
 2873	salsa de soja	575
 2874	tofu	575
 2875	verduras	575
-2876	ajonjolÔö£┬í	576
+2876	ajonjol???????????	576
 2877	pimiento	576
 2878	salsa de soja	576
 2879	tofu	576
@@ -6926,85 +6899,85 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 2998	pasta	600
 2999	queso	600
 3000	sal	600
-3001	azÔö£Ôòæcar	601
+3001	az????????????car	601
 3002	harina	601
 3003	huevo	601
 3004	leche	601
 3005	mantequilla	601
-3006	azÔö£Ôòæcar	602
+3006	az????????????car	602
 3007	harina	602
 3008	huevo	602
 3009	leche	602
 3010	mantequilla	602
-3011	azÔö£Ôòæcar	603
+3011	az????????????car	603
 3012	harina	603
 3013	huevo	603
 3014	leche	603
 3015	mantequilla	603
-3016	azÔö£Ôòæcar	604
+3016	az????????????car	604
 3017	harina	604
 3018	huevo	604
 3019	leche	604
 3020	mantequilla	604
-3021	azÔö£Ôòæcar	605
+3021	az????????????car	605
 3022	harina	605
 3023	huevo	605
 3024	leche	605
 3025	mantequilla	605
-3026	azÔö£Ôòæcar	606
+3026	az????????????car	606
 3027	harina	606
 3028	huevo	606
 3029	leche	606
 3030	mantequilla	606
-3031	azÔö£Ôòæcar	607
+3031	az????????????car	607
 3032	harina	607
 3033	huevo	607
 3034	leche	607
 3035	mantequilla	607
-3036	azÔö£Ôòæcar	608
+3036	az????????????car	608
 3037	harina	608
 3038	huevo	608
 3039	leche	608
 3040	mantequilla	608
 3041	agua	609
-3042	azÔö£Ôòæcar	609
+3042	az????????????car	609
 3043	hielo	609
-3044	limÔö£Ôöén	609
+3044	lim????????????n	609
 3045	menta	609
 3046	agua	610
-3047	azÔö£Ôòæcar	610
+3047	az????????????car	610
 3048	hielo	610
-3049	limÔö£Ôöén	610
+3049	lim????????????n	610
 3050	menta	610
 3051	agua	611
-3052	azÔö£Ôòæcar	611
+3052	az????????????car	611
 3053	hielo	611
-3054	limÔö£Ôöén	611
+3054	lim????????????n	611
 3055	menta	611
 3056	agua	612
-3057	azÔö£Ôòæcar	612
+3057	az????????????car	612
 3058	hielo	612
-3059	limÔö£Ôöén	612
+3059	lim????????????n	612
 3060	menta	612
 3061	agua	613
-3062	azÔö£Ôòæcar	613
+3062	az????????????car	613
 3063	hielo	613
-3064	limÔö£Ôöén	613
+3064	lim????????????n	613
 3065	menta	613
 3066	agua	614
-3067	azÔö£Ôòæcar	614
+3067	az????????????car	614
 3068	hielo	614
-3069	limÔö£Ôöén	614
+3069	lim????????????n	614
 3070	menta	614
 3071	agua	615
-3072	azÔö£Ôòæcar	615
+3072	az????????????car	615
 3073	hielo	615
-3074	limÔö£Ôöén	615
+3074	lim????????????n	615
 3075	menta	615
 3076	agua	616
-3077	azÔö£Ôòæcar	616
+3077	az????????????car	616
 3078	hielo	616
-3079	limÔö£Ôöén	616
+3079	lim????????????n	616
 3080	menta	616
 3081	aceite	617
 3082	cebolla	617
@@ -7086,48 +7059,121 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 3158	pimienta	632
 3159	pollo	632
 3160	sal	632
-3161	ajonjolÔö£┬í	633
+3161	ajonjol???????????	633
 3162	pimiento	633
 3163	salsa de soja	633
 3164	tofu	633
 3165	verduras	633
-3166	ajonjolÔö£┬í	634
+3166	ajonjol???????????	634
 3167	pimiento	634
 3168	salsa de soja	634
 3169	tofu	634
 3170	verduras	634
-3171	ajonjolÔö£┬í	635
+3171	ajonjol???????????	635
 3172	pimiento	635
 3173	salsa de soja	635
 3174	tofu	635
 3175	verduras	635
-3176	ajonjolÔö£┬í	636
+3176	ajonjol???????????	636
 3177	pimiento	636
 3178	salsa de soja	636
 3179	tofu	636
 3180	verduras	636
-3181	ajonjolÔö£┬í	637
+3181	ajonjol???????????	637
 3182	pimiento	637
 3183	salsa de soja	637
 3184	tofu	637
 3185	verduras	637
-3186	ajonjolÔö£┬í	638
+3186	ajonjol???????????	638
 3187	pimiento	638
 3188	salsa de soja	638
 3189	tofu	638
 3190	verduras	638
-3191	ajonjolÔö£┬í	639
+3191	ajonjol???????????	639
 3192	pimiento	639
 3193	salsa de soja	639
 3194	tofu	639
 3195	verduras	639
-3196	ajonjolÔö£┬í	640
+3196	ajonjol???????????	640
 3197	pimiento	640
 3198	salsa de soja	640
 3199	tofu	640
 3200	verduras	640
 3209	Ingrediente adicional 1	648
 3210	Ingrediente adicional 2	648
+3213	Ingrediente A mod	662
+3214	Ingrediente C nuevo	662
+3215	IA	664
+3216	IB	664
+3219	Ingrediente A mod	668
+3220	Ingrediente C nuevo	668
+3223	Ingrediente A mod	669
+3224	Ingrediente C nuevo	669
+3227	A mod	670
+3228	C new	670
+3231	A mod	671
+3232	C new	671
+3235	A mod	672
+3236	C new	672
+3239	A mod	673
+3240	C new	673
+3241	i1	674
+3242	arr1	674
+3243	obj1	674
+3246	A mod	675
+3247	C new	675
+3248	Add-1	675
+3249	Add-2	675
+3250	Add-3	675
+3251	Add-4	675
+3252	Add-5	675
+3253	Add-6	675
+3254	Add-7	675
+3255	Add-8	675
+3256	Add-9	675
+3257	Add-10	675
+3260	A mod	676
+3261	C new	676
+3262	Add-1	676
+3263	Add-2	676
+3264	Add-3	676
+3265	Add-4	676
+3266	Add-5	676
+3267	Add-6	676
+3268	Add-7	676
+3269	Add-8	676
+3270	Add-9	676
+3271	Add-10	676
+3272	Add-11	676
+3273	Add-12	676
+3274	Add-13	676
+3275	Add-14	676
+3276	Add-15	676
+3277	Add-16	676
+3278	Add-17	676
+3279	Add-18	676
+3280	Add-19	676
+3281	Add-20	676
+3282	Add-21	676
+3283	Add-22	676
+3284	Add-23	676
+3285	Add-24	676
+3286	Add-25	676
+3287	Add-26	676
+3288	Add-27	676
+3289	Add-28	676
+3290	Add-29	676
+3291	Add-30	676
+3294	Ingrediente A mod	677
+3295	Ingrediente C nuevo	677
+3296	Ingrediente D agregado	677
+3299	A mod	678
+3300	C new	678
+3301	Add-1	678
+3302	Add-2	678
+3303	Add-3	678
+3304	Add-4	678
+3305	Add-5	678
 \.
 
 
@@ -7136,7 +7182,6 @@ COPY public.ingrediente (id_ingrediente, nombre, id_receta) FROM stdin;
 --
 
 COPY public.me_gusta (id_megusta, fecha_creacion, id_receta, id_usr) FROM stdin;
-1	2025-09-15 17:56:55.742644	476	1
 2	2025-09-15 17:56:55.742644	205	2
 3	2025-09-15 17:56:55.742644	598	1
 4	2025-09-15 17:56:55.742644	344	1
@@ -9049,6 +9094,18 @@ COPY public.me_gusta (id_megusta, fecha_creacion, id_receta, id_usr) FROM stdin;
 1919	2025-09-15 17:56:55.742644	549	3
 1920	2025-09-15 17:56:55.742644	498	2
 1925	\N	648	15
+1926	2025-10-19 14:44:43.761965	1	1
+1927	2025-10-19 14:46:20.488424	1	1
+1928	2025-10-19 15:03:36.07428	2	1
+1929	2025-10-19 15:04:53.357676	3	1
+1930	2025-10-19 15:05:18.943267	3	1
+1931	2025-10-19 17:46:48.79538	1	1
+1932	2025-10-19 17:49:18.78793	1	1
+1933	2025-10-19 17:54:14.311409	1	1
+1934	2025-10-20 23:31:22.721697	1	1
+1935	2025-10-21 01:26:48.263696	1	1
+1936	2025-10-21 01:27:47.323002	1	1
+1937	2025-10-21 01:40:42.572516	1	1
 \.
 
 
@@ -9058,7 +9115,7 @@ COPY public.me_gusta (id_megusta, fecha_creacion, id_receta, id_usr) FROM stdin;
 
 COPY public.pais (id_pais, nombre, url_imagen, estado, fecha_creacion, comentario, id_usr) FROM stdin;
 16	Chile	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg	1	2025-09-10 18:05:44.113594	\N	\N
-17	PerÔö£Ôòæ	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg	1	2025-09-10 18:05:44.113594	\N	\N
+17	Per????????????	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg	1	2025-09-10 18:05:44.113594	\N	\N
 18	Argentina	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg	1	2025-09-10 18:05:44.113594	\N	\N
 19	Bolivia	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg	1	2025-09-10 18:05:44.113594	\N	\N
 20	Uruguay	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg	1	2025-09-10 18:05:44.113594	\N	\N
@@ -9070,7 +9127,7 @@ COPY public.pais (id_pais, nombre, url_imagen, estado, fecha_creacion, comentari
 28	Pais de Prueba Automatizada	\N	0	2025-10-10 01:42:43.331658	\N	\N
 29	Pais de Pruebas Automatizadas	https://example.com/flag-test.png	0	2025-10-10 11:06:02.749371	Este es un pais creado automaticamente para pruebas	\N
 31	Pais Test 1556736707	\N	1	2025-10-10 12:22:53.219845	\N	\N
-32	Pa├¡s Test 1854671487	\N	1	2025-10-10 15:00:52.261858	\N	\N
+32	Pa?????s Test 1854671487	\N	1	2025-10-10 15:00:52.261858	\N	\N
 33	Test Pais	\N	1	2025-10-10 15:12:15.408447	\N	\N
 34	Test Debug	\N	1	2025-10-10 15:15:08.194271	\N	\N
 36	Test Pais 153029	\N	1	2025-10-10 15:30:29.149922	\N	\N
@@ -9099,650 +9156,663 @@ COPY public.perfil (id_perfil, nombre) FROM stdin;
 --
 
 COPY public.receta (id_receta, nombre, url_imagen, ingrediente, preparacion, estado, id_cat, id_pais, fecha_creacion, id_usr, visitas) FROM stdin;
-9	Almuerzo - Chile #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
-10	Almuerzo - PerÔö£Ôòæ #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
-11	Almuerzo - Argentina #1	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
-13	Almuerzo - Uruguay #1	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
-16	Almuerzo - Ecuador #1	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
-17	Cena - Chile #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
-18	Cena - PerÔö£Ôòæ #1	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
-19	Cena - Argentina #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
-20	Cena - Bolivia #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
-21	Cena - Uruguay #1	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
-22	Cena - Paraguay #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
-23	Cena - Brasil #1	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
-24	Cena - Ecuador #1	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
-25	Postres - Chile #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
-26	Postres - PerÔö£Ôòæ #1	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
-27	Postres - Argentina #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
-28	Postres - Bolivia #1	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
-29	Postres - Uruguay #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
-30	Postres - Paraguay #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
-31	Postres - Brasil #1	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
-32	Postres - Ecuador #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
-33	Bebidas - Chile #1	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
-34	Bebidas - PerÔö£Ôòæ #1	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
-35	Bebidas - Argentina #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
-36	Bebidas - Bolivia #1	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
-37	Bebidas - Uruguay #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
-38	Bebidas - Paraguay #1	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
-1	Desayuno - Chile #1	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	4
-14	Almuerzo - Paraguay #1	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	2
-12	Almuerzo - Bolivia #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	18
-39	Bebidas - Brasil #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
-40	Bebidas - Ecuador #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
-41	Ensaladas - Chile #1	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
-42	Ensaladas - PerÔö£Ôòæ #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
-43	Ensaladas - Argentina #1	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
-44	Ensaladas - Bolivia #1	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
-45	Ensaladas - Uruguay #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
-46	Ensaladas - Paraguay #1	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
-47	Ensaladas - Brasil #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
-48	Ensaladas - Ecuador #1	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
-49	Sopas - Chile #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
-50	Sopas - PerÔö£Ôòæ #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
-51	Sopas - Argentina #1	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
-52	Sopas - Bolivia #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
-53	Sopas - Uruguay #1	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
-54	Sopas - Paraguay #1	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
-55	Sopas - Brasil #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
-56	Sopas - Ecuador #1	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
-57	Vegetariana - Chile #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
-58	Vegetariana - PerÔö£Ôòæ #1	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
-59	Vegetariana - Argentina #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
-60	Vegetariana - Bolivia #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
-61	Vegetariana - Uruguay #1	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
-62	Vegetariana - Paraguay #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
-63	Vegetariana - Brasil #1	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
-64	Vegetariana - Ecuador #1	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
-65	Desayuno - Chile #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
-66	Desayuno - PerÔö£Ôòæ #2	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
-67	Desayuno - Argentina #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
-68	Desayuno - Bolivia #2	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
-69	Desayuno - Uruguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
-70	Desayuno - Paraguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
-71	Desayuno - Brasil #2	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
-72	Desayuno - Ecuador #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
-73	Almuerzo - Chile #2	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
-74	Almuerzo - PerÔö£Ôòæ #2	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
-75	Almuerzo - Argentina #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
-76	Almuerzo - Bolivia #2	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
-77	Almuerzo - Uruguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
-78	Almuerzo - Paraguay #2	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
-79	Almuerzo - Brasil #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
-80	Almuerzo - Ecuador #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
-81	Cena - Chile #2	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
-82	Cena - PerÔö£Ôòæ #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
-83	Cena - Argentina #2	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
-84	Cena - Bolivia #2	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
-85	Cena - Uruguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
-86	Cena - Paraguay #2	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
-87	Cena - Brasil #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
-88	Cena - Ecuador #2	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
-89	Postres - Chile #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
-90	Postres - PerÔö£Ôòæ #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
-91	Postres - Argentina #2	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
-92	Postres - Bolivia #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
-93	Postres - Uruguay #2	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
-94	Postres - Paraguay #2	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
-95	Postres - Brasil #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
-96	Postres - Ecuador #2	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
-97	Bebidas - Chile #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
-98	Bebidas - PerÔö£Ôòæ #2	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
-99	Bebidas - Argentina #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
-100	Bebidas - Bolivia #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
-101	Bebidas - Uruguay #2	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
-102	Bebidas - Paraguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
-103	Bebidas - Brasil #2	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
-104	Bebidas - Ecuador #2	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
-105	Ensaladas - Chile #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
-106	Ensaladas - PerÔö£Ôòæ #2	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
-107	Ensaladas - Argentina #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
-108	Ensaladas - Bolivia #2	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
-109	Ensaladas - Uruguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
-110	Ensaladas - Paraguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
-111	Ensaladas - Brasil #2	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
-112	Ensaladas - Ecuador #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
-113	Sopas - Chile #2	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
-114	Sopas - PerÔö£Ôòæ #2	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
-115	Sopas - Argentina #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
-116	Sopas - Bolivia #2	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
-117	Sopas - Uruguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
-118	Sopas - Paraguay #2	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
-119	Sopas - Brasil #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
-120	Sopas - Ecuador #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
-121	Vegetariana - Chile #2	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
-122	Vegetariana - PerÔö£Ôòæ #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
-123	Vegetariana - Argentina #2	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
-124	Vegetariana - Bolivia #2	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
-125	Vegetariana - Uruguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
-126	Vegetariana - Paraguay #2	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
-127	Vegetariana - Brasil #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
-128	Vegetariana - Ecuador #2	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
-129	Desayuno - Chile #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
-161	Bebidas - Chile #3	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
-130	Desayuno - PerÔö£Ôòæ #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
-131	Desayuno - Argentina #3	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
-132	Desayuno - Bolivia #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
-133	Desayuno - Uruguay #3	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
-134	Desayuno - Paraguay #3	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
-135	Desayuno - Brasil #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
-136	Desayuno - Ecuador #3	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
-137	Almuerzo - Chile #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
-138	Almuerzo - PerÔö£Ôòæ #3	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
-139	Almuerzo - Argentina #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
-140	Almuerzo - Bolivia #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
-141	Almuerzo - Uruguay #3	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
-142	Almuerzo - Paraguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
-143	Almuerzo - Brasil #3	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
-144	Almuerzo - Ecuador #3	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
-145	Cena - Chile #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
-146	Cena - PerÔö£Ôòæ #3	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
-147	Cena - Argentina #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
-148	Cena - Bolivia #3	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
-149	Cena - Uruguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
-150	Cena - Paraguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
-151	Cena - Brasil #3	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
-152	Cena - Ecuador #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
-153	Postres - Chile #3	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
-154	Postres - PerÔö£Ôòæ #3	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
-155	Postres - Argentina #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
-156	Postres - Bolivia #3	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
-157	Postres - Uruguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
-158	Postres - Paraguay #3	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
-159	Postres - Brasil #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
-160	Postres - Ecuador #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
-162	Bebidas - PerÔö£Ôòæ #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
-163	Bebidas - Argentina #3	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
-164	Bebidas - Bolivia #3	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
-165	Bebidas - Uruguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
-166	Bebidas - Paraguay #3	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
-167	Bebidas - Brasil #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
-168	Bebidas - Ecuador #3	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
-169	Ensaladas - Chile #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
-170	Ensaladas - PerÔö£Ôòæ #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
-171	Ensaladas - Argentina #3	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
-172	Ensaladas - Bolivia #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
-173	Ensaladas - Uruguay #3	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
-174	Ensaladas - Paraguay #3	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
-175	Ensaladas - Brasil #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
-176	Ensaladas - Ecuador #3	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
-177	Sopas - Chile #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
-178	Sopas - PerÔö£Ôòæ #3	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
-179	Sopas - Argentina #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
-180	Sopas - Bolivia #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
-181	Sopas - Uruguay #3	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
-182	Sopas - Paraguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
-183	Sopas - Brasil #3	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
-184	Sopas - Ecuador #3	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
-185	Vegetariana - Chile #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
-186	Vegetariana - PerÔö£Ôòæ #3	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
-187	Vegetariana - Argentina #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
-188	Vegetariana - Bolivia #3	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
-189	Vegetariana - Uruguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
-190	Vegetariana - Paraguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
-191	Vegetariana - Brasil #3	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
-192	Vegetariana - Ecuador #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
-193	Desayuno - Chile #4	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
-194	Desayuno - PerÔö£Ôòæ #4	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
-195	Desayuno - Argentina #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
-196	Desayuno - Bolivia #4	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
-197	Desayuno - Uruguay #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
-198	Desayuno - Paraguay #4	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
-199	Desayuno - Brasil #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
-200	Desayuno - Ecuador #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
-201	Almuerzo - Chile #4	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
-202	Almuerzo - PerÔö£Ôòæ #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
-203	Almuerzo - Argentina #4	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
-204	Almuerzo - Bolivia #4	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
-205	Almuerzo - Uruguay #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
-206	Almuerzo - Paraguay #4	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
-207	Almuerzo - Brasil #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
-208	Almuerzo - Ecuador #4	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
-209	Cena - Chile #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
-210	Cena - PerÔö£Ôòæ #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
-211	Cena - Argentina #4	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
-212	Cena - Bolivia #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
-213	Cena - Uruguay #4	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
-214	Cena - Paraguay #4	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
-215	Cena - Brasil #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
-216	Cena - Ecuador #4	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
-217	Postres - Chile #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
-218	Postres - PerÔö£Ôòæ #4	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
-219	Postres - Argentina #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
-220	Postres - Bolivia #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
-221	Postres - Uruguay #4	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
-222	Postres - Paraguay #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
-223	Postres - Brasil #4	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
-224	Postres - Ecuador #4	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
-225	Bebidas - Chile #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
-226	Bebidas - PerÔö£Ôòæ #4	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
-227	Bebidas - Argentina #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
-228	Bebidas - Bolivia #4	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
-229	Bebidas - Uruguay #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
-230	Bebidas - Paraguay #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
-231	Bebidas - Brasil #4	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
-232	Bebidas - Ecuador #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
-233	Ensaladas - Chile #4	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
-234	Ensaladas - PerÔö£Ôòæ #4	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
-235	Ensaladas - Argentina #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
-236	Ensaladas - Bolivia #4	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
-237	Ensaladas - Uruguay #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
-238	Ensaladas - Paraguay #4	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
-239	Ensaladas - Brasil #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
-240	Ensaladas - Ecuador #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
-241	Sopas - Chile #4	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
-242	Sopas - PerÔö£Ôòæ #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
-243	Sopas - Argentina #4	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
-244	Sopas - Bolivia #4	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
-245	Sopas - Uruguay #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
-246	Sopas - Paraguay #4	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
-247	Sopas - Brasil #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
-248	Sopas - Ecuador #4	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
-249	Vegetariana - Chile #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
-250	Vegetariana - PerÔö£Ôòæ #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
-251	Vegetariana - Argentina #4	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
-252	Vegetariana - Bolivia #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
-253	Vegetariana - Uruguay #4	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
-254	Vegetariana - Paraguay #4	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
-255	Vegetariana - Brasil #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
-256	Vegetariana - Ecuador #4	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
-257	Desayuno - Chile #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
-258	Desayuno - PerÔö£Ôòæ #5	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
-259	Desayuno - Argentina #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
-260	Desayuno - Bolivia #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
-261	Desayuno - Uruguay #5	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
-262	Desayuno - Paraguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
-263	Desayuno - Brasil #5	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
-264	Desayuno - Ecuador #5	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
-265	Almuerzo - Chile #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
-266	Almuerzo - PerÔö£Ôòæ #5	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
-267	Almuerzo - Argentina #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
-268	Almuerzo - Bolivia #5	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
-269	Almuerzo - Uruguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
-270	Almuerzo - Paraguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
-271	Almuerzo - Brasil #5	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
-272	Almuerzo - Ecuador #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
-273	Cena - Chile #5	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
-274	Cena - PerÔö£Ôòæ #5	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
-275	Cena - Argentina #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
-276	Cena - Bolivia #5	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
-277	Cena - Uruguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
-278	Cena - Paraguay #5	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
-279	Cena - Brasil #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
-280	Cena - Ecuador #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
-281	Postres - Chile #5	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
-282	Postres - PerÔö£Ôòæ #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
-283	Postres - Argentina #5	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
-284	Postres - Bolivia #5	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
-285	Postres - Uruguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
-286	Postres - Paraguay #5	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
-287	Postres - Brasil #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
-288	Postres - Ecuador #5	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
-289	Bebidas - Chile #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
-290	Bebidas - PerÔö£Ôòæ #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
-291	Bebidas - Argentina #5	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
-292	Bebidas - Bolivia #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
-293	Bebidas - Uruguay #5	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
-294	Bebidas - Paraguay #5	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
-295	Bebidas - Brasil #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
-296	Bebidas - Ecuador #5	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
-297	Ensaladas - Chile #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
-298	Ensaladas - PerÔö£Ôòæ #5	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
-299	Ensaladas - Argentina #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
-300	Ensaladas - Bolivia #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
-301	Ensaladas - Uruguay #5	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
-302	Ensaladas - Paraguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
-303	Ensaladas - Brasil #5	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
-304	Ensaladas - Ecuador #5	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
-305	Sopas - Chile #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
-306	Sopas - PerÔö£Ôòæ #5	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
-307	Sopas - Argentina #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
-308	Sopas - Bolivia #5	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
-309	Sopas - Uruguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
-310	Sopas - Paraguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
-311	Sopas - Brasil #5	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
-312	Sopas - Ecuador #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
-313	Vegetariana - Chile #5	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
-314	Vegetariana - PerÔö£Ôòæ #5	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
-315	Vegetariana - Argentina #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
-316	Vegetariana - Bolivia #5	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
-317	Vegetariana - Uruguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
-318	Vegetariana - Paraguay #5	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
-319	Vegetariana - Brasil #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
-320	Vegetariana - Ecuador #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
-321	Desayuno - Chile #6	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
-322	Desayuno - PerÔö£Ôòæ #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
-323	Desayuno - Argentina #6	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
-324	Desayuno - Bolivia #6	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
-325	Desayuno - Uruguay #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
-326	Desayuno - Paraguay #6	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
-327	Desayuno - Brasil #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
-328	Desayuno - Ecuador #6	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
-329	Almuerzo - Chile #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
-330	Almuerzo - PerÔö£Ôòæ #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
-331	Almuerzo - Argentina #6	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
-332	Almuerzo - Bolivia #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
-333	Almuerzo - Uruguay #6	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
-334	Almuerzo - Paraguay #6	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
-335	Almuerzo - Brasil #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
-336	Almuerzo - Ecuador #6	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
-337	Cena - Chile #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
-338	Cena - PerÔö£Ôòæ #6	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
-339	Cena - Argentina #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
-340	Cena - Bolivia #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
-341	Cena - Uruguay #6	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
-342	Cena - Paraguay #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
-343	Cena - Brasil #6	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
-344	Cena - Ecuador #6	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
-345	Postres - Chile #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
-346	Postres - PerÔö£Ôòæ #6	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
-347	Postres - Argentina #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
-348	Postres - Bolivia #6	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
-349	Postres - Uruguay #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
-350	Postres - Paraguay #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
-351	Postres - Brasil #6	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
-352	Postres - Ecuador #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
-353	Bebidas - Chile #6	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
-354	Bebidas - PerÔö£Ôòæ #6	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
-355	Bebidas - Argentina #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
-356	Bebidas - Bolivia #6	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
-357	Bebidas - Uruguay #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
-358	Bebidas - Paraguay #6	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
-359	Bebidas - Brasil #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
-360	Bebidas - Ecuador #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
-361	Ensaladas - Chile #6	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
-362	Ensaladas - PerÔö£Ôòæ #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
-363	Ensaladas - Argentina #6	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
-364	Ensaladas - Bolivia #6	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
-365	Ensaladas - Uruguay #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
-366	Ensaladas - Paraguay #6	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
-367	Ensaladas - Brasil #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
-368	Ensaladas - Ecuador #6	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
-369	Sopas - Chile #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
-370	Sopas - PerÔö£Ôòæ #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
-371	Sopas - Argentina #6	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
-372	Sopas - Bolivia #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
-373	Sopas - Uruguay #6	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
-374	Sopas - Paraguay #6	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
-375	Sopas - Brasil #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
-376	Sopas - Ecuador #6	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
-377	Vegetariana - Chile #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
-378	Vegetariana - PerÔö£Ôòæ #6	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
-379	Vegetariana - Argentina #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
-380	Vegetariana - Bolivia #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
-381	Vegetariana - Uruguay #6	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
-382	Vegetariana - Paraguay #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
-383	Vegetariana - Brasil #6	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
-384	Vegetariana - Ecuador #6	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
-385	Desayuno - Chile #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
-386	Desayuno - PerÔö£Ôòæ #7	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
-387	Desayuno - Argentina #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
-388	Desayuno - Bolivia #7	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
-389	Desayuno - Uruguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
-390	Desayuno - Paraguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
-391	Desayuno - Brasil #7	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
-392	Desayuno - Ecuador #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
-393	Almuerzo - Chile #7	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
-394	Almuerzo - PerÔö£Ôòæ #7	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
-395	Almuerzo - Argentina #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
-396	Almuerzo - Bolivia #7	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
-397	Almuerzo - Uruguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
-398	Almuerzo - Paraguay #7	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
-399	Almuerzo - Brasil #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
-400	Almuerzo - Ecuador #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
-401	Cena - Chile #7	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
-402	Cena - PerÔö£Ôòæ #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
-403	Cena - Argentina #7	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
-404	Cena - Bolivia #7	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
-405	Cena - Uruguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
-406	Cena - Paraguay #7	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
-407	Cena - Brasil #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
-408	Cena - Ecuador #7	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
-409	Postres - Chile #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
-410	Postres - PerÔö£Ôòæ #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
-411	Postres - Argentina #7	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
-412	Postres - Bolivia #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
-413	Postres - Uruguay #7	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
-414	Postres - Paraguay #7	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
-415	Postres - Brasil #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
-416	Postres - Ecuador #7	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
-417	Bebidas - Chile #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
-418	Bebidas - PerÔö£Ôòæ #7	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
-419	Bebidas - Argentina #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
-420	Bebidas - Bolivia #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
-421	Bebidas - Uruguay #7	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
-422	Bebidas - Paraguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
-423	Bebidas - Brasil #7	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
-424	Bebidas - Ecuador #7	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
-425	Ensaladas - Chile #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
-426	Ensaladas - PerÔö£Ôòæ #7	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
-427	Ensaladas - Argentina #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
-428	Ensaladas - Bolivia #7	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
-429	Ensaladas - Uruguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
-430	Ensaladas - Paraguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
-431	Ensaladas - Brasil #7	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
-432	Ensaladas - Ecuador #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
-433	Sopas - Chile #7	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
-434	Sopas - PerÔö£Ôòæ #7	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
-435	Sopas - Argentina #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
-436	Sopas - Bolivia #7	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
-437	Sopas - Uruguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
-438	Sopas - Paraguay #7	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
-439	Sopas - Brasil #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
-440	Sopas - Ecuador #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
-441	Vegetariana - Chile #7	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
-442	Vegetariana - PerÔö£Ôòæ #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
-443	Vegetariana - Argentina #7	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
-444	Vegetariana - Bolivia #7	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
-445	Vegetariana - Uruguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
-446	Vegetariana - Paraguay #7	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
-447	Vegetariana - Brasil #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
-448	Vegetariana - Ecuador #7	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
-449	Desayuno - Chile #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
-450	Desayuno - PerÔö£Ôòæ #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
-451	Desayuno - Argentina #8	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
-452	Desayuno - Bolivia #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
-453	Desayuno - Uruguay #8	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
-454	Desayuno - Paraguay #8	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
-455	Desayuno - Brasil #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
-456	Desayuno - Ecuador #8	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
-457	Almuerzo - Chile #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
-458	Almuerzo - PerÔö£Ôòæ #8	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
-459	Almuerzo - Argentina #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
-460	Almuerzo - Bolivia #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
-461	Almuerzo - Uruguay #8	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
-462	Almuerzo - Paraguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
-463	Almuerzo - Brasil #8	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
-464	Almuerzo - Ecuador #8	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
-465	Cena - Chile #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
-466	Cena - PerÔö£Ôòæ #8	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
-467	Cena - Argentina #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
-468	Cena - Bolivia #8	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
-469	Cena - Uruguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
-470	Cena - Paraguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
-471	Cena - Brasil #8	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
-472	Cena - Ecuador #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
-473	Postres - Chile #8	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
-474	Postres - PerÔö£Ôòæ #8	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
-475	Postres - Argentina #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
-476	Postres - Bolivia #8	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
-477	Postres - Uruguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
-478	Postres - Paraguay #8	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
-479	Postres - Brasil #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
-480	Postres - Ecuador #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
-481	Bebidas - Chile #8	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
-482	Bebidas - PerÔö£Ôòæ #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
-483	Bebidas - Argentina #8	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
-484	Bebidas - Bolivia #8	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
-485	Bebidas - Uruguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
-486	Bebidas - Paraguay #8	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
-487	Bebidas - Brasil #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
-488	Bebidas - Ecuador #8	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
-489	Ensaladas - Chile #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
-490	Ensaladas - PerÔö£Ôòæ #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
-491	Ensaladas - Argentina #8	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
-492	Ensaladas - Bolivia #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
-493	Ensaladas - Uruguay #8	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
-494	Ensaladas - Paraguay #8	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
-495	Ensaladas - Brasil #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
-496	Ensaladas - Ecuador #8	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
-497	Sopas - Chile #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
-498	Sopas - PerÔö£Ôòæ #8	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
-499	Sopas - Argentina #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
-500	Sopas - Bolivia #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
-501	Sopas - Uruguay #8	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
-502	Sopas - Paraguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
-503	Sopas - Brasil #8	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
-504	Sopas - Ecuador #8	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
-505	Vegetariana - Chile #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
-506	Vegetariana - PerÔö£Ôòæ #8	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
-507	Vegetariana - Argentina #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
-508	Vegetariana - Bolivia #8	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
-509	Vegetariana - Uruguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
-510	Vegetariana - Paraguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
-511	Vegetariana - Brasil #8	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
-512	Vegetariana - Ecuador #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
-513	Desayuno - Chile #9	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
-514	Desayuno - PerÔö£Ôòæ #9	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
-515	Desayuno - Argentina #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
-516	Desayuno - Bolivia #9	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
-517	Desayuno - Uruguay #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
-518	Desayuno - Paraguay #9	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
-519	Desayuno - Brasil #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
-520	Desayuno - Ecuador #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
-521	Almuerzo - Chile #9	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
-522	Almuerzo - PerÔö£Ôòæ #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
-523	Almuerzo - Argentina #9	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
-524	Almuerzo - Bolivia #9	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
-525	Almuerzo - Uruguay #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
-526	Almuerzo - Paraguay #9	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
-527	Almuerzo - Brasil #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
-528	Almuerzo - Ecuador #9	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
-529	Cena - Chile #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
-530	Cena - PerÔö£Ôòæ #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
-531	Cena - Argentina #9	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
-532	Cena - Bolivia #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
-533	Cena - Uruguay #9	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
-534	Cena - Paraguay #9	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
-535	Cena - Brasil #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
-536	Cena - Ecuador #9	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
-537	Postres - Chile #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
-538	Postres - PerÔö£Ôòæ #9	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
-539	Postres - Argentina #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
-540	Postres - Bolivia #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
-541	Postres - Uruguay #9	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
-542	Postres - Paraguay #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
-543	Postres - Brasil #9	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
-544	Postres - Ecuador #9	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
-545	Bebidas - Chile #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
-546	Bebidas - PerÔö£Ôòæ #9	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
-547	Bebidas - Argentina #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
-548	Bebidas - Bolivia #9	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
-549	Bebidas - Uruguay #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
-550	Bebidas - Paraguay #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
-551	Bebidas - Brasil #9	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
-552	Bebidas - Ecuador #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
-553	Ensaladas - Chile #9	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
-554	Ensaladas - PerÔö£Ôòæ #9	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
-555	Ensaladas - Argentina #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
-556	Ensaladas - Bolivia #9	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
-557	Ensaladas - Uruguay #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
-558	Ensaladas - Paraguay #9	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
-559	Ensaladas - Brasil #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
-560	Ensaladas - Ecuador #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
-561	Sopas - Chile #9	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
-562	Sopas - PerÔö£Ôòæ #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
-563	Sopas - Argentina #9	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
-564	Sopas - Bolivia #9	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
-565	Sopas - Uruguay #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
-566	Sopas - Paraguay #9	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
-567	Sopas - Brasil #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
-568	Sopas - Ecuador #9	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
-569	Vegetariana - Chile #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
-570	Vegetariana - PerÔö£Ôòæ #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
-571	Vegetariana - Argentina #9	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
-572	Vegetariana - Bolivia #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
-573	Vegetariana - Uruguay #9	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
-574	Vegetariana - Paraguay #9	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
-575	Vegetariana - Brasil #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
-576	Vegetariana - Ecuador #9	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
-577	Desayuno - Chile #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
-578	Desayuno - PerÔö£Ôòæ #10	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
-579	Desayuno - Argentina #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
-580	Desayuno - Bolivia #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
-581	Desayuno - Uruguay #10	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
-582	Desayuno - Paraguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
-583	Desayuno - Brasil #10	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
-584	Desayuno - Ecuador #10	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
-585	Almuerzo - Chile #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
-586	Almuerzo - PerÔö£Ôòæ #10	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
-587	Almuerzo - Argentina #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
-588	Almuerzo - Bolivia #10	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
-589	Almuerzo - Uruguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
-590	Almuerzo - Paraguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
-591	Almuerzo - Brasil #10	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
-592	Almuerzo - Ecuador #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
-593	Cena - Chile #10	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
-594	Cena - PerÔö£Ôòæ #10	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
-595	Cena - Argentina #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
-596	Cena - Bolivia #10	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
-597	Cena - Uruguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
-598	Cena - Paraguay #10	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
-599	Cena - Brasil #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
-600	Cena - Ecuador #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
-601	Postres - Chile #10	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
-602	Postres - PerÔö£Ôòæ #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
-603	Postres - Argentina #10	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
-604	Postres - Bolivia #10	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
-619	Ensaladas - Argentina #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
-2	Desayuno - PerÔö£Ôòæ #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
-4	Desayuno - Bolivia #1	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
-5	Desayuno - Uruguay #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
-6	Desayuno - Paraguay #1	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
-7	Desayuno - Brasil #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
-8	Desayuno - Ecuador #1	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
-625	Sopas - Chile #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
-605	Postres - Uruguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
-606	Postres - Paraguay #10	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
-607	Postres - Brasil #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
-608	Postres - Ecuador #10	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
-609	Bebidas - Chile #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
-610	Bebidas - PerÔö£Ôòæ #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
-611	Bebidas - Argentina #10	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
-612	Bebidas - Bolivia #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
-613	Bebidas - Uruguay #10	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
-614	Bebidas - Paraguay #10	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
-615	Bebidas - Brasil #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
-616	Bebidas - Ecuador #10	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
-617	Ensaladas - Chile #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
-618	Ensaladas - PerÔö£Ôòæ #10	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
-621	Ensaladas - Uruguay #10	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
-622	Ensaladas - Paraguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
-623	Ensaladas - Brasil #10	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
-624	Ensaladas - Ecuador #10	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
-626	Sopas - PerÔö£Ôòæ #10	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
-627	Sopas - Argentina #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
-628	Sopas - Bolivia #10	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
-629	Sopas - Uruguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
-630	Sopas - Paraguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
-631	Sopas - Brasil #10	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
-632	Sopas - Ecuador #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
-633	Vegetariana - Chile #10	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
-634	Vegetariana - PerÔö£Ôòæ #10	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en PerÔö£Ôòæ. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
-635	Vegetariana - Argentina #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
-636	Vegetariana - Bolivia #10	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
-637	Vegetariana - Uruguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
-638	Vegetariana - Paraguay #10	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
-639	Vegetariana - Brasil #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
-640	Vegetariana - Ecuador #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
-3	Desayuno - Argentina #1	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	4
-15	Almuerzo - Brasil #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	1
+9	Almuerzo - Chile #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
+10	Almuerzo - Per???????????? #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
+11	Almuerzo - Argentina #1	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
+13	Almuerzo - Uruguay #1	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
+16	Almuerzo - Ecuador #1	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
+17	Cena - Chile #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
+18	Cena - Per???????????? #1	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Cena en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
+19	Cena - Argentina #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
+20	Cena - Bolivia #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
+21	Cena - Uruguay #1	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
+22	Cena - Paraguay #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
+23	Cena - Brasil #1	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
+24	Cena - Ecuador #1	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
+25	Postres - Chile #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
+26	Postres - Per???????????? #1	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Postres en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
+27	Postres - Argentina #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
+28	Postres - Bolivia #1	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
+29	Postres - Uruguay #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
+30	Postres - Paraguay #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
+31	Postres - Brasil #1	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
+32	Postres - Ecuador #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
+33	Bebidas - Chile #1	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
+34	Bebidas - Per???????????? #1	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Bebidas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
+35	Bebidas - Argentina #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
+36	Bebidas - Bolivia #1	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
+37	Bebidas - Uruguay #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
+38	Bebidas - Paraguay #1	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
+1	Desayuno - Chile #1	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	4
+14	Almuerzo - Paraguay #1	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	2
+12	Almuerzo - Bolivia #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	18
+39	Bebidas - Brasil #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
+40	Bebidas - Ecuador #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
+41	Ensaladas - Chile #1	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
+42	Ensaladas - Per???????????? #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
+43	Ensaladas - Argentina #1	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
+44	Ensaladas - Bolivia #1	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
+45	Ensaladas - Uruguay #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
+46	Ensaladas - Paraguay #1	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
+47	Ensaladas - Brasil #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
+48	Ensaladas - Ecuador #1	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
+49	Sopas - Chile #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
+50	Sopas - Per???????????? #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
+51	Sopas - Argentina #1	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
+52	Sopas - Bolivia #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
+53	Sopas - Uruguay #1	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
+54	Sopas - Paraguay #1	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
+55	Sopas - Brasil #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
+56	Sopas - Ecuador #1	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
+57	Vegetariana - Chile #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
+58	Vegetariana - Per???????????? #1	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
+59	Vegetariana - Argentina #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
+60	Vegetariana - Bolivia #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
+61	Vegetariana - Uruguay #1	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
+62	Vegetariana - Paraguay #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
+63	Vegetariana - Brasil #1	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
+64	Vegetariana - Ecuador #1	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
+65	Desayuno - Chile #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
+66	Desayuno - Per???????????? #2	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Desayuno en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
+67	Desayuno - Argentina #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
+68	Desayuno - Bolivia #2	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
+69	Desayuno - Uruguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
+70	Desayuno - Paraguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
+71	Desayuno - Brasil #2	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
+72	Desayuno - Ecuador #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
+73	Almuerzo - Chile #2	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
+74	Almuerzo - Per???????????? #2	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Almuerzo en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
+75	Almuerzo - Argentina #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
+76	Almuerzo - Bolivia #2	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
+77	Almuerzo - Uruguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
+78	Almuerzo - Paraguay #2	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
+79	Almuerzo - Brasil #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
+80	Almuerzo - Ecuador #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
+81	Cena - Chile #2	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
+82	Cena - Per???????????? #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
+83	Cena - Argentina #2	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
+84	Cena - Bolivia #2	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
+85	Cena - Uruguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
+86	Cena - Paraguay #2	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
+87	Cena - Brasil #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
+88	Cena - Ecuador #2	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
+89	Postres - Chile #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
+90	Postres - Per???????????? #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
+91	Postres - Argentina #2	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
+92	Postres - Bolivia #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
+93	Postres - Uruguay #2	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
+94	Postres - Paraguay #2	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
+95	Postres - Brasil #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
+96	Postres - Ecuador #2	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
+97	Bebidas - Chile #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
+98	Bebidas - Per???????????? #2	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Bebidas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
+99	Bebidas - Argentina #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
+100	Bebidas - Bolivia #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
+101	Bebidas - Uruguay #2	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
+102	Bebidas - Paraguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
+103	Bebidas - Brasil #2	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
+104	Bebidas - Ecuador #2	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
+105	Ensaladas - Chile #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
+106	Ensaladas - Per???????????? #2	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
+107	Ensaladas - Argentina #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
+108	Ensaladas - Bolivia #2	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
+109	Ensaladas - Uruguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
+110	Ensaladas - Paraguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
+111	Ensaladas - Brasil #2	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
+112	Ensaladas - Ecuador #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
+113	Sopas - Chile #2	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
+114	Sopas - Per???????????? #2	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Sopas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
+115	Sopas - Argentina #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
+116	Sopas - Bolivia #2	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
+117	Sopas - Uruguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
+118	Sopas - Paraguay #2	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
+119	Sopas - Brasil #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
+120	Sopas - Ecuador #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
+121	Vegetariana - Chile #2	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
+122	Vegetariana - Per???????????? #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
+123	Vegetariana - Argentina #2	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
+124	Vegetariana - Bolivia #2	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
+125	Vegetariana - Uruguay #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
+126	Vegetariana - Paraguay #2	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
+127	Vegetariana - Brasil #2	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
+128	Vegetariana - Ecuador #2	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
+129	Desayuno - Chile #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
+161	Bebidas - Chile #3	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
+130	Desayuno - Per???????????? #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
+131	Desayuno - Argentina #3	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
+132	Desayuno - Bolivia #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
+133	Desayuno - Uruguay #3	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
+134	Desayuno - Paraguay #3	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
+135	Desayuno - Brasil #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
+136	Desayuno - Ecuador #3	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
+137	Almuerzo - Chile #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
+138	Almuerzo - Per???????????? #3	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
+139	Almuerzo - Argentina #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
+140	Almuerzo - Bolivia #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
+141	Almuerzo - Uruguay #3	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
+142	Almuerzo - Paraguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
+143	Almuerzo - Brasil #3	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
+144	Almuerzo - Ecuador #3	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
+145	Cena - Chile #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
+146	Cena - Per???????????? #3	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Cena en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
+147	Cena - Argentina #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
+148	Cena - Bolivia #3	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
+149	Cena - Uruguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
+150	Cena - Paraguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
+151	Cena - Brasil #3	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
+152	Cena - Ecuador #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
+153	Postres - Chile #3	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
+154	Postres - Per???????????? #3	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Postres en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
+155	Postres - Argentina #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
+156	Postres - Bolivia #3	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
+157	Postres - Uruguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
+158	Postres - Paraguay #3	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
+159	Postres - Brasil #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
+160	Postres - Ecuador #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
+162	Bebidas - Per???????????? #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
+163	Bebidas - Argentina #3	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
+164	Bebidas - Bolivia #3	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
+165	Bebidas - Uruguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
+166	Bebidas - Paraguay #3	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
+167	Bebidas - Brasil #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
+168	Bebidas - Ecuador #3	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
+169	Ensaladas - Chile #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
+170	Ensaladas - Per???????????? #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
+171	Ensaladas - Argentina #3	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
+172	Ensaladas - Bolivia #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
+173	Ensaladas - Uruguay #3	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
+174	Ensaladas - Paraguay #3	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
+175	Ensaladas - Brasil #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
+176	Ensaladas - Ecuador #3	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
+177	Sopas - Chile #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
+178	Sopas - Per???????????? #3	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Sopas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
+179	Sopas - Argentina #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
+180	Sopas - Bolivia #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
+181	Sopas - Uruguay #3	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
+182	Sopas - Paraguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
+183	Sopas - Brasil #3	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
+184	Sopas - Ecuador #3	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
+185	Vegetariana - Chile #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
+186	Vegetariana - Per???????????? #3	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
+187	Vegetariana - Argentina #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
+188	Vegetariana - Bolivia #3	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
+189	Vegetariana - Uruguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
+190	Vegetariana - Paraguay #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
+191	Vegetariana - Brasil #3	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
+192	Vegetariana - Ecuador #3	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
+193	Desayuno - Chile #4	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
+194	Desayuno - Per???????????? #4	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Desayuno en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
+195	Desayuno - Argentina #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
+196	Desayuno - Bolivia #4	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
+197	Desayuno - Uruguay #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
+198	Desayuno - Paraguay #4	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
+199	Desayuno - Brasil #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
+200	Desayuno - Ecuador #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
+201	Almuerzo - Chile #4	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
+202	Almuerzo - Per???????????? #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
+203	Almuerzo - Argentina #4	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
+204	Almuerzo - Bolivia #4	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
+205	Almuerzo - Uruguay #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
+206	Almuerzo - Paraguay #4	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
+207	Almuerzo - Brasil #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
+208	Almuerzo - Ecuador #4	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
+209	Cena - Chile #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
+210	Cena - Per???????????? #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
+211	Cena - Argentina #4	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
+212	Cena - Bolivia #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
+213	Cena - Uruguay #4	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
+214	Cena - Paraguay #4	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
+215	Cena - Brasil #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
+216	Cena - Ecuador #4	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
+217	Postres - Chile #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
+218	Postres - Per???????????? #4	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Postres en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
+219	Postres - Argentina #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
+220	Postres - Bolivia #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
+221	Postres - Uruguay #4	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
+222	Postres - Paraguay #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
+223	Postres - Brasil #4	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
+224	Postres - Ecuador #4	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
+225	Bebidas - Chile #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
+226	Bebidas - Per???????????? #4	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Bebidas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
+227	Bebidas - Argentina #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
+228	Bebidas - Bolivia #4	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
+229	Bebidas - Uruguay #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
+230	Bebidas - Paraguay #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
+231	Bebidas - Brasil #4	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
+232	Bebidas - Ecuador #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
+233	Ensaladas - Chile #4	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
+234	Ensaladas - Per???????????? #4	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Ensaladas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
+235	Ensaladas - Argentina #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
+236	Ensaladas - Bolivia #4	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
+237	Ensaladas - Uruguay #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
+238	Ensaladas - Paraguay #4	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
+239	Ensaladas - Brasil #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
+240	Ensaladas - Ecuador #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
+241	Sopas - Chile #4	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
+242	Sopas - Per???????????? #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
+243	Sopas - Argentina #4	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
+244	Sopas - Bolivia #4	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
+245	Sopas - Uruguay #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
+246	Sopas - Paraguay #4	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
+247	Sopas - Brasil #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
+248	Sopas - Ecuador #4	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
+249	Vegetariana - Chile #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
+250	Vegetariana - Per???????????? #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
+251	Vegetariana - Argentina #4	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
+252	Vegetariana - Bolivia #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
+253	Vegetariana - Uruguay #4	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
+254	Vegetariana - Paraguay #4	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
+255	Vegetariana - Brasil #4	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
+256	Vegetariana - Ecuador #4	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
+257	Desayuno - Chile #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
+258	Desayuno - Per???????????? #5	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Desayuno en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
+259	Desayuno - Argentina #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
+260	Desayuno - Bolivia #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
+261	Desayuno - Uruguay #5	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
+262	Desayuno - Paraguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
+263	Desayuno - Brasil #5	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
+264	Desayuno - Ecuador #5	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
+265	Almuerzo - Chile #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
+266	Almuerzo - Per???????????? #5	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
+267	Almuerzo - Argentina #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
+268	Almuerzo - Bolivia #5	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
+269	Almuerzo - Uruguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
+270	Almuerzo - Paraguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
+271	Almuerzo - Brasil #5	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
+272	Almuerzo - Ecuador #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
+273	Cena - Chile #5	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
+274	Cena - Per???????????? #5	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Cena en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
+275	Cena - Argentina #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
+276	Cena - Bolivia #5	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
+277	Cena - Uruguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
+278	Cena - Paraguay #5	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
+279	Cena - Brasil #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
+280	Cena - Ecuador #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
+281	Postres - Chile #5	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
+282	Postres - Per???????????? #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
+283	Postres - Argentina #5	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
+284	Postres - Bolivia #5	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
+285	Postres - Uruguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
+286	Postres - Paraguay #5	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
+287	Postres - Brasil #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
+288	Postres - Ecuador #5	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
+289	Bebidas - Chile #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
+290	Bebidas - Per???????????? #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
+291	Bebidas - Argentina #5	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
+292	Bebidas - Bolivia #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
+293	Bebidas - Uruguay #5	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
+294	Bebidas - Paraguay #5	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
+295	Bebidas - Brasil #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
+296	Bebidas - Ecuador #5	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
+297	Ensaladas - Chile #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
+298	Ensaladas - Per???????????? #5	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
+299	Ensaladas - Argentina #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
+300	Ensaladas - Bolivia #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
+301	Ensaladas - Uruguay #5	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
+302	Ensaladas - Paraguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
+303	Ensaladas - Brasil #5	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
+304	Ensaladas - Ecuador #5	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
+305	Sopas - Chile #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
+306	Sopas - Per???????????? #5	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Sopas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
+307	Sopas - Argentina #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
+308	Sopas - Bolivia #5	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
+309	Sopas - Uruguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
+310	Sopas - Paraguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
+311	Sopas - Brasil #5	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
+312	Sopas - Ecuador #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
+313	Vegetariana - Chile #5	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
+314	Vegetariana - Per???????????? #5	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Vegetariana en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
+315	Vegetariana - Argentina #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
+316	Vegetariana - Bolivia #5	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
+317	Vegetariana - Uruguay #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
+318	Vegetariana - Paraguay #5	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
+319	Vegetariana - Brasil #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
+320	Vegetariana - Ecuador #5	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
+321	Desayuno - Chile #6	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
+322	Desayuno - Per???????????? #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
+323	Desayuno - Argentina #6	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
+324	Desayuno - Bolivia #6	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
+325	Desayuno - Uruguay #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
+326	Desayuno - Paraguay #6	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
+327	Desayuno - Brasil #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
+328	Desayuno - Ecuador #6	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
+329	Almuerzo - Chile #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
+330	Almuerzo - Per???????????? #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
+331	Almuerzo - Argentina #6	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
+332	Almuerzo - Bolivia #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
+333	Almuerzo - Uruguay #6	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
+334	Almuerzo - Paraguay #6	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
+335	Almuerzo - Brasil #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
+336	Almuerzo - Ecuador #6	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
+337	Cena - Chile #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
+338	Cena - Per???????????? #6	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Cena en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
+339	Cena - Argentina #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
+340	Cena - Bolivia #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
+341	Cena - Uruguay #6	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
+342	Cena - Paraguay #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
+343	Cena - Brasil #6	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
+344	Cena - Ecuador #6	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
+345	Postres - Chile #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
+346	Postres - Per???????????? #6	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Postres en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
+347	Postres - Argentina #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
+348	Postres - Bolivia #6	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
+349	Postres - Uruguay #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
+350	Postres - Paraguay #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
+351	Postres - Brasil #6	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
+352	Postres - Ecuador #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
+353	Bebidas - Chile #6	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
+354	Bebidas - Per???????????? #6	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Bebidas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
+355	Bebidas - Argentina #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
+356	Bebidas - Bolivia #6	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
+357	Bebidas - Uruguay #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
+358	Bebidas - Paraguay #6	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
+359	Bebidas - Brasil #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
+360	Bebidas - Ecuador #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
+361	Ensaladas - Chile #6	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
+362	Ensaladas - Per???????????? #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
+363	Ensaladas - Argentina #6	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
+364	Ensaladas - Bolivia #6	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
+365	Ensaladas - Uruguay #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
+366	Ensaladas - Paraguay #6	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
+367	Ensaladas - Brasil #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
+368	Ensaladas - Ecuador #6	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
+369	Sopas - Chile #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
+370	Sopas - Per???????????? #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
+371	Sopas - Argentina #6	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
+372	Sopas - Bolivia #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
+373	Sopas - Uruguay #6	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
+374	Sopas - Paraguay #6	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
+375	Sopas - Brasil #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
+376	Sopas - Ecuador #6	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
+377	Vegetariana - Chile #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
+378	Vegetariana - Per???????????? #6	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
+379	Vegetariana - Argentina #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
+380	Vegetariana - Bolivia #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
+381	Vegetariana - Uruguay #6	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
+382	Vegetariana - Paraguay #6	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
+383	Vegetariana - Brasil #6	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
+384	Vegetariana - Ecuador #6	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
+385	Desayuno - Chile #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
+386	Desayuno - Per???????????? #7	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Desayuno en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
+387	Desayuno - Argentina #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
+388	Desayuno - Bolivia #7	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
+389	Desayuno - Uruguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
+390	Desayuno - Paraguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
+391	Desayuno - Brasil #7	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
+392	Desayuno - Ecuador #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
+393	Almuerzo - Chile #7	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
+394	Almuerzo - Per???????????? #7	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Almuerzo en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
+395	Almuerzo - Argentina #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
+396	Almuerzo - Bolivia #7	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
+397	Almuerzo - Uruguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
+398	Almuerzo - Paraguay #7	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
+399	Almuerzo - Brasil #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
+400	Almuerzo - Ecuador #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
+401	Cena - Chile #7	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
+402	Cena - Per???????????? #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
+403	Cena - Argentina #7	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
+404	Cena - Bolivia #7	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
+405	Cena - Uruguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
+406	Cena - Paraguay #7	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
+407	Cena - Brasil #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
+408	Cena - Ecuador #7	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
+409	Postres - Chile #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
+410	Postres - Per???????????? #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
+411	Postres - Argentina #7	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
+412	Postres - Bolivia #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
+413	Postres - Uruguay #7	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
+414	Postres - Paraguay #7	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
+415	Postres - Brasil #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
+416	Postres - Ecuador #7	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
+417	Bebidas - Chile #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
+418	Bebidas - Per???????????? #7	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Bebidas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
+419	Bebidas - Argentina #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
+420	Bebidas - Bolivia #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
+421	Bebidas - Uruguay #7	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
+422	Bebidas - Paraguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
+423	Bebidas - Brasil #7	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
+424	Bebidas - Ecuador #7	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
+425	Ensaladas - Chile #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
+426	Ensaladas - Per???????????? #7	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
+427	Ensaladas - Argentina #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
+428	Ensaladas - Bolivia #7	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
+429	Ensaladas - Uruguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
+430	Ensaladas - Paraguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
+431	Ensaladas - Brasil #7	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
+432	Ensaladas - Ecuador #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
+433	Sopas - Chile #7	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
+434	Sopas - Per???????????? #7	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Sopas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
+435	Sopas - Argentina #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
+436	Sopas - Bolivia #7	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
+437	Sopas - Uruguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
+438	Sopas - Paraguay #7	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
+439	Sopas - Brasil #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
+440	Sopas - Ecuador #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
+441	Vegetariana - Chile #7	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
+442	Vegetariana - Per???????????? #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
+443	Vegetariana - Argentina #7	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
+444	Vegetariana - Bolivia #7	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
+445	Vegetariana - Uruguay #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
+446	Vegetariana - Paraguay #7	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
+447	Vegetariana - Brasil #7	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
+448	Vegetariana - Ecuador #7	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
+449	Desayuno - Chile #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
+450	Desayuno - Per???????????? #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
+451	Desayuno - Argentina #8	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
+452	Desayuno - Bolivia #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
+453	Desayuno - Uruguay #8	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
+454	Desayuno - Paraguay #8	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
+455	Desayuno - Brasil #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
+456	Desayuno - Ecuador #8	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
+457	Almuerzo - Chile #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
+458	Almuerzo - Per???????????? #8	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
+459	Almuerzo - Argentina #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
+460	Almuerzo - Bolivia #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
+461	Almuerzo - Uruguay #8	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
+462	Almuerzo - Paraguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
+463	Almuerzo - Brasil #8	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
+464	Almuerzo - Ecuador #8	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
+465	Cena - Chile #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
+466	Cena - Per???????????? #8	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Cena en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
+467	Cena - Argentina #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
+468	Cena - Bolivia #8	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
+469	Cena - Uruguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
+470	Cena - Paraguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
+471	Cena - Brasil #8	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
+472	Cena - Ecuador #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
+473	Postres - Chile #8	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
+474	Postres - Per???????????? #8	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Postres en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
+475	Postres - Argentina #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
+476	Postres - Bolivia #8	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
+477	Postres - Uruguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
+478	Postres - Paraguay #8	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
+479	Postres - Brasil #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
+480	Postres - Ecuador #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
+481	Bebidas - Chile #8	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
+482	Bebidas - Per???????????? #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
+483	Bebidas - Argentina #8	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
+484	Bebidas - Bolivia #8	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
+485	Bebidas - Uruguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
+486	Bebidas - Paraguay #8	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
+487	Bebidas - Brasil #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
+488	Bebidas - Ecuador #8	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
+489	Ensaladas - Chile #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
+490	Ensaladas - Per???????????? #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
+491	Ensaladas - Argentina #8	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
+492	Ensaladas - Bolivia #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
+493	Ensaladas - Uruguay #8	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
+494	Ensaladas - Paraguay #8	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
+495	Ensaladas - Brasil #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
+496	Ensaladas - Ecuador #8	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
+497	Sopas - Chile #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
+498	Sopas - Per???????????? #8	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Sopas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
+499	Sopas - Argentina #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
+500	Sopas - Bolivia #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
+501	Sopas - Uruguay #8	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
+502	Sopas - Paraguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
+503	Sopas - Brasil #8	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
+504	Sopas - Ecuador #8	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
+505	Vegetariana - Chile #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
+506	Vegetariana - Per???????????? #8	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
+507	Vegetariana - Argentina #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
+508	Vegetariana - Bolivia #8	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
+509	Vegetariana - Uruguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
+510	Vegetariana - Paraguay #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
+511	Vegetariana - Brasil #8	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
+512	Vegetariana - Ecuador #8	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
+513	Desayuno - Chile #9	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
+514	Desayuno - Per???????????? #9	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Desayuno en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
+515	Desayuno - Argentina #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
+516	Desayuno - Bolivia #9	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
+517	Desayuno - Uruguay #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
+518	Desayuno - Paraguay #9	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
+519	Desayuno - Brasil #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
+520	Desayuno - Ecuador #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
+521	Almuerzo - Chile #9	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
+522	Almuerzo - Per???????????? #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
+523	Almuerzo - Argentina #9	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
+524	Almuerzo - Bolivia #9	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
+525	Almuerzo - Uruguay #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
+526	Almuerzo - Paraguay #9	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
+527	Almuerzo - Brasil #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
+528	Almuerzo - Ecuador #9	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
+529	Cena - Chile #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
+530	Cena - Per???????????? #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
+531	Cena - Argentina #9	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
+532	Cena - Bolivia #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
+533	Cena - Uruguay #9	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
+534	Cena - Paraguay #9	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
+535	Cena - Brasil #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
+536	Cena - Ecuador #9	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
+537	Postres - Chile #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
+538	Postres - Per???????????? #9	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Postres en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
+539	Postres - Argentina #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
+540	Postres - Bolivia #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
+541	Postres - Uruguay #9	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
+542	Postres - Paraguay #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
+543	Postres - Brasil #9	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
+544	Postres - Ecuador #9	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
+545	Bebidas - Chile #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
+546	Bebidas - Per???????????? #9	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Bebidas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
+547	Bebidas - Argentina #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
+548	Bebidas - Bolivia #9	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
+549	Bebidas - Uruguay #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
+550	Bebidas - Paraguay #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
+551	Bebidas - Brasil #9	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
+552	Bebidas - Ecuador #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
+553	Ensaladas - Chile #9	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
+554	Ensaladas - Per???????????? #9	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Ensaladas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
+555	Ensaladas - Argentina #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
+556	Ensaladas - Bolivia #9	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	0
+557	Ensaladas - Uruguay #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
+558	Ensaladas - Paraguay #9	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
+559	Ensaladas - Brasil #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
+560	Ensaladas - Ecuador #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
+561	Sopas - Chile #9	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
+562	Sopas - Per???????????? #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
+563	Sopas - Argentina #9	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
+564	Sopas - Bolivia #9	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
+565	Sopas - Uruguay #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
+566	Sopas - Paraguay #9	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
+567	Sopas - Brasil #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
+568	Sopas - Ecuador #9	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
+569	Vegetariana - Chile #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
+570	Vegetariana - Per???????????? #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
+571	Vegetariana - Argentina #9	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
+572	Vegetariana - Bolivia #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
+573	Vegetariana - Uruguay #9	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
+574	Vegetariana - Paraguay #9	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
+575	Vegetariana - Brasil #9	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
+576	Vegetariana - Ecuador #9	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
+577	Desayuno - Chile #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	16	2025-09-15	1	0
+578	Desayuno - Per???????????? #10	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Desayuno en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
+579	Desayuno - Argentina #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	0
+580	Desayuno - Bolivia #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
+581	Desayuno - Uruguay #10	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
+582	Desayuno - Paraguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
+583	Desayuno - Brasil #10	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
+584	Desayuno - Ecuador #10	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
+585	Almuerzo - Chile #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	16	2025-09-15	1	0
+586	Almuerzo - Per???????????? #10	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	17	2025-09-15	1	0
+587	Almuerzo - Argentina #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	18	2025-09-15	1	0
+588	Almuerzo - Bolivia #10	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	19	2025-09-15	1	0
+589	Almuerzo - Uruguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	20	2025-09-15	1	0
+590	Almuerzo - Paraguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	21	2025-09-15	1	0
+591	Almuerzo - Brasil #10	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	0
+592	Almuerzo - Ecuador #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	23	2025-09-15	1	0
+593	Cena - Chile #10	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Cena en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	16	2025-09-15	1	0
+594	Cena - Per???????????? #10	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Cena en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	17	2025-09-15	1	0
+595	Cena - Argentina #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	18	2025-09-15	1	0
+596	Cena - Bolivia #10	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Cena en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	19	2025-09-15	1	0
+597	Cena - Uruguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	20	2025-09-15	1	0
+598	Cena - Paraguay #10	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Cena en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	21	2025-09-15	1	0
+599	Cena - Brasil #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	22	2025-09-15	1	0
+600	Cena - Ecuador #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Cena en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	27	23	2025-09-15	1	0
+601	Postres - Chile #10	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Postres en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	16	2025-09-15	1	0
+602	Postres - Per???????????? #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	17	2025-09-15	1	0
+603	Postres - Argentina #10	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Postres en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	18	2025-09-15	1	0
+604	Postres - Bolivia #10	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Postres en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	19	2025-09-15	1	0
+619	Ensaladas - Argentina #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	18	2025-09-15	1	0
+2	Desayuno - Per???????????? #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	17	2025-09-15	1	0
+4	Desayuno - Bolivia #1	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Desayuno en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	19	2025-09-15	1	0
+5	Desayuno - Uruguay #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	20	2025-09-15	1	0
+6	Desayuno - Paraguay #1	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Desayuno en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	21	2025-09-15	1	0
+7	Desayuno - Brasil #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Desayuno en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	22	2025-09-15	1	0
+8	Desayuno - Ecuador #1	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Desayuno en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	23	2025-09-15	1	0
+625	Sopas - Chile #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	16	2025-09-15	1	0
+605	Postres - Uruguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	20	2025-09-15	1	0
+606	Postres - Paraguay #10	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Postres en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	21	2025-09-15	1	0
+607	Postres - Brasil #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Postres en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	22	2025-09-15	1	0
+608	Postres - Ecuador #10	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Postres en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	28	23	2025-09-15	1	0
+609	Bebidas - Chile #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	16	2025-09-15	1	0
+610	Bebidas - Per???????????? #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	17	2025-09-15	1	0
+611	Bebidas - Argentina #10	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Bebidas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	18	2025-09-15	1	0
+612	Bebidas - Bolivia #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	19	2025-09-15	1	0
+613	Bebidas - Uruguay #10	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Bebidas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	20	2025-09-15	1	0
+614	Bebidas - Paraguay #10	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Bebidas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	21	2025-09-15	1	0
+615	Bebidas - Brasil #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Bebidas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	22	2025-09-15	1	0
+616	Bebidas - Ecuador #10	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Bebidas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	29	23	2025-09-15	1	0
+617	Ensaladas - Chile #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	16	2025-09-15	1	0
+618	Ensaladas - Per???????????? #10	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	17	2025-09-15	1	0
+621	Ensaladas - Uruguay #10	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	20	2025-09-15	1	0
+622	Ensaladas - Paraguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	21	2025-09-15	1	0
+623	Ensaladas - Brasil #10	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	22	2025-09-15	1	0
+624	Ensaladas - Ecuador #10	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Ensaladas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	23	2025-09-15	1	0
+626	Sopas - Per???????????? #10	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Sopas en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	17	2025-09-15	1	0
+627	Sopas - Argentina #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	18	2025-09-15	1	0
+628	Sopas - Bolivia #10	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Sopas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	19	2025-09-15	1	0
+629	Sopas - Uruguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	20	2025-09-15	1	0
+630	Sopas - Paraguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	21	2025-09-15	1	0
+631	Sopas - Brasil #10	https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg		Preparaci????????????n b???????????sica de Sopas en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	22	2025-09-15	1	0
+632	Sopas - Ecuador #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Sopas en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	31	23	2025-09-15	1	0
+633	Vegetariana - Chile #10	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Chile. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	16	2025-09-15	1	0
+634	Vegetariana - Per???????????? #10	https://images.pexels.com/photos/2232/vegetables-italian-pizza-restaurant.jpg		Preparaci????????????n b???????????sica de Vegetariana en Per????????????. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	17	2025-09-15	1	0
+635	Vegetariana - Argentina #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	18	2025-09-15	1	0
+636	Vegetariana - Bolivia #10	https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	19	2025-09-15	1	0
+637	Vegetariana - Uruguay #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Uruguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	20	2025-09-15	1	0
+638	Vegetariana - Paraguay #10	https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Paraguay. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	21	2025-09-15	1	0
+639	Vegetariana - Brasil #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	22	2025-09-15	1	0
+640	Vegetariana - Ecuador #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Vegetariana en Ecuador. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	32	23	2025-09-15	1	0
+3	Desayuno - Argentina #1	https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg		Preparaci????????????n b???????????sica de Desayuno en Argentina. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	25	18	2025-09-15	1	4
+15	Almuerzo - Brasil #1	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Almuerzo en Brasil. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	26	22	2025-09-15	1	1
 643	Paella Valenciana API Test	https://example.com/paella.jpg		1. Calentar aceite en paellera. 2. Sofreir pollo y verduras. 3. Agregar arroz y caldo. 4. Cocinar 18 minutos.	1	26	22	2025-10-08	3	0
 644	Pasta Italiana API Test	https://example.com/pasta.jpg		1. Hervir agua con sal. 2. Cocinar pasta al dente. 3. Preparar salsa. 4. Mezclar y servir caliente.	1	26	26	2025-10-08	3	0
-620	Ensaladas - Bolivia #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		PreparaciÔö£Ôöén bÔö£├¡sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	8
+620	Ensaladas - Bolivia #10	https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg		Preparaci????????????n b???????????sica de Ensaladas en Bolivia. Paso 1: preparar ingredientes. Paso 2: cocinar. Paso 3: servir.	1	30	19	2025-09-15	1	8
 648	Receta Modificada Automatizada	https://example.com/receta-modificada.jpg		Preparacion actualizada por prueba automatizada	0	36	28	2025-10-10	15	0
-658	Lasa├▒a Bolo├▒esa Italiana	https://images.pexels.com/photos/4518843/pexels-photo-4518843.jpeg		1. Preparar salsa bolo├▒esa con carne, cebolla, ajo, tomate y vino. 2. Hacer bechamel con mantequilla, harina y leche. 3. Cocer pasta al dente. 4. Armar lasa├▒a alternando capas. 5. Hornear 180┬░C por 45 min. 6. Reposar 10 min antes de servir.	1	26	26	2025-10-10	1	0
+658	Lasa??????a Bolo??????esa Italiana	https://images.pexels.com/photos/4518843/pexels-photo-4518843.jpeg		1. Preparar salsa bolo??????esa con carne, cebolla, ajo, tomate y vino. 2. Hacer bechamel con mantequilla, harina y leche. 3. Cocer pasta al dente. 4. Armar lasa??????a alternando capas. 5. Hornear 180??????C por 45 min. 6. Reposar 10 min antes de servir.	1	26	26	2025-10-10	1	0
+662	E2E Receta Test	https://example.com/e2e.jpg		Preparacion original	0	26	18	2025-10-20	1	0
+664	E2E Receta Run	https://example.com/e2e.jpg		Preparacion prueba	1	26	18	2025-10-21	1	0
+668	E2E Receta Test - 20251021000400	https://example.com/e2e.jpg		Preparacion original	0	26	18	2025-10-21	1	0
+669	E2E Receta Test - 20251021001043	https://example.com/e2e.jpg		Preparacion modificada por E2E	0	26	18	2025-10-21	1	0
+670	E2E Repro 20251020211313	https://example.com/e2e.jpg		prep	1	26	18	2025-10-21	1	0
+671	E2E Repro 20251020211322	https://example.com/e2e.jpg		prep	1	26	18	2025-10-21	1	0
+672	E2E Repro 20251020211418	https://example.com/e2e.jpg		prep	1	26	18	2025-10-21	1	0
+673	E2E Repro 20251020211425	https://example.com/e2e.jpg		prep	1	26	18	2025-10-21	1	0
+674	ReproTest-212147			x	1	26	18	2025-10-21	1	0
+675	E2E Repro 20251020212325	https://example.com/e2e.jpg		prep	1	26	18	2025-10-21	1	0
+676	E2E Repro 20251020212728	https://example.com/e2e.jpg		prep	1	26	18	2025-10-21	1	0
+677	E2E Receta Test - 20251021003904	https://example.com/e2e.jpg		Preparacion modificada por E2E	0	26	18	2025-10-21	1	0
+678	E2E Repro 20251020213932	https://example.com/e2e.jpg		prep	1	26	18	2025-10-21	1	0
 \.
 
 
@@ -9782,16 +9852,10 @@ COPY public.usuario (id_usr, nombre, apellido, email, password, estado, fecha_cr
 20	Test User	Test Last	test153316@test.com	$2a$10$xOOYuYsVApeVFzGigL4Veuev.dsFWaA5V8AiD9cj.5zJLZiOkULDe	0	2025-10-10 15:33:16.810668	\N	1
 21	Test User	Test	testuser1905487739@test.com	$2a$10$3Mtxlb.NqO9hVaPrlbT5lOdwWqYV3MMI6Hhv2z1weBAvmeDusYSwa	1	2025-10-10 15:50:04.545947	\N	1
 22	Test User	Auto	testuser155004@auto.com	$2a$10$jxu07m17dfiS9taBi6rTuu0Qo8Oqt6Rw9yVa1auE6yF4pTcULR0tu	0	2025-10-10 15:50:05.045665	\N	1
-2	User	Test	user@recetas.com	$2a$06$WKZzXwq8yrrjIGRdfYYzQucfwFH53ssYZ9oKlzuYDZw0GmUVcsbpK	1	2023-06-27 10:00:19	\N	1
 3	Claudio	Sanchez	cla.sanchezt@duo	$2a$06$WKZzXwq8yrrjIGRdfYYzQucfwFH53ssYZ9oKlzuYDZw0GmUVcsbpK	1	2024-05-26 17:15:11	\N	2
 1	Admin	System	admin@recetas.com	$2a$06$WKZzXwq8yrrjIGRdfYYzQucfwFH53ssYZ9oKlzuYDZw0GmUVcsbpK	1	2023-06-26 23:58:57	\N	3
+2	E2E Modified	Test	user@recetas.com	$2a$06$WKZzXwq8yrrjIGRdfYYzQucfwFH53ssYZ9oKlzuYDZw0GmUVcsbpK	0	2023-06-27 10:00:19	\N	1
 \.
-
-
---
--- (carrusel sequence setval removed)
--- SELECT pg_catalog.setval('public.carrusel_id_carrusel_seq', 1, false);
--- (removed) carrusel table and sequence references because carrusel was intentionally eliminated from schema
 
 
 --
@@ -9805,42 +9869,42 @@ SELECT pg_catalog.setval('public.categoria_id_cat_seq', 45, true);
 -- Name: comentario_id_comentario_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.comentario_id_comentario_seq', 1466, true);
+SELECT pg_catalog.setval('public.comentario_id_comentario_seq', 1478, true);
 
 
 --
 -- Name: donacion_id_donacion_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.donacion_id_donacion_seq', 3, true);
+SELECT pg_catalog.setval('public.donacion_id_donacion_seq', 9, true);
 
 
 --
 -- Name: estrella_id_estrella_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.estrella_id_estrella_seq', 1282, true);
+SELECT pg_catalog.setval('public.estrella_id_estrella_seq', 1293, true);
 
 
 --
 -- Name: favorito_id_fav_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.favorito_id_fav_seq', 647, true);
+SELECT pg_catalog.setval('public.favorito_id_fav_seq', 658, true);
 
 
 --
 -- Name: ingrediente_new_id_ingrediente_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.ingrediente_new_id_ingrediente_seq', 3210, true);
+SELECT pg_catalog.setval('public.ingrediente_new_id_ingrediente_seq', 3305, true);
 
 
 --
 -- Name: me_gusta_id_megusta_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.me_gusta_id_megusta_seq', 1925, true);
+SELECT pg_catalog.setval('public.me_gusta_id_megusta_seq', 1937, true);
 
 
 --
@@ -9861,7 +9925,7 @@ SELECT pg_catalog.setval('public.perfil_id_perfil_seq', 3, true);
 -- Name: receta_id_receta_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.receta_id_receta_seq', 658, true);
+SELECT pg_catalog.setval('public.receta_id_receta_seq', 678, true);
 
 
 --
@@ -9875,12 +9939,7 @@ SELECT pg_catalog.setval('public.sesion_pago_id_sesion_seq', 1, false);
 -- Name: usuario_id_usr_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.usuario_id_usr_seq', 22, true);
-
-
---
--- (carrusel primary key constraint removed)
-    -- ADD CONSTRAINT carrusel_pkey PRIMARY KEY (id_carrusel); -- removed (carrusel table eliminated)
+SELECT pg_catalog.setval('public.usuario_id_usr_seq', 27, true);
 
 
 --
@@ -10099,11 +10158,6 @@ CREATE TRIGGER set_fecha_actualizacion BEFORE UPDATE ON public.sesion_pago FOR E
 
 
 --
--- (carrusel fk constraint removed)
-    -- ADD CONSTRAINT carrusel_id_usr_fkey FOREIGN KEY (id_usr) REFERENCES public.usuario(id_usr); -- removed (carrusel table eliminated)
-
-
---
 -- Name: categoria categoria_id_usr_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -10251,5 +10305,6 @@ ALTER TABLE ONLY public.usuario
 -- PostgreSQL database dump complete
 --
 
-\unrestrict QjOblnNyCu2vWqJS2YdUrsIes5UbuPto4dtHzP6DHxU2yWOgdHuEITQkE7eEBka
+\unrestrict hv4TYBV82P2ChcZTg34MD6kDHGcK6e3OJjgYBjpiCtZHtX4925pXBwQ1mkzVlQu
+
 

@@ -68,6 +68,22 @@ find "$WORKDIR" -maxdepth 2 -type f -printf '  - %P\n' || true
 IMAGES_TAR="$(ls -1 "$WORKDIR"/docker/images_*.tar 2>/dev/null | head -n1 || true)"
 DB_SQL="$(ls -1 "$WORKDIR"/database/pgdump_*.sql 2>/dev/null | head -n1 || true)"
 
+# Verificar prerequisitos: docker y docker-compose/docker compose
+DOCKER_COMPOSE_CMD=""
+if ! command -v docker >/dev/null 2>&1; then
+  echo "[ERROR] Docker no está instalado o no está en PATH. Instala Docker antes de continuar." >&2
+  exit 2
+fi
+
+# Preferir el subcomando 'docker compose' si está disponible, si no usar 'docker-compose' binario
+if docker compose version >/dev/null 2>&1; then
+  DOCKER_COMPOSE_CMD="docker compose"
+elif command -v docker-compose >/dev/null 2>&1; then
+  DOCKER_COMPOSE_CMD="docker-compose"
+else
+  echo "[WARN] No se encontró comando 'docker compose' ni 'docker-compose'. Algunas operaciones pueden fallar." >&2
+fi
+
 # 1) Cargar imágenes
 if [[ -n "$IMAGES_TAR" && -f "$IMAGES_TAR" ]]; then
   echo "[INFO] Cargando imágenes Docker desde: $IMAGES_TAR"
@@ -94,10 +110,38 @@ if [[ -d "$VOLUMES_DIR" ]]; then
         docker volume create "$vol_name" >/dev/null
         echo "[INFO]    Volumen creado: $vol_name"
       fi
-      docker run --rm \
-        -v "$vol_name:/volume" \
-        -v "$VOLUMES_DIR:/backup" \
-        alpine sh -c "set -e; rm -rf /volume/*; tar -xzf /backup/$base -C /volume"
+
+      echo "[INFO]    Restaurando desde archivo: $vf"
+      # Montar el archivo tar.gz individualmente (bind) y el volumen como volume
+      # Usa --mount para evitar problemas de interpretación de rutas y dejar claro el tipo de mount
+      # Intento preferido: --mount (más explícito). Si falla, usar contenedor temporal + docker cp (funciona en Docker Desktop/Git Bash).
+      if docker run --rm \
+        --mount type=volume,source="$vol_name",target=/volume \
+        --mount type=bind,source="$vf",target=/backup/backup.tar.gz,readonly \
+        alpine sh -c 'set -e; rm -rf /volume/*; tar -xzf /backup/backup.tar.gz -C /volume'; then
+        echo "[OK]   Volumen restaurado (via --mount): $vol_name"
+      else
+        echo "[WARN] --mount falló, intentando extracción vía contenedor temporal para $vol_name" >&2
+        # Contenedor temporal: montar solo el volumen y usar docker cp para evitar path translation issues
+        tmp_ctr="restore_tmp_$(date +%s)_$RANDOM"
+        if ! docker run -d --name "$tmp_ctr" -v "$vol_name:/volume" alpine sleep 600 >/dev/null; then
+          echo "[ERROR] No se pudo crear contenedor temporal $tmp_ctr para $vol_name" >&2
+          exit 1
+        fi
+        # Copiar archivo dentro del contenedor y extraer
+        if ! docker cp "$vf" "$tmp_ctr:/backup.tar.gz"; then
+          echo "[ERROR] docker cp falló para $vf -> $tmp_ctr:/backup.tar.gz" >&2
+          docker rm -f "$tmp_ctr" >/dev/null || true
+          exit 1
+        fi
+        if ! docker exec "$tmp_ctr" sh -c 'rm -rf /volume/* && tar -xzf /backup.tar.gz -C /volume'; then
+          echo "[ERROR] Extracción dentro del contenedor temporal falló para $vol_name" >&2
+          docker rm -f "$tmp_ctr" >/dev/null || true
+          exit 1
+        fi
+        docker rm -f "$tmp_ctr" >/dev/null || true
+        echo "[OK]   Volumen restaurado (via contenedor temporal): $vol_name"
+      fi
       echo "[OK]   Volumen restaurado: $vol_name"
     done
   else
@@ -166,10 +210,15 @@ fi
 # 5) Levantar stack si así se solicitó
 if [[ "$COMPOSE_UP" == "yes" && -n "$compose_src" ]]; then
   echo "[INFO] Levantando stack con: $DEPLOY_DIR/$compose_name"
+  # Usar la variable DOCKER_COMPOSE_CMD detectada
+  if [[ -z "$DOCKER_COMPOSE_CMD" ]]; then
+    echo "[ERROR] No se encontró un comando de docker-compose funcional. Abortando levantado." >&2
+    exit 3
+  fi
   if [[ -n "${ENV_FILE:-}" && -f "$ENV_FILE" ]]; then
-    (cd "$DEPLOY_DIR" && docker compose -f "$compose_name" --env-file "$ENV_FILE" up -d)
+    (cd "$DEPLOY_DIR" && eval "$DOCKER_COMPOSE_CMD -f \"$compose_name\" --env-file \"$ENV_FILE\" up -d")
   else
-    (cd "$DEPLOY_DIR" && docker compose -f "$compose_name" up -d)
+    (cd "$DEPLOY_DIR" && eval "$DOCKER_COMPOSE_CMD -f \"$compose_name\" up -d")
   fi
   echo "[OK]   Stack levantado"
 else

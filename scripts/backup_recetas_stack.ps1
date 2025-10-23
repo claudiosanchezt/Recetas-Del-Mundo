@@ -111,20 +111,26 @@ try {
   Write-Ok "Volumen $PGADMIN_VOLUME respaldado"
 } catch { Write-Warn "Volumen $PGADMIN_VOLUME no existe o no accesible" }
 
-# 3) Imágenes Docker
-Write-Info "Guardando imágenes del stack"
+# 3) Imágenes Docker (priorizar contenedores en ejecución)
+Write-Info "Guardando imágenes del stack (priorizando contenedores en ejecución)"
 $composeFile = Join-Path $RootDir 'docker-compose.yml'
 $images = @()
 try {
-  # Preferir repository:tag para evitar IDs crudos que generan errores
-  $images = docker compose -f $composeFile images --format "{{.Repository}}:{{.Tag}}" 2>$null |
-            Where-Object { $_ -and ($_ -notmatch '<none>') } |
-            Sort-Object -Unique
-} catch { }
+  # 1) imágenes de contenedores en ejecución
+  $running = docker ps --format '{{.Image}}' 2>$null | Sort-Object -Unique
+  if ($running) { $images = $running }
+  # 2) si no hay contenedores en ejecución, intenta docker compose images
+  if (-not $images -or $images.Count -eq 0) {
+    try {
+      $composeImgs = docker compose -f $composeFile images --format "{{.Repository}}:{{.Tag}}" 2>$null | Where-Object { $_ -and ($_ -notmatch '<none>') } | Sort-Object -Unique
+      if ($composeImgs) { $images = $composeImgs }
+    } catch {}
+  }
+} catch {}
 if (-not $images -or $images.Count -eq 0) {
   $images = @('postgres:15-alpine','dpage/pgadmin4:8.11', $BACKEND_IMAGE_NAME)
 }
-Write-Info ("Imágenes: {0}" -f ($images -join ', '))
+Write-Info ("Imágenes a salvar: {0}" -f ($images -join ', '))
 $imagesTar = Join-Path (Join-Path $staging 'docker') ("images_{0}.tar" -f $timestamp)
 try {
   docker save -o $imagesTar $images

@@ -1,13 +1,12 @@
 services:
   postgres:
-    image: postgres:15
+    image:  postgres:15
     container_name: api-recetas-postgres
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-api_recetas_postgres}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-kz!M8LYC6x&vFTy}
-    ports:
-      - "5432:5432"
+    # Not published to host by default for better security; available inside docker network
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./database:/docker-entrypoint-initdb.d:ro
@@ -66,6 +65,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 12
+    volumes:
+      - ./docker/wait-for-postgres.sh:/app/wait-for-postgres.sh:ro
+    command: ["/bin/sh","-c","/app/wait-for-postgres.sh postgres 5432 ${POSTGRES_USER:-postgres} 30 2 && java -jar /app/app.jar"]
 
 volumes:
   postgres_data:

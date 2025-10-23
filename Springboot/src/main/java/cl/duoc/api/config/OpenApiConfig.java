@@ -17,7 +17,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
-import org.springdoc.core.customizers.OpenApiCustomiser;
 import io.swagger.v3.oas.models.media.Schema;
 
 @Configuration
@@ -55,33 +54,6 @@ public class OpenApiConfig {
                     .name("MIT License")
                     .url("https://opensource.org/licenses/MIT"))
             );
-    }
-
-    /**
-     * Marca la propiedad `fechaCreacion` como readOnly en todos los schemas generados
-     * para que no aparezca como campo requerido en los request bodies.
-     */
-    @Bean
-    public OpenApiCustomiser fechaCreacionReadOnlyCustomizer() {
-        return openApi -> {
-            if (openApi.getComponents() == null) return;
-            Map<String, Schema> schemas = openApi.getComponents().getSchemas();
-            if (schemas == null) return;
-            schemas.forEach((name, schema) -> {
-                if (schema == null) return;
-                if (schema.getProperties() != null && schema.getProperties().containsKey("fechaCreacion")) {
-                    Object p = schema.getProperties().get("fechaCreacion");
-                    if (p instanceof Schema) {
-                        ((Schema) p).setReadOnly(Boolean.TRUE);
-                    }
-                    // If the schema declared 'fechaCreacion' as required, remove it
-                    List<String> req = schema.getRequired();
-                    if (req != null && req.contains("fechaCreacion")) {
-                        req.remove("fechaCreacion");
-                    }
-                }
-            });
-        };
     }
 
     private String buildDescription() {
