@@ -100,6 +100,12 @@ public class AuthController {
         Map<String, Object> response = new HashMap<>();
         
         try {
+            // Validación mínima: evitar intentar guardar NULL en password
+            if (usuario.getPassword() == null || usuario.getPassword().trim().isEmpty()) {
+                response.put("exito", false);
+                response.put("mensaje", "La contraseña es obligatoria");
+                return ResponseEntity.ok(response);
+            }
             if (usuarioService.findByEmail(usuario.getEmail()) != null) {
                 response.put("exito", false);
                 response.put("mensaje", "El email ya esta registrado");

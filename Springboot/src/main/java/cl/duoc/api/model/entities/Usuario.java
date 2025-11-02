@@ -2,6 +2,7 @@ package cl.duoc.api.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -25,7 +26,8 @@ public class Usuario {
     private String email;
 
     @Column(name = "password", nullable = false, length = 255)
-    @JsonIgnore
+    // Allow incoming JSON to set the password but avoid serializing it in responses
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(name = "estado", nullable = false)
