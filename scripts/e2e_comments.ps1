@@ -22,11 +22,59 @@ function Get-Token {
 $token = Get-Token
 $headers = @{ Authorization = "Bearer $token" }
 
+# Decode token payload helper
+function Decode-JwtPayload($jwt) {
+    $parts = $jwt -split '\.'
+    if ($parts.Length -lt 2) { return $null }
+    $payload = $parts[1]
+    switch ($payload.Length % 4) { 2 { $payload += '==' } 3 { $payload += '=' } default { } }
+    try {
+        $bytes = [System.Convert]::FromBase64String($payload)
+        $json = [System.Text.Encoding]::UTF8.GetString($bytes)
+        return $json | ConvertFrom-Json
+    } catch { return $null }
+}
+
+# Extract idUsuario from token
+$idUsuario = $null
+$payload = Decode-JwtPayload $token
+if ($payload) {
+    if ($payload.id_usr) { $idUsuario = $payload.id_usr }
+    elseif ($payload.idUsr) { $idUsuario = $payload.idUsr }
+    elseif ($payload.sub) { $idUsuario = $payload.sub }
+}
+if (-not $idUsuario) { Write-Host "Warning: no user id found in token; falling back to 1"; $idUsuario = 1 }
+
+# Pick a receta dynamically to avoid FK issues
+Write-Host "Picking a receta via GET /recetas"
+try {
+    $recetasResp = Invoke-RestMethod -Uri "$base/recetas" -Method Get -ErrorAction Stop
+} catch {
+    Write-Host "Failed to list recetas to pick an id: $_.Exception.Message"
+    if ($_.Exception.Response) { $s=(New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())).ReadToEnd(); Write-Host 'BODY:'; Write-Host $s }
+    exit 1
+}
+
+function Get-FirstRecetaId($recetasObj) {
+    if (-not $recetasObj) { return $null }
+    $candidate = $null
+    if ($recetasObj -is [System.Array] -and $recetasObj.Length -gt 0) { $candidate = $recetasObj[0] }
+    elseif ($recetasObj.data -and $recetasObj.data[0]) { $candidate = $recetasObj.data[0] }
+    else { $candidate = $recetasObj }
+    foreach ($prop in @('idReceta','id_receta','id','idReceta')) {
+        if ($candidate.PSObject.Properties.Name -contains $prop) { return $candidate.$prop }
+    }
+    return $null
+}
+
+$idReceta = Get-FirstRecetaId $recetasResp
+if (-not $idReceta) { Write-Host 'Could not determine receta id from /recetas response, falling back to 1'; $idReceta = 1 }
+
 # 1) Crear comentario
 Write-Host "-> Creando comentario (endpoint espera query params idUsuario,idReceta,texto)..."
 try {
-    $qs = @{ idUsuario = 1; idReceta = 1; texto = 'Comentario E2E inicial' }
-    $url = "$base/recetas/comentarios?idUsuario=$($qs.idUsuario)&idReceta=$($qs.idReceta)&texto=$( [System.Uri]::EscapeDataString($qs.texto) )"
+    $qs = @{ id_usr = $idUsuario; id_receta = $idReceta; texto = 'Comentario E2E inicial' }
+    $url = "$base/recetas/comentarios?id_usr=$($qs.id_usr)&id_receta=$($qs.id_receta)&texto=$( [System.Uri]::EscapeDataString($qs.texto) )"
     $createdResp = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -ErrorAction Stop
     $createdResp | ConvertTo-Json -Depth 10 | Write-Host
 } catch {

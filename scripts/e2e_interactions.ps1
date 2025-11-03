@@ -46,23 +46,23 @@ $recetaId = 1
 
 # 1) Me Gusta: POST then DELETE
 Write-Host "\n== Me Gusta: crear -> borrar =="
-$postMg = Do-Request -method 'POST' -url "$baseUrl/recetas/megusta?idUsuario=$usuarioId&idReceta=$recetaId" -headers $h -bodyJson $null
+$postMg = Do-Request -method 'POST' -url "$baseUrl/recetas/megusta?id_usr=$usuarioId&id_receta=$recetaId" -headers $h -bodyJson $null
 Write-Host "POST /recetas/megusta response:"; $postMg | ConvertTo-Json -Depth 5
 
-$delMg = Do-Request -method 'DELETE' -url "$baseUrl/recetas/megusta?idUsuario=$usuarioId&idReceta=$recetaId" -headers $h -bodyJson $null
+$delMg = Do-Request -method 'DELETE' -url "$baseUrl/recetas/megusta?id_usr=$usuarioId&id_receta=$recetaId" -headers $h -bodyJson $null
 Write-Host "DELETE /recetas/megusta response:"; $delMg | ConvertTo-Json -Depth 5
 
 # 2) Favorito: POST then DELETE
 Write-Host "\n== Favorito: crear -> borrar =="
-$postFav = Do-Request -method 'POST' -url "$baseUrl/recetas/favoritos?idUsuario=$usuarioId&idReceta=$recetaId" -headers $h -bodyJson $null
+$postFav = Do-Request -method 'POST' -url "$baseUrl/recetas/favoritos?id_usr=$usuarioId&id_receta=$recetaId" -headers $h -bodyJson $null
 Write-Host "POST /recetas/favoritos response:"; $postFav | ConvertTo-Json -Depth 5
 
-$delFav = Do-Request -method 'DELETE' -url "$baseUrl/recetas/favoritos?idUsuario=$usuarioId&idReceta=$recetaId" -headers $h -bodyJson $null
+$delFav = Do-Request -method 'DELETE' -url "$baseUrl/recetas/favoritos?id_usr=$usuarioId&id_receta=$recetaId" -headers $h -bodyJson $null
 Write-Host "DELETE /recetas/favoritos response:"; $delFav | ConvertTo-Json -Depth 5
 
 # 3) Estrella: POST (crear/update) and PUT (update)
 Write-Host "\n== Estrella: crear -> actualizar =="
-$postEst = Do-Request -method 'POST' -url "$baseUrl/recetas/estrellas?idUsuario=$usuarioId&idReceta=$recetaId&estrellas=4" -headers $h -bodyJson $null
+$postEst = Do-Request -method 'POST' -url "$baseUrl/recetas/estrellas?id_usr=$usuarioId&id_receta=$recetaId&estrellas=4" -headers $h -bodyJson $null
 Write-Host "POST /recetas/estrellas response:"; $postEst | ConvertTo-Json -Depth 5
 
 Write-Host "(No se hara PUT de actualizacion para estrellas - no requerido)"

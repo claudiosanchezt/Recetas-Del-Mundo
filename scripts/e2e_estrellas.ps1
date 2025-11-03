@@ -19,8 +19,59 @@ function Get-Token {
 $token = Get-Token
 $headers = @{ Authorization = "Bearer $token" }
 
-$idUsuario = 1
-$idReceta = 1
+# Decode token payload helper (safe)
+function Decode-JwtPayload($jwt) {
+    $parts = $jwt -split '\.'
+    if ($parts.Length -lt 2) { return $null }
+    $payload = $parts[1]
+    switch ($payload.Length % 4) { 2 { $payload += '==' } 3 { $payload += '=' } default { } }
+    try {
+        $bytes = [System.Convert]::FromBase64String($payload)
+        $json = [System.Text.Encoding]::UTF8.GetString($bytes)
+        return $json | ConvertFrom-Json
+    } catch { return $null }
+}
+
+# Extract user id from token (avoid hardcoding)
+$idUsuario = $null
+$payload = Decode-JwtPayload $token
+if ($payload) {
+    if ($payload.id_usr) { $idUsuario = $payload.id_usr }
+    elseif ($payload.idUsr) { $idUsuario = $payload.idUsr }
+    elseif ($payload.sub) { $idUsuario = $payload.sub }
+}
+if (-not $idUsuario) {
+    Write-Host "Warning: no user id found in token; falling back to 1"
+    $idUsuario = 1
+}
+
+# Buscar una receta existente para usar en la prueba
+Write-Host "-> Buscando una receta existente via GET /recetas"
+try {
+    $allRec = Invoke-RestMethod -Uri "$base/recetas" -Method Get -ErrorAction Stop
+} catch {
+    Write-Host "ERROR al listar recetas: $_.Exception.Message"
+    if ($_.Exception.Response) { $s=(New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())).ReadToEnd(); Write-Host 'BODY:'; Write-Host $s }
+    exit 1
+}
+
+$idReceta = $null
+if ($allRec -and $allRec.data -and $allRec.data.Count -gt 0) {
+    $first = $allRec.data[0]
+    # intentar varias propiedades posibles
+    $possible = @('idReceta','id_receta','id','idRecet')
+    foreach ($p in $possible) {
+        try {
+            $val = $first.$p
+        } catch { $val = $null }
+        if ($val) { $idReceta = $val; break }
+    }
+}
+if (-not $idReceta) {
+    Write-Host "No se encontró ninguna receta válida para usar en la prueba. Abortando."
+    exit 1
+}
+Write-Host "Usando receta id=$idReceta para la prueba"
 
 # 1) Agregar calificacion 4
 $estrellas = 4

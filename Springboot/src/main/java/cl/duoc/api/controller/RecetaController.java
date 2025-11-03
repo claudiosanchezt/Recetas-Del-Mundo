@@ -24,6 +24,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +38,8 @@ import java.util.Collections;
 @CrossOrigin(origins = "*")
 @Tag(name = "🍽️ Recetas", description = "API completa para gestión de recetas con ingredientes")
 public class RecetaController {
+
+    private static final Logger logger = LoggerFactory.getLogger(RecetaController.class);
 
     @Autowired
     private RecetaService recetaService;
@@ -77,7 +82,7 @@ public class RecetaController {
     public ResponseEntity<Map<String, Object>> obtenerRecetas() {
         Map<String, Object> response = new HashMap<>();
         
-        try {
+    try {
             List<Receta> recetas = recetaService.findAll();
             response.put("exito", true);
             response.put("data", recetas);
@@ -555,11 +560,36 @@ public class RecetaController {
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     public ResponseEntity<Map<String, Object>> agregarFavorito(
-            @RequestParam Integer idUsuario, 
-            @RequestParam Integer idReceta) {
+            HttpServletRequest request,
+            @RequestParam(required = false) Integer idUsuario, 
+            @RequestParam(required = false) Integer idReceta) {
         Map<String, Object> response = new HashMap<>();
         
         try {
+            // Preferir token en header Authorization; si no se proporciona idUsuario, extraer del token
+            String authHeader = request.getHeader("Authorization");
+            Integer idFromToken = getUserIdFromToken(authHeader);
+            if (idUsuario == null && idFromToken != null) {
+                idUsuario = idFromToken;
+            }
+            // Aceptar variantes de nombres de parámetros (id_usr / id_receta)
+            if (idUsuario == null) {
+                String alt = request.getParameter("id_usr");
+                if (alt != null) {
+                    try { idUsuario = Integer.parseInt(alt); } catch (NumberFormatException ignore) { }
+                }
+            }
+            if (idReceta == null) {
+                String alt = request.getParameter("id_receta");
+                if (alt != null) {
+                    try { idReceta = Integer.parseInt(alt); } catch (NumberFormatException ignore) { }
+                }
+            }
+            if (idUsuario == null || idReceta == null) {
+                response.put("exito", false);
+                response.put("mensaje", "Parámetros requeridos: idUsuario (o id_usr) y idReceta (o id_receta). Asegúrese de incluir el header Authorization con Bearer <token> si no envía idUsuario.");
+                return ResponseEntity.badRequest().body(response);
+            }
             // Crear favorito usando el servicio existente
             Favorito favorito = new Favorito();
             favorito.setUsuario(new Usuario(idUsuario));
@@ -584,11 +614,36 @@ public class RecetaController {
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     public ResponseEntity<Map<String, Object>> quitarFavorito(
-            @RequestParam Integer idUsuario, 
-            @RequestParam Integer idReceta) {
+            HttpServletRequest request,
+            @RequestParam(required = false) Integer idUsuario, 
+            @RequestParam(required = false) Integer idReceta) {
         Map<String, Object> response = new HashMap<>();
         
         try {
+            // Preferir token en header Authorization; si no se proporciona idUsuario, extraer del token
+            String authHeader = request.getHeader("Authorization");
+            Integer idFromToken = getUserIdFromToken(authHeader);
+            if (idUsuario == null && idFromToken != null) {
+                idUsuario = idFromToken;
+            }
+            // Aceptar variantes de nombres de parámetros (id_usr / id_receta)
+            if (idUsuario == null) {
+                String alt = request.getParameter("id_usr");
+                if (alt != null) {
+                    try { idUsuario = Integer.parseInt(alt); } catch (NumberFormatException ignore) { }
+                }
+            }
+            if (idReceta == null) {
+                String alt = request.getParameter("id_receta");
+                if (alt != null) {
+                    try { idReceta = Integer.parseInt(alt); } catch (NumberFormatException ignore) { }
+                }
+            }
+            if (idUsuario == null || idReceta == null) {
+                response.put("exito", false);
+                response.put("mensaje", "Parámetros requeridos: idUsuario (o id_usr) y idReceta (o id_receta). Asegúrese de incluir el header Authorization con Bearer <token> si no envía idUsuario.");
+                return ResponseEntity.badRequest().body(response);
+            }
             favoritoService.deleteByRecetaAndUsuario(idReceta, idUsuario);
             response.put("exito", true);
             response.put("mensaje", "Receta removida de favoritos");
@@ -664,11 +719,52 @@ public class RecetaController {
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     public ResponseEntity<Map<String, Object>> darMeGusta(
-            @RequestParam Integer idUsuario, 
-            @RequestParam Integer idReceta) {
+            HttpServletRequest request,
+            @RequestParam(required = false) Integer idUsuario, 
+            @RequestParam(required = false) Integer idReceta) {
         Map<String, Object> response = new HashMap<>();
         
         try {
+            logger.info("POST /recetas/megusta called - query='{}' AuthorizationPresent='{}'", request.getQueryString(), request.getHeader("Authorization") != null ? "yes" : "no");
+            // Preferir token en header Authorization; si no se proporciona idUsuario, extraer del token
+            String authHeader = request.getHeader("Authorization");
+            Integer idFromToken = getUserIdFromToken(authHeader);
+            // Si idUsuario no fue entregado por params, intentar usar id desde token
+            if (idUsuario == null && idFromToken != null) {
+                idUsuario = idFromToken;
+            }
+            // Si se entregó idUsuario y también hay token, validar que coincidan
+            if (idUsuario != null && idFromToken != null && !idUsuario.equals(idFromToken)) {
+                response.put("exito", false);
+                response.put("mensaje", "Token no corresponde al idUsuario proporcionado");
+                return ResponseEntity.status(403).body(response);
+            }
+            // Aceptar variantes de nombres de parámetros (compatibilidad con scripts/frontend)
+            if (idUsuario == null) {
+                String alt = request.getParameter("id_usr");
+                if (alt != null) {
+                    try {
+                        idUsuario = Integer.parseInt(alt);
+                    } catch (NumberFormatException nfe) {
+                        // ignore, handled below
+                    }
+                }
+            }
+            if (idReceta == null) {
+                String alt = request.getParameter("id_receta");
+                if (alt != null) {
+                    try {
+                        idReceta = Integer.parseInt(alt);
+                    } catch (NumberFormatException nfe) {
+                        // ignore, handled below
+                    }
+                }
+            }
+            if (idUsuario == null || idReceta == null) {
+                response.put("exito", false);
+                response.put("mensaje", "Parámetros requeridos: idUsuario (o id_usr) y idReceta (o id_receta). Asegúrese de incluir el header Authorization con Bearer <token> si no envía idUsuario.");
+                return ResponseEntity.badRequest().body(response);
+            }
             // Crear meGusta usando el servicio existente
             MeGusta meGusta = new MeGusta();
             meGusta.setUsuario(new Usuario(idUsuario));
@@ -693,12 +789,52 @@ public class RecetaController {
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     public ResponseEntity<Map<String, Object>> quitarMeGusta(
-            @RequestParam Integer idUsuario, 
-            @RequestParam Integer idReceta) {
+            HttpServletRequest request,
+            @RequestParam(required = false) Integer idUsuario, 
+            @RequestParam(required = false) Integer idReceta) {
         Map<String, Object> response = new HashMap<>();
         
         try {
-            meGustaService.deleteByRecetaAndUsuario(idReceta, idUsuario);
+            // Preferir token en header Authorization; si no se proporciona idUsuario, extraer del token
+            String authHeader = request.getHeader("Authorization");
+            logger.info("DELETE /recetas/megusta called - query='{}' AuthorizationPresent='{}'", request.getQueryString(), request.getHeader("Authorization") != null ? "yes" : "no");
+            Integer idFromToken = getUserIdFromToken(authHeader);
+            if (idUsuario == null && idFromToken != null) {
+                idUsuario = idFromToken;
+            }
+            // Si se entregó idUsuario y también hay token, validar que coincidan
+            if (idUsuario != null && idFromToken != null && !idUsuario.equals(idFromToken)) {
+                response.put("exito", false);
+                response.put("mensaje", "Token no corresponde al idUsuario proporcionado");
+                return ResponseEntity.status(403).body(response);
+            }
+            // Aceptar variantes de nombres de parámetros (compatibilidad con scripts/frontend)
+            if (idUsuario == null) {
+                String alt = request.getParameter("id_usr");
+                if (alt != null) {
+                    try {
+                        idUsuario = Integer.parseInt(alt);
+                    } catch (NumberFormatException nfe) {
+                        // ignore, handled below
+                    }
+                }
+            }
+            if (idReceta == null) {
+                String alt = request.getParameter("id_receta");
+                if (alt != null) {
+                    try {
+                        idReceta = Integer.parseInt(alt);
+                    } catch (NumberFormatException nfe) {
+                        // ignore, handled below
+                    }
+                }
+            }
+            if (idUsuario == null || idReceta == null) {
+                response.put("exito", false);
+                response.put("mensaje", "Parámetros requeridos: idUsuario (o id_usr) y idReceta (o id_receta). Asegúrese de incluir el header Authorization con Bearer <token> si no envía idUsuario.");
+                return ResponseEntity.badRequest().body(response);
+            }
+            meGustaService.deleteByRecetaAndUsuarioTransactional(idReceta, idUsuario);
             response.put("exito", true);
             response.put("mensaje", "Me gusta removido");
         } catch (Exception e) {
@@ -773,23 +909,47 @@ public class RecetaController {
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     public ResponseEntity<Map<String, Object>> calificarReceta(
-            @RequestParam Integer idUsuario, 
+            HttpServletRequest request,
+            @RequestParam(required = false) Integer idUsuario, 
             @RequestParam Integer idReceta,
             @RequestParam Short estrellas) {
         Map<String, Object> response = new HashMap<>();
         
         try {
+            // Preferir id desde token si está presente
+            String authHeader = request.getHeader("Authorization");
+            Integer idFromToken = getUserIdFromToken(authHeader);
+            if (idUsuario == null && idFromToken != null) {
+                idUsuario = idFromToken;
+            }
+            if (idUsuario != null && idFromToken != null && !idUsuario.equals(idFromToken)) {
+                response.put("exito", false);
+                response.put("mensaje", "Token no corresponde al idUsuario proporcionado");
+                return ResponseEntity.status(403).body(response);
+            }
             if (estrellas < 1 || estrellas > 5) {
                 response.put("exito", false);
                 response.put("mensaje", "Las estrellas deben ser entre 1 y 5");
                 return ResponseEntity.ok(response);
             }
-            
-            // Crear y guardar estrella usando servicio real
-            Estrella estrella = new Estrella();
-            estrella.setUsuario(new Usuario(idUsuario));
-            estrella.setReceta(new Receta(idReceta));
-            estrella.setValor(estrellas);
+            if (idUsuario == null) {
+                response.put("exito", false);
+                response.put("mensaje", "Parámetro idUsuario faltante y no se pudo extraer del token");
+                return ResponseEntity.badRequest().body(response);
+            }
+
+            // Upsert: si ya existe calificación del usuario para la receta, actualizarla
+            Optional<Estrella> existing = estrellaService.getEstrellaByUsuarioAndReceta(idUsuario, idReceta);
+            Estrella estrella;
+            if (existing.isPresent()) {
+                estrella = existing.get();
+                estrella.setValor(estrellas);
+            } else {
+                estrella = new Estrella();
+                estrella.setUsuario(new Usuario(idUsuario));
+                estrella.setReceta(new Receta(idReceta));
+                estrella.setValor(estrellas);
+            }
             estrella = estrellaService.save(estrella);
             response.put("exito", true);
             response.put("mensaje", "Calificación registrada");
@@ -926,18 +1086,36 @@ public class RecetaController {
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     public ResponseEntity<Map<String, Object>> agregarComentario(
-            @RequestParam Integer idUsuario, 
-            @RequestParam Integer idReceta,
-            @RequestParam String texto) {
+            HttpServletRequest request,
+            @RequestParam(required = false) Integer idUsuario, 
+            @RequestParam(required = false) Integer idReceta,
+            @RequestParam(required = false) String texto) {
         Map<String, Object> response = new HashMap<>();
         
         try {
+            // Preferir token in Authorization and accept alternate param names
+            String authHeader = request.getHeader("Authorization");
+            Integer idFromToken = getUserIdFromToken(authHeader);
+            if (idUsuario == null && idFromToken != null) { idUsuario = idFromToken; }
+            if (idUsuario == null) {
+                String alt = request.getParameter("id_usr");
+                if (alt != null) { try { idUsuario = Integer.parseInt(alt); } catch (NumberFormatException ignore) { } }
+            }
+            if (idReceta == null) {
+                String alt = request.getParameter("id_receta");
+                if (alt != null) { try { idReceta = Integer.parseInt(alt); } catch (NumberFormatException ignore) { } }
+            }
             if (texto == null || texto.trim().isEmpty()) {
                 response.put("exito", false);
                 response.put("mensaje", "El texto del comentario no puede estar vacío");
                 return ResponseEntity.ok(response);
             }
-            
+            if (idUsuario == null || idReceta == null) {
+                response.put("exito", false);
+                response.put("mensaje", "Parámetros requeridos: idUsuario (o id_usr) y idReceta (o id_receta). Asegúrese de incluir el header Authorization con Bearer <token> si no envía idUsuario.");
+                return ResponseEntity.badRequest().body(response);
+            }
+
             // Crear comentario básico por ahora
             Comentario comentario = new Comentario();
             comentario.setUsuario(new Usuario(idUsuario));
@@ -1081,15 +1259,28 @@ public class RecetaController {
                 response.put("mensaje", "Las estrellas deben ser entre 1 y 5");
                 return ResponseEntity.ok(response);
             }
-            
+            // Verificar que la calificación existe
             Optional<Estrella> estrellaOpt = estrellaService.getEstrellaById(id);
             if (!estrellaOpt.isPresent()) {
                 response.put("exito", false);
                 response.put("mensaje", "Calificación no encontrada con ID: " + id);
                 return ResponseEntity.ok(response);
             }
-            
             Estrella estrella = estrellaOpt.get();
+
+            // Verificar ownership: solo el usuario dueño puede actualizar
+            // Extraer id del token
+            String authHeader = null; // no direct request in signature, try to get from context
+            try {
+                authHeader = ((jakarta.servlet.http.HttpServletRequest) org.springframework.web.context.request.RequestContextHolder.currentRequestAttributes().resolveReference(org.springframework.web.context.request.RequestAttributes.REFERENCE_REQUEST)).getHeader("Authorization");
+            } catch (Exception ignore) { }
+            Integer idFromToken = getUserIdFromToken(authHeader);
+            if (idFromToken != null && !idFromToken.equals(estrella.getUsuario().getIdUsr())) {
+                response.put("exito", false);
+                response.put("mensaje", "No autorizado para actualizar esta calificación");
+                return ResponseEntity.status(403).body(response);
+            }
+
             estrella.setValor(estrellas);
             estrella = estrellaService.save(estrella);
             
@@ -1123,7 +1314,18 @@ public class RecetaController {
                 response.put("mensaje", "Calificación no encontrada con ID: " + id);
                 return ResponseEntity.ok(response);
             }
-            
+            // Verificar ownership: solo el usuario dueño puede eliminar
+            String authHeader = null;
+            try {
+                authHeader = ((jakarta.servlet.http.HttpServletRequest) org.springframework.web.context.request.RequestContextHolder.currentRequestAttributes().resolveReference(org.springframework.web.context.request.RequestAttributes.REFERENCE_REQUEST)).getHeader("Authorization");
+            } catch (Exception ignore) { }
+            Integer idFromToken = getUserIdFromToken(authHeader);
+            if (idFromToken != null && !idFromToken.equals(estrella.get().getUsuario().getIdUsr())) {
+                response.put("exito", false);
+                response.put("mensaje", "No autorizado para eliminar esta calificación");
+                return ResponseEntity.status(403).body(response);
+            }
+
             estrellaService.delete(id);
             response.put("exito", true);
             response.put("mensaje", "Calificación eliminada correctamente");

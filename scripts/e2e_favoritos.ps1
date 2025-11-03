@@ -29,7 +29,7 @@ $idUsuario = 1
 $idReceta = 1
 Write-Host "-> Agregando favorito idUsuario=$idUsuario idReceta=$idReceta"
 try {
-    $add = Invoke-RestMethod -Uri "$base/recetas/favoritos?idUsuario=$idUsuario&idReceta=$idReceta" -Method Post -Headers $headers -ErrorAction Stop
+    $add = Invoke-RestMethod -Uri "$base/recetas/favoritos?id_usr=$idUsuario&id_receta=$idReceta" -Method Post -Headers $headers -ErrorAction Stop
     $add | ConvertTo-Json -Depth 6 | Write-Host
 } catch {
     Write-Host "ADD ERROR: $_.Exception.Message"
@@ -51,7 +51,7 @@ try {
 # Quitar favorito
 Write-Host "-> Quitando favorito idUsuario=$idUsuario idReceta=$idReceta"
 try {
-    $del = Invoke-RestMethod -Uri "$base/recetas/favoritos?idUsuario=$idUsuario&idReceta=$idReceta" -Method Delete -Headers $headers -ErrorAction Stop
+    $del = Invoke-RestMethod -Uri "$base/recetas/favoritos?id_usr=$idUsuario&id_receta=$idReceta" -Method Delete -Headers $headers -ErrorAction Stop
     $del | ConvertTo-Json -Depth 6 | Write-Host
 } catch {
     Write-Host "DELETE ERROR: $_.Exception.Message"

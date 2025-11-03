@@ -15,11 +15,16 @@ public class EstrellaService {
     private EstrellaRepository estrellaRepository;
 
     public List<Estrella> getEstrellasByUsuario(Integer usuarioId) {
-        return estrellaRepository.findAll();
+        if (usuarioId == null) return estrellaRepository.findAll();
+        return estrellaRepository.findByUsuarioIdUsr(usuarioId);
     }
 
     public Estrella save(Estrella estrella) {
         return estrellaRepository.save(estrella);
+    }
+
+    public Optional<Estrella> getEstrellaByUsuarioAndReceta(Integer usuarioId, Integer recetaId) {
+        return estrellaRepository.findByUsuarioIdUsrAndRecetaIdReceta(usuarioId, recetaId);
     }
 
     public Double avgByReceta(Integer idReceta) {

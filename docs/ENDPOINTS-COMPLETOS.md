@@ -10,7 +10,7 @@
 **Arquitectura:** API simplificada con 5 controladores principales  
 **Última verificación:** ✅ API respondiendo correctamente en puerto 8081  
 **Swagger UI:** ✅ Disponible en http://localhost:8081/swagger-ui/index.html  
-**Fecha de actualización:** 10 de octubre de 2025, 17:21
+**Fecha de actualización:** 3 de noviembre de 2025, 17:40
 
 ## 🧪 Pruebas E2E realizadas (resumen)
 
@@ -20,6 +20,8 @@ Se ejecutaron y validaron los siguientes scripts E2E locales contra el backend e
 - `scripts\debug_repro_ingredientes.ps1 -iterations N` — reproducible run para POST /recetas/{id}/ingredientes; usado para validar la corrección de parsing array/object — RESULTADO: OK en 30 iteraciones (sin 400)
 - `scripts\e2e_comments.ps1` — crear → modificar → eliminar comentario; verifica preservación de `fechaCreacion` y llaves foráneas — RESULTADO: OK
 - `scripts\e2e_favoritos.ps1` — agregar → listar → eliminar favorito — RESULTADO: OK
+- `scripts\e2e_favoritos.ps1` — (script original dependiente de credenciales admin; en algunos entornos el login no devolvía token)
+- `scripts\test_favoritos_manual.ps1` — script robusto creado para registrar/login dinámico, seleccionar receta y ejecutar add/list/delete/list — RESULTADO: OK
 - `scripts\e2e_megusta.ps1` — agregar → listar → eliminar me gusta — RESULTADO: OK
 - `scripts\e2e_estrellas.ps1` — agregar calificación (4) → actualizar (3) → eliminar → verificar GET — RESULTADO: OK
 - `scripts\e2e_interactions.ps1` — flujo combinado (me gusta, favorito, estrella) y prueba de creación de donación (si STRIPE no configurado crea donación PENDING) — RESULTADO: OK (donación en modo PENDING local si STRIPE no está configurado)
@@ -101,9 +103,10 @@ Autorización ligera aplicada por filtro HTTP propio (sin Spring Security):
 - Base URL por defecto: http://localhost:8081
 
 Uso del token:
+- Requisito importante: el servidor ahora exige el token JWT en el header HTTP Authorization en formato EXACTO `Authorization: Bearer <token>` para las rutas que requieren autenticación. Los scripts E2E y controladores están configurados para rechazar tokens enviados por otros medios (por ejemplo un parámetro `token` en query). Si el cliente no envía `id_usr`/`idUsuario` en query, el servidor intenta extraer el id del JWT.
 
 - Login: `POST /auth/login` con `{ "email": "...", "password": "..." }` devuelve `token`.
-- Header privado: `Authorization: Bearer <token>`.
+- Header privado OBLIGATORIO para endpoints protegidos: `Authorization: Bearer <token>`.
 - Variables: `JWT_SECRET`, `JWT_EXPIRATION_MS` (definidas en `.env` / docker-compose).
 
 Ejemplo rápido (PowerShell):
@@ -233,6 +236,99 @@ _Acceso: GET público; POST/PUT/DELETE requieren JWT (Bearer)_
 **Relación JPA:** ✅ **@OneToMany/@ManyToOne con cascade operations**  
 **Integridad:** ✅ **Relaciones bidireccionales funcionando correctamente**  
 **Arquitectura:** ✅ **Endpoints contextualizados por funcionalidad (favoritos, me gusta, estrellas, comentarios bajo /recetas)**
+
+### ❤️ Detalle: Me gusta (POST / DELETE)
+
+Estos endpoints permiten a un usuario autenticado agregar o quitar un "me gusta" a una receta. La seguridad prioriza el envío del JWT en el header `Authorization: Bearer <token>`; si no se envía `idUsuario` en los parámetros, el servidor extrae el id del token.
+
+- POST /recetas/megusta
+  - Descripción: Agrega un me gusta a una receta. Sólo 1 me gusta por usuario/receta.
+  - Autorización: Requiere estrictamente `Authorization: Bearer <token>` en el header. Si no se envía `id_usr` (o `idUsuario`) en query, el servidor extrae el id del usuario desde el JWT y lo utiliza.
+  - Parámetros (query):
+    - `id_receta` (obligatorio) — id de la receta. Alias aceptado: `idReceta`.
+    - `id_usr` (opcional) — id del usuario que da el like. Alias aceptado: `idUsuario`. Recomendación de cliente: usar `id_usr` y `id_receta` para consistencia.
+  - Ejemplo (curl):
+
+    ```bash
+    curl -X POST "http://localhost:8081/recetas/megusta?id_receta=8" \
+      -H "Authorization: Bearer <TOKEN>"
+    ```
+
+  - Respuesta (éxito): HTTP 200
+    ```json
+    {
+      "exito": true,
+      "mensaje": "Me gusta agregado",
+      "data": { "idMeGusta": 123, "receta": { "idReceta": 8 }, "usuario": { "idUsr": 1 }, "fechaCreacion": "..." }
+    }
+    ```
+
+  - Casos de error:
+    - Si el usuario ya dio me gusta: la petición no crea otro registro y el backend devuelve un mensaje indicando que ya existe el me gusta (respuesta con `exito: false` y `mensaje` explicativo).
+    - Si faltan parámetros: HTTP 400 con mensaje explicando `idReceta` obligatorio o que incluya el header Authorization si no pasa `idUsuario`.
+
+- DELETE /recetas/megusta
+  - Descripción: Quita el me gusta de una receta para el usuario indicado (o extraído del token).
+  - Autorización: `Authorization: Bearer <token>` recomendado.
+  - Parámetros (query): `idReceta` (o `id_receta`) y opcional `idUsuario` (o `id_usr`). Si `idUsuario` se omite, se usa el id del token.
+  - Ejemplo (curl):
+
+    ```bash
+    curl -X DELETE "http://localhost:8081/recetas/megusta?id_receta=8" \
+      -H "Authorization: Bearer <TOKEN>"
+    ```
+
+  - Respuesta (éxito): HTTP 200
+    ```json
+    { "exito": true, "mensaje": "Me gusta removido" }
+    ```
+
+    ### ⭐ Detalle: Favoritos (POST / DELETE / GET)
+
+    Los endpoints de favoritos permiten agregar/quitar recetas de la lista de favoritos de un usuario. La API acepta tanto los nombres de parámetro en estilo camelCase (`idUsuario`, `idReceta`) como las variantes con guión bajo (`id_usr`, `id_receta`). Se recomienda usar `id_usr` y `id_receta` en los clientes para mantener consistencia con otros endpoints.
+
+    - POST /recetas/favoritos
+      - Descripción: Agrega una receta a favoritos del usuario.
+      - Autorización: Recomendado `Authorization: Bearer <token>`. Si no se envía `idUsuario` (o `id_usr`) en query, el servidor intentará extraer el id desde el token.
+      - Parámetros (query):
+      - `id_receta` (obligatorio) — id de la receta. Alias aceptado: `idReceta`.
+      - `id_usr` (opcional) — id del usuario. Alias aceptado: `idUsuario`. Si no se provee, el servidor usará el id presente en el JWT.
+
+      - Ejemplo (curl):
+
+        ```bash
+        curl -X POST "http://localhost:8081/recetas/favoritos?id_receta=8" \
+          -H "Authorization: Bearer <TOKEN>"
+        ```
+
+    - DELETE /recetas/favoritos
+      - Descripción: Quita una receta de favoritos.
+      - Parámetros (query): `id_receta` (o `idReceta`) y opcional `id_usr` (o `idUsuario`). Si `id_usr` se omite, se usa el id del token.
+
+    - GET /recetas/favoritos
+      - Descripción: Retorna los favoritos del usuario autenticado (se usa el token para identificar al usuario cuando se envía `Authorization`).
+
+    ### ⭐ Detalle: Estrellas (POST / PUT / GET)
+
+    Los endpoints de calificación (`/recetas/estrellas`) aceptan `id_usr`/`id_receta` como parámetros de consulta y prefieren extraer `id_usr` del header `Authorization` cuando sea necesario. El endpoint `POST /recetas/estrellas` realiza un upsert: crea o actualiza la calificación del usuario para la receta.
+
+    - POST /recetas/estrellas
+      - Parámetros (query): `id_receta` (obligatorio), `id_usr` (opcional), `estrellas` (1-5).
+        - Si `id_usr` no se entrega, se extrae del token.
+
+    ### 🗨️ Detalle: Comentarios (POST / PUT / DELETE / GET)
+
+    Los endpoints de comentarios aceptan `id_usr`/`id_receta` o los aliases `idUsuario`/`idReceta`. Para crear un comentario use `POST /recetas/comentarios?id_receta=8&texto=...` y envíe `Authorization: Bearer <token>` o `id_usr` si no quiere depender del token.
+
+
+  - Casos de error:
+    - Si no existe el me gusta para ese usuario/receta, la API devuelve `exito: false` y mensaje explicativo (o 404 si se prefiere mapearlo así en el futuro).
+
+- PUT /recetas/megusta
+  - Nota: Actualmente no existe un `PUT` dedicado para "me gusta". Usa `POST` para agregar y `DELETE` para quitar. Si quieres una operación idempotente de tipo toggle (añadir o quitar dependiendo del estado actual), se puede implementar un endpoint `PUT /recetas/megusta/toggle` o mapear `POST` para comportarse como toggle; pídemelo y lo implemento.
+
+Nota de seguridad y recomendación: para evitar duplicados a nivel de BD y condiciones de carrera, recomiendo añadir una constraint UNIQUE (id_receta, id_usr) en la tabla `me_gusta`.
+
 
 > Nota importante sobre PUT /recetas/comentarios:
 >

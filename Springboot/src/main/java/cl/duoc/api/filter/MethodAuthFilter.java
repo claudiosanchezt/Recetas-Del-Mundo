@@ -71,12 +71,13 @@ public class MethodAuthFilter extends OncePerRequestFilter {
 
         // Para POST/PUT/DELETE en rutas no públicas: exigir Authorization: Bearer
         String authHeader = request.getHeader("Authorization");
-        if (!StringUtils.hasText(authHeader) || !authHeader.startsWith("Bearer ")) {
+        String token = null;
+        if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
+            token = authHeader.substring(7);
+        } else {
             unauthorized(response, "Missing Bearer token");
             return;
         }
-
-        String token = authHeader.substring(7);
         if (!StringUtils.hasText(jwtSecret)) {
             unauthorized(response, "Server JWT secret not configured");
             return;
@@ -100,6 +101,7 @@ public class MethodAuthFilter extends OncePerRequestFilter {
     }
 
     private boolean authorizeWithRole(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Require Authorization header for role-protected GETs
         String authHeader = request.getHeader("Authorization");
         if (!StringUtils.hasText(authHeader) || !authHeader.startsWith("Bearer ")) {
             unauthorized(response, "Missing Bearer token");
