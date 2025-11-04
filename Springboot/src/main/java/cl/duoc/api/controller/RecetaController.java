@@ -35,7 +35,6 @@ import java.util.Collections;
 
 @RestController
 @RequestMapping("/recetas")
-@CrossOrigin(origins = "*")
 @Tag(name = "🍽️ Recetas", description = "API completa para gestión de recetas con ingredientes")
 public class RecetaController {
 
@@ -67,15 +66,25 @@ public class RecetaController {
 
     // Helper method para extraer usuario ID del JWT token
     private Integer getUserIdFromToken(String authHeader) {
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
-            try {
-                return jwtUtil.extractUserId(token);
-            } catch (Exception e) {
-                return null;
-            }
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            logger.warn("🚫 Header Authorization inválido: {}", authHeader);
+            return null;
         }
-        return null;
+        
+        String token = authHeader.substring(7);
+        if (token.trim().isEmpty()) {
+            logger.warn("🚫 Token vacío después de 'Bearer '");
+            return null;
+        }
+        
+        try {
+            Integer userId = jwtUtil.extractUserId(token);
+            logger.info("✅ Usuario extraído del token: {}", userId);
+            return userId;
+        } catch (Exception e) {
+            logger.error("❌ Error al extraer usuario del token: {}", e.getMessage());
+            return null;
+        }
     }
 
     @GetMapping
@@ -910,53 +919,106 @@ public class RecetaController {
     })
     public ResponseEntity<Map<String, Object>> calificarReceta(
             HttpServletRequest request,
-            @RequestParam(required = false) Integer idUsuario, 
-            @RequestParam Integer idReceta,
+            @RequestParam(required = false) Integer idUsuario,
+            @RequestParam(required = false) Integer id_usr,    // Soporte alias
+            @RequestParam(required = false) Integer idReceta,
+            @RequestParam(required = false) Integer id_receta, // Soporte alias
             @RequestParam Short estrellas) {
         Map<String, Object> response = new HashMap<>();
         
         try {
-            // Preferir id desde token si está presente
+            logger.info("⭐ POST /estrellas - Datos recibidos: idUsuario={}, id_usr={}, idReceta={}, id_receta={}, estrellas={}", 
+                       idUsuario, id_usr, idReceta, id_receta, estrellas);
+            
+            // Extraer token y usuario
             String authHeader = request.getHeader("Authorization");
+            logger.info("🔑 Authorization header presente: {}", authHeader != null ? "SI" : "NO");
+            
             Integer idFromToken = getUserIdFromToken(authHeader);
-            if (idUsuario == null && idFromToken != null) {
-                idUsuario = idFromToken;
-            }
-            if (idUsuario != null && idFromToken != null && !idUsuario.equals(idFromToken)) {
-                response.put("exito", false);
-                response.put("mensaje", "Token no corresponde al idUsuario proporcionado");
-                return ResponseEntity.status(403).body(response);
-            }
-            if (estrellas < 1 || estrellas > 5) {
+            logger.info("👤 Usuario extraído del token: {}", idFromToken);
+            
+            // Normalizar parámetros
+            if (idUsuario == null && id_usr != null) { idUsuario = id_usr; }
+            if (idUsuario == null && idFromToken != null) { idUsuario = idFromToken; }
+            
+            if (idReceta == null && id_receta != null) { idReceta = id_receta; }
+            
+            logger.info("🎯 Parámetros finales: idUsuario={}, idReceta={}", idUsuario, idReceta);
+            
+            // Validaciones con mensajes específicos
+            if (estrellas == null || estrellas < 1 || estrellas > 5) {
                 response.put("exito", false);
                 response.put("mensaje", "Las estrellas deben ser entre 1 y 5");
-                return ResponseEntity.ok(response);
-            }
-            if (idUsuario == null) {
-                response.put("exito", false);
-                response.put("mensaje", "Parámetro idUsuario faltante y no se pudo extraer del token");
+                response.put("codigo", "ESTRELLAS_INVALIDAS");
                 return ResponseEntity.badRequest().body(response);
             }
+            
+            if (idReceta == null) {
+                response.put("exito", false);
+                response.put("mensaje", "Parámetro id_receta es requerido");
+                response.put("codigo", "ID_RECETA_FALTANTE");
+                return ResponseEntity.badRequest().body(response);
+            }
+            
+            if (idUsuario == null) {
+                response.put("exito", false);
+                response.put("mensaje", "No se pudo obtener el ID de usuario. Verifique que el token JWT sea válido.");
+                response.put("codigo", "ID_USUARIO_FALTANTE");
+                response.put("debug", "Asegúrese de enviar el header: Authorization: Bearer <token>");
+                return ResponseEntity.badRequest().body(response);
+            }
+            
+            // Validar coherencia token vs parámetro (si ambos están presentes)
+            if (idFromToken != null && idUsuario != null && !idUsuario.equals(idFromToken)) {
+                response.put("exito", false);
+                response.put("mensaje", "El token no corresponde al usuario especificado");
+                response.put("codigo", "TOKEN_USUARIO_MISMATCH");
+                return ResponseEntity.status(403).body(response);
+            }
 
-            // Upsert: si ya existe calificación del usuario para la receta, actualizarla
+            // Upsert: verificar si ya existe calificación
             Optional<Estrella> existing = estrellaService.getEstrellaByUsuarioAndReceta(idUsuario, idReceta);
             Estrella estrella;
+            boolean isUpdate = false;
+            
             if (existing.isPresent()) {
                 estrella = existing.get();
                 estrella.setValor(estrellas);
+                isUpdate = true;
+                logger.info("🔄 Actualizando calificación existente: ID={}", estrella.getIdEstrella());
             } else {
                 estrella = new Estrella();
                 estrella.setUsuario(new Usuario(idUsuario));
                 estrella.setReceta(new Receta(idReceta));
                 estrella.setValor(estrellas);
+                logger.info("🆕 Creando nueva calificación");
             }
+            
             estrella = estrellaService.save(estrella);
+            logger.info("✅ Calificación {} exitosamente: ID={}", isUpdate ? "actualizada" : "creada", estrella.getIdEstrella());
+            
+            // Respuesta estructurada
+            Map<String, Object> data = new HashMap<>();
+            data.put("idEstrella", estrella.getIdEstrella());
+            data.put("estrellas", estrella.getValor());
+            
+            Map<String, Object> recetaData = new HashMap<>();
+            recetaData.put("idReceta", idReceta);
+            data.put("receta", recetaData);
+            
+            Map<String, Object> usuarioData = new HashMap<>();
+            usuarioData.put("idUsr", idUsuario);
+            data.put("usuario", usuarioData);
+            
             response.put("exito", true);
-            response.put("mensaje", "Calificación registrada");
-            response.put("data", estrella);
+            response.put("mensaje", isUpdate ? "Calificación actualizada exitosamente" : "Calificación agregada exitosamente");
+            response.put("data", data);
+            
         } catch (Exception e) {
+            logger.error("❌ Error al calificar receta", e);
             response.put("exito", false);
-            response.put("mensaje", "Error al calificar receta: " + e.getMessage());
+            response.put("mensaje", "Error interno al calificar receta: " + e.getMessage());
+            response.put("codigo", "ERROR_INTERNO");
         }
         
         return ResponseEntity.ok(response);
@@ -1089,58 +1151,85 @@ public class RecetaController {
             HttpServletRequest request,
             @RequestParam(required = false) Integer idUsuario, 
             @RequestParam(required = false) Integer idReceta,
+            @RequestParam(required = false) Integer id_receta, // Soporte alias
+            @RequestParam(required = false) Integer id_usr,    // Soporte alias
             @RequestParam(required = false) String texto) {
         Map<String, Object> response = new HashMap<>();
         
         try {
-            // Preferir token in Authorization and accept alternate param names
+            logger.info("📝 POST /comentarios - Datos recibidos: idUsuario={}, idReceta={}, id_receta={}, id_usr={}, texto={}", 
+                       idUsuario, idReceta, id_receta, id_usr, texto != null ? "presente" : "null");
+            
+            // Extraer token y usuario
             String authHeader = request.getHeader("Authorization");
+            logger.info("🔑 Authorization header presente: {}", authHeader != null ? "SI" : "NO");
+            
             Integer idFromToken = getUserIdFromToken(authHeader);
+            logger.info("👤 Usuario extraído del token: {}", idFromToken);
+            
+            // Normalizar parámetros (soportar ambos formatos)
+            if (idUsuario == null && id_usr != null) { idUsuario = id_usr; }
             if (idUsuario == null && idFromToken != null) { idUsuario = idFromToken; }
-            if (idUsuario == null) {
-                String alt = request.getParameter("id_usr");
-                if (alt != null) { try { idUsuario = Integer.parseInt(alt); } catch (NumberFormatException ignore) { } }
-            }
-            if (idReceta == null) {
-                String alt = request.getParameter("id_receta");
-                if (alt != null) { try { idReceta = Integer.parseInt(alt); } catch (NumberFormatException ignore) { } }
-            }
+            
+            if (idReceta == null && id_receta != null) { idReceta = id_receta; }
+            
+            logger.info("🎯 Parámetros finales: idUsuario={}, idReceta={}", idUsuario, idReceta);
+            
+            // Validaciones con mensajes específicos
             if (texto == null || texto.trim().isEmpty()) {
                 response.put("exito", false);
                 response.put("mensaje", "El texto del comentario no puede estar vacío");
-                return ResponseEntity.ok(response);
+                response.put("codigo", "TEXTO_VACIO");
+                return ResponseEntity.badRequest().body(response);
             }
-            if (idUsuario == null || idReceta == null) {
+            
+            if (idReceta == null) {
                 response.put("exito", false);
-                response.put("mensaje", "Parámetros requeridos: idUsuario (o id_usr) y idReceta (o id_receta). Asegúrese de incluir el header Authorization con Bearer <token> si no envía idUsuario.");
+                response.put("mensaje", "Parámetro id_receta es requerido");
+                response.put("codigo", "ID_RECETA_FALTANTE");
+                return ResponseEntity.badRequest().body(response);
+            }
+            
+            if (idUsuario == null) {
+                response.put("exito", false);
+                response.put("mensaje", "No se pudo obtener el ID de usuario. Verifique que el token JWT sea válido.");
+                response.put("codigo", "ID_USUARIO_FALTANTE");
+                response.put("debug", "Asegúrese de enviar el header: Authorization: Bearer <token>");
                 return ResponseEntity.badRequest().body(response);
             }
 
-            // Crear comentario básico por ahora
+            // Crear y guardar comentario
             Comentario comentario = new Comentario();
             comentario.setUsuario(new Usuario(idUsuario));
             comentario.setReceta(new Receta(idReceta));
             comentario.setTexto(texto.trim());
-            response.put("exito", true);
-            // Usar servicio real
+            
             comentario = comentarioService.save(comentario);
+            logger.info("✅ Comentario creado exitosamente: ID={}", comentario.getIdComentario());
+            
+            // Respuesta estructurada
+            Map<String, Object> data = new HashMap<>();
+            data.put("idComentario", comentario.getIdComentario());
+            data.put("texto", comentario.getTexto());
+            data.put("fechaCreacion", comentario.getFechaCreacion());
+            
+            Map<String, Object> recetaData = new HashMap<>();
+            recetaData.put("idReceta", idReceta);
+            data.put("receta", recetaData);
+            
+            Map<String, Object> usuarioData = new HashMap<>();
+            usuarioData.put("idUsr", idUsuario);
+            data.put("usuario", usuarioData);
+            
             response.put("exito", true);
-            response.put("mensaje", "Comentario agregado correctamente");
-            // sanitize comentario for response
-            java.util.Map<String,Object> m = new java.util.HashMap<>();
-            m.put("idComentario", comentario.getIdComentario());
-            m.put("texto", comentario.getTexto());
-            m.put("fechaCreacion", comentario.getFechaCreacion());
-            java.util.Map<String,Object> r = new java.util.HashMap<>();
-            if (comentario.getReceta() != null) { r.put("idReceta", comentario.getReceta().getIdReceta()); r.put("idUsr", comentario.getReceta().getIdUsr()); }
-            m.put("receta", r);
-            java.util.Map<String,Object> u = new java.util.HashMap<>();
-            if (comentario.getUsuario() != null) { u.put("idUsr", comentario.getUsuario().getIdUsr()); }
-            m.put("usuario", u);
-            response.put("data", m);
+            response.put("mensaje", "Comentario agregado exitosamente");
+            response.put("data", data);
+            
         } catch (Exception e) {
+            logger.error("❌ Error al crear comentario", e);
             response.put("exito", false);
-            response.put("mensaje", "Error al agregar comentario: " + e.getMessage());
+            response.put("mensaje", "Error interno al agregar comentario: " + e.getMessage());
+            response.put("codigo", "ERROR_INTERNO");
         }
         
         return ResponseEntity.ok(response);
@@ -1246,50 +1335,108 @@ public class RecetaController {
         @ApiResponse(responseCode = "200", description = "Calificación actualizada exitosamente"),
         @ApiResponse(responseCode = "404", description = "Calificación no encontrada"),
         @ApiResponse(responseCode = "400", description = "Valor de estrellas inválido"),
+        @ApiResponse(responseCode = "403", description = "No autorizado"),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     public ResponseEntity<Map<String, Object>> actualizarEstrella(
             @Parameter(description = "ID de la calificación", required = true) @PathVariable Integer id,
             @RequestParam Short estrellas) {
+        
+        logger.info("🔄 PUT /estrellas/{} - Actualizando calificación", id);
         Map<String, Object> response = new HashMap<>();
         
         try {
+            // Obtener Authorization header
+            String authHeader = null;
+            try {
+                authHeader = ((jakarta.servlet.http.HttpServletRequest) org.springframework.web.context.request.RequestContextHolder
+                    .currentRequestAttributes().resolveReference(org.springframework.web.context.request.RequestAttributes.REFERENCE_REQUEST))
+                    .getHeader("Authorization");
+                logger.info("🔑 Token recibido: {}", authHeader != null ? "Sí" : "No");
+            } catch (Exception ignore) {
+                logger.warn("⚠️ No se pudo obtener el header Authorization del contexto");
+            }
+
+            // Validar token
+            Integer idFromToken = getUserIdFromToken(authHeader);
+            if (idFromToken == null) {
+                logger.warn("🚫 Token JWT inválido o missing");
+                response.put("success", false);
+                response.put("error", "Missing Bearer token");
+                response.put("codigo", "AUTH_001");
+                return ResponseEntity.status(401).body(response);
+            }
+
+            logger.info("👤 Usuario autenticado: {}", idFromToken);
+            logger.info("🎯 Parámetros: id={}, estrellas={}", id, estrellas);
+            
+            // Validar rango de estrellas
             if (estrellas < 1 || estrellas > 5) {
+                logger.warn("❌ Valor de estrellas inválido: {}", estrellas);
                 response.put("exito", false);
                 response.put("mensaje", "Las estrellas deben ser entre 1 y 5");
-                return ResponseEntity.ok(response);
+                response.put("codigo", "INVALID_STARS_RANGE");
+                return ResponseEntity.badRequest().body(response);
             }
+            
             // Verificar que la calificación existe
             Optional<Estrella> estrellaOpt = estrellaService.getEstrellaById(id);
             if (!estrellaOpt.isPresent()) {
+                logger.warn("❌ Calificación no encontrada: ID={}", id);
                 response.put("exito", false);
                 response.put("mensaje", "Calificación no encontrada con ID: " + id);
-                return ResponseEntity.ok(response);
+                response.put("codigo", "RATING_NOT_FOUND");
+                return ResponseEntity.status(404).body(response);
             }
+            
             Estrella estrella = estrellaOpt.get();
+            logger.info("📝 Calificación encontrada - Owner: {}, Receta: {}, Valor actual: {}", 
+                estrella.getUsuario().getIdUsr(), estrella.getReceta().getIdReceta(), estrella.getValor());
 
             // Verificar ownership: solo el usuario dueño puede actualizar
-            // Extraer id del token
-            String authHeader = null; // no direct request in signature, try to get from context
-            try {
-                authHeader = ((jakarta.servlet.http.HttpServletRequest) org.springframework.web.context.request.RequestContextHolder.currentRequestAttributes().resolveReference(org.springframework.web.context.request.RequestAttributes.REFERENCE_REQUEST)).getHeader("Authorization");
-            } catch (Exception ignore) { }
-            Integer idFromToken = getUserIdFromToken(authHeader);
-            if (idFromToken != null && !idFromToken.equals(estrella.getUsuario().getIdUsr())) {
+            if (!idFromToken.equals(estrella.getUsuario().getIdUsr())) {
+                logger.warn("🚫 Usuario {} no autorizado para modificar calificación del usuario {}", 
+                    idFromToken, estrella.getUsuario().getIdUsr());
                 response.put("exito", false);
                 response.put("mensaje", "No autorizado para actualizar esta calificación");
+                response.put("codigo", "UNAUTHORIZED_UPDATE");
                 return ResponseEntity.status(403).body(response);
             }
 
+            // Actualizar valor
+            Short valorAnterior = estrella.getValor();
             estrella.setValor(estrellas);
             estrella = estrellaService.save(estrella);
             
+            logger.info("✅ Calificación actualizada exitosamente: ID={}, {} -> {}", 
+                id, valorAnterior, estrellas);
+            
+            // Respuesta estructurada
+            Map<String, Object> data = new HashMap<>();
+            data.put("idEstrella", estrella.getIdEstrella());
+            data.put("estrellas", estrella.getValor());
+            
+            Map<String, Object> recetaData = new HashMap<>();
+            recetaData.put("idReceta", estrella.getReceta().getIdReceta());
+            data.put("receta", recetaData);
+            
+            Map<String, Object> usuarioData = new HashMap<>();
+            usuarioData.put("idUsr", estrella.getUsuario().getIdUsr());
+            data.put("usuario", usuarioData);
+            
+            if (estrella.getFechaCreacion() != null) {
+                data.put("fechaCreacion", estrella.getFechaCreacion());
+            }
+            
             response.put("exito", true);
-            response.put("mensaje", "Calificación actualizada correctamente");
-            response.put("data", estrella);
+            response.put("mensaje", "Calificación actualizada exitosamente");
+            response.put("data", data);
+            
         } catch (Exception e) {
+            logger.error("❌ Error al actualizar calificación ID={}: {}", id, e.getMessage(), e);
             response.put("exito", false);
-            response.put("mensaje", "Error al actualizar calificación: " + e.getMessage());
+            response.put("mensaje", "Error interno al actualizar calificación: " + e.getMessage());
+            response.put("codigo", "ERROR_INTERNO");
         }
         
         return ResponseEntity.ok(response);
@@ -1301,37 +1448,91 @@ public class RecetaController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Calificación eliminada exitosamente"),
         @ApiResponse(responseCode = "404", description = "Calificación no encontrada"),
+        @ApiResponse(responseCode = "403", description = "No autorizado"),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     public ResponseEntity<Map<String, Object>> eliminarEstrella(
             @Parameter(description = "ID de la calificación", required = true) @PathVariable Integer id) {
+        
+        logger.info("🗑️ DELETE /estrellas/{} - Eliminando calificación", id);
         Map<String, Object> response = new HashMap<>();
         
         try {
-            Optional<Estrella> estrella = estrellaService.getEstrellaById(id);
-            if (!estrella.isPresent()) {
-                response.put("exito", false);
-                response.put("mensaje", "Calificación no encontrada con ID: " + id);
-                return ResponseEntity.ok(response);
-            }
-            // Verificar ownership: solo el usuario dueño puede eliminar
+            // Obtener Authorization header
             String authHeader = null;
             try {
-                authHeader = ((jakarta.servlet.http.HttpServletRequest) org.springframework.web.context.request.RequestContextHolder.currentRequestAttributes().resolveReference(org.springframework.web.context.request.RequestAttributes.REFERENCE_REQUEST)).getHeader("Authorization");
-            } catch (Exception ignore) { }
+                authHeader = ((jakarta.servlet.http.HttpServletRequest) org.springframework.web.context.request.RequestContextHolder
+                    .currentRequestAttributes().resolveReference(org.springframework.web.context.request.RequestAttributes.REFERENCE_REQUEST))
+                    .getHeader("Authorization");
+                logger.info("🔑 Token recibido: {}", authHeader != null ? "Sí" : "No");
+            } catch (Exception ignore) {
+                logger.warn("⚠️ No se pudo obtener el header Authorization del contexto");
+            }
+
+            // Validar token
             Integer idFromToken = getUserIdFromToken(authHeader);
-            if (idFromToken != null && !idFromToken.equals(estrella.get().getUsuario().getIdUsr())) {
+            if (idFromToken == null) {
+                logger.warn("🚫 Token JWT inválido o missing");
+                response.put("success", false);
+                response.put("error", "Missing Bearer token");
+                response.put("codigo", "AUTH_001");
+                return ResponseEntity.status(401).body(response);
+            }
+
+            logger.info("👤 Usuario autenticado: {}", idFromToken);
+            logger.info("🎯 Parámetros: id={}", id);
+            
+            // Verificar que la calificación existe
+            Optional<Estrella> estrellaOpt = estrellaService.getEstrellaById(id);
+            if (!estrellaOpt.isPresent()) {
+                logger.warn("❌ Calificación no encontrada: ID={}", id);
+                response.put("exito", false);
+                response.put("mensaje", "Calificación no encontrada con ID: " + id);
+                response.put("codigo", "RATING_NOT_FOUND");
+                return ResponseEntity.status(404).body(response);
+            }
+            
+            Estrella estrella = estrellaOpt.get();
+            logger.info("📝 Calificación encontrada - Owner: {}, Receta: {}, Valor: {}", 
+                estrella.getUsuario().getIdUsr(), estrella.getReceta().getIdReceta(), estrella.getValor());
+
+            // Verificar ownership: solo el usuario dueño puede eliminar
+            if (!idFromToken.equals(estrella.getUsuario().getIdUsr())) {
+                logger.warn("🚫 Usuario {} no autorizado para eliminar calificación del usuario {}", 
+                    idFromToken, estrella.getUsuario().getIdUsr());
                 response.put("exito", false);
                 response.put("mensaje", "No autorizado para eliminar esta calificación");
+                response.put("codigo", "UNAUTHORIZED_DELETE");
                 return ResponseEntity.status(403).body(response);
             }
 
+            // Datos de la calificación antes de eliminar (para el response)
+            Map<String, Object> deletedData = new HashMap<>();
+            deletedData.put("idEstrella", estrella.getIdEstrella());
+            deletedData.put("estrellas", estrella.getValor());
+            
+            Map<String, Object> recetaData = new HashMap<>();
+            recetaData.put("idReceta", estrella.getReceta().getIdReceta());
+            deletedData.put("receta", recetaData);
+            
+            Map<String, Object> usuarioData = new HashMap<>();
+            usuarioData.put("idUsr", estrella.getUsuario().getIdUsr());
+            deletedData.put("usuario", usuarioData);
+
+            // Eliminar calificación
             estrellaService.delete(id);
+            
+            logger.info("✅ Calificación eliminada exitosamente: ID={}", id);
+            
             response.put("exito", true);
-            response.put("mensaje", "Calificación eliminada correctamente");
+            response.put("mensaje", "Calificación eliminada exitosamente");
+            response.put("data", deletedData);
+            
         } catch (Exception e) {
+            logger.error("❌ Error al eliminar calificación ID={}: {}", id, e.getMessage(), e);
             response.put("exito", false);
-            response.put("mensaje", "Error al eliminar calificación: " + e.getMessage());
+            response.put("mensaje", "Error interno al eliminar calificación: " + e.getMessage());
+            response.put("codigo", "ERROR_INTERNO");
         }
         
         return ResponseEntity.ok(response);

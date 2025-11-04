@@ -17,31 +17,38 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         
-        // Permitir orígenes específicos
-        String env = System.getenv().getOrDefault("APP_CORS_ALLOWED_ORIGINS", "http://localhost:5173");
+        // Permitir orígenes específicos desde variables de entorno
+        String env = System.getenv("APP_CORS_ALLOWED_ORIGINS");
+        if (env == null || env.trim().isEmpty()) {
+            throw new IllegalStateException("APP_CORS_ALLOWED_ORIGINS debe estar configurada en las variables de entorno");
+        }
         List<String> origins = Arrays.stream(env.split(","))
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
                 .toList();
+        
+        System.out.println("🌐 CORS - Orígenes permitidos: " + origins);
         config.setAllowedOrigins(origins);
         
         // Permitir todos los métodos HTTP
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         
-        // Permitir todos los headers
+        // Permitir todos los headers (incluyendo Authorization)
         config.setAllowedHeaders(List.of("*"));
         
-        // Exponer headers específicos
-        config.setExposedHeaders(List.of("Authorization", "Content-Type"));
+        // Exponer headers específicos para que el frontend pueda leerlos
+        config.setExposedHeaders(List.of("Authorization", "Content-Type", "X-Total-Count"));
         
-        // Permitir credenciales
+        // Permitir credenciales (importante para JWT tokens)
         config.setAllowCredentials(true);
         
-        // Configurar tiempo de caché para OPTIONS
+        // Configurar tiempo de caché para preflight OPTIONS requests
         config.setMaxAge(3600L);
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
+        
+        System.out.println("✅ CORS configurado para endpoints: /**");
         
         return new CorsFilter(source);
     }

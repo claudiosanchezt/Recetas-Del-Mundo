@@ -147,6 +147,20 @@ public class MethodAuthFilter extends OncePerRequestFilter {
     }
 
     private void unauthorized(HttpServletResponse response, String message) throws IOException {
+        // ✅ AGREGAR HEADERS CORS PARA RESPUESTAS DE ERROR - Solo variables de entorno
+        String corsOrigins = System.getenv("APP_CORS_ALLOWED_ORIGINS");
+        // Por simplicidad, usar * si hay múltiples orígenes (el CorsFilter real maneja esto mejor)
+        String allowOrigin = "*"; // Usar * para mantener compatibilidad general
+        if (corsOrigins != null && !corsOrigins.trim().isEmpty() && !corsOrigins.contains(",")) {
+            allowOrigin = corsOrigins.trim();
+        }
+        
+        response.setHeader("Access-Control-Allow-Origin", allowOrigin);
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, X-Requested-With");
+        response.setHeader("Vary", "Origin, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().write("{\"success\":false,\"error\":\"" + escapeJson(message) + "\"}");
