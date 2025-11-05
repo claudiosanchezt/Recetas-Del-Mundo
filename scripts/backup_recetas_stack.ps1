@@ -101,25 +101,30 @@ Write-Info "Respaldando volúmenes Docker"
 $volDir = Join-Path $staging 'volumes'
 try {
   docker volume inspect $POSTGRES_VOLUME *>$null
-  docker run --rm -v "${POSTGRES_VOLUME}:/volume" -v "${volDir}:/backup" alpine sh -c "tar -czf /backup/${POSTGRES_VOLUME}_${timestamp}.tar.gz -C /volume ."
+  docker run --rm -v "${POSTGRES_VOLUME}:/volume" -v "${volDir}:/backup" busybox sh -c "tar -czf /backup/${POSTGRES_VOLUME}_${timestamp}.tar.gz -C /volume ."
   Write-Ok "Volumen $POSTGRES_VOLUME respaldado"
 } catch { Write-Warn "Volumen $POSTGRES_VOLUME no existe o no accesible" }
 
 try {
   docker volume inspect $PGADMIN_VOLUME *>$null
-  docker run --rm -v "${PGADMIN_VOLUME}:/volume" -v "${volDir}:/backup" alpine sh -c "tar -czf /backup/${PGADMIN_VOLUME}_${timestamp}.tar.gz -C /volume ."
+  docker run --rm -v "${PGADMIN_VOLUME}:/volume" -v "${volDir}:/backup" busybox sh -c "tar -czf /backup/${PGADMIN_VOLUME}_${timestamp}.tar.gz -C /volume ."
   Write-Ok "Volumen $PGADMIN_VOLUME respaldado"
 } catch { Write-Warn "Volumen $PGADMIN_VOLUME no existe o no accesible" }
 
-# 3) Imágenes Docker (priorizar contenedores en ejecución)
-Write-Info "Guardando imágenes del stack (priorizando contenedores en ejecución)"
+# 3) Imagenes Docker (priorizar contenedores en ejecucion)
+Write-Info "Guardando imagenes del stack (priorizando contenedores en ejecucion)"
 $composeFile = Join-Path $RootDir 'docker-compose.yml'
 $images = @()
 try {
-  # 1) imágenes de contenedores en ejecución
-  $running = docker ps --format '{{.Image}}' 2>$null | Sort-Object -Unique
-  if ($running) { $images = $running }
-  # 2) si no hay contenedores en ejecución, intenta docker compose images
+  # 1) imagenes de contenedores en ejecucion - obtener nombres completos usando docker inspect
+  $runningContainers = docker ps -q 2>$null
+  if ($runningContainers) {
+    $images = $runningContainers | ForEach-Object {
+      $cid = $_
+      docker inspect $cid --format '{{.Config.Image}}' 2>$null
+    } | Where-Object { $_ -and $_.Trim() } | Sort-Object -Unique
+  }
+  # 2) si no hay contenedores en ejecucion, intenta docker compose images
   if (-not $images -or $images.Count -eq 0) {
     try {
       $composeImgs = docker compose -f $composeFile images --format "{{.Repository}}:{{.Tag}}" 2>$null | Where-Object { $_ -and ($_ -notmatch '<none>') } | Sort-Object -Unique
@@ -128,20 +133,21 @@ try {
   }
 } catch {}
 if (-not $images -or $images.Count -eq 0) {
-  $images = @('postgres:15-alpine','dpage/pgadmin4:8.11', $BACKEND_IMAGE_NAME)
+  # Imagenes actualizadas para coincidir con las versiones activas
+  $images = @('postgres:15','dpage/pgadmin4:9.9', $BACKEND_IMAGE_NAME)
 }
-Write-Info ("Imágenes a salvar: {0}" -f ($images -join ', '))
+Write-Info ("Imagenes a salvar: {0}" -f ($images -join ', '))
 $imagesTar = Join-Path (Join-Path $staging 'docker') ("images_{0}.tar" -f $timestamp)
 try {
   docker save -o $imagesTar $images
   if (Test-Path $imagesTar) {
     $size = (Get-Item $imagesTar).Length
-    if ($size -gt 0) { Write-Ok "Imágenes guardadas: $imagesTar ($([Math]::Round($size/1MB,2)) MB)" }
-    else { Write-Warn "El archivo de imágenes se creó pero está vacío: $imagesTar" }
+    if ($size -gt 0) { Write-Ok "Imagenes guardadas: $imagesTar ($([Math]::Round($size/1MB,2)) MB)" }
+    else { Write-Warn "El archivo de imagenes se creo pero esta vacio: $imagesTar" }
   } else {
-    Write-Warn "El archivo de imágenes no se creó: $imagesTar"
+    Write-Warn "El archivo de imagenes no se creo: $imagesTar"
   }
-} catch { Write-Warn "No se pudieron guardar todas las imágenes: $($_.Exception.Message)" }
+} catch { Write-Warn "No se pudieron guardar todas las imagenes: $($_.Exception.Message)" }
 
 # 4) Configs
 Write-Info "Copiando configuración"

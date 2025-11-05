@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Si el script se ejecuta con `sh` (p. ej. `sh stop_stack.sh`), algunas opciones
-# como `set -o pipefail` o construcciones `[[ ... ]]` fallarán. Re-ejecutamos con
-# bash si no estamos ya en él.
+# como `set -o pipefail` o construcciones `[[ ... ]]` fallarÃ¡n. Re-ejecutamos con
+# bash si no estamos ya en Ã©l.
 if [ -z "${BASH_VERSION-}" ]; then
   if command -v bash >/dev/null 2>&1; then
     exec bash "$0" "$@"
@@ -13,12 +13,12 @@ fi
 set -euo pipefail
 
 # stop_stack.sh
-# Detiene el stack de docker-compose para la aplicación Recetas.
+# Detiene el stack de docker-compose para la aplicaciÃ³n Recetas.
 
 APP_DIR="${APP_DIR:-/home/admin/api-recetas}"
 LOG_FILE="${LOG_FILE:-/var/log/recetas-stack.log}"
 
-# Selección de compose file: prod primero, luego default
+# SelecciÃ³n de compose file: prod primero, luego default
 if [[ -f "$APP_DIR/docker-compose.prod.yml" ]]; then
   COMPOSE_FILE="$APP_DIR/docker-compose.prod.yml"
 elif [[ -f "$APP_DIR/docker-compose.yml" ]]; then
@@ -42,7 +42,7 @@ exec >> "$LOG_TARGET" 2>&1
 echo "[$(date --iso-8601=seconds)] stop_stack: iniciando"
 
 if ! command -v docker >/dev/null 2>&1; then
-  echo "[ERROR] docker no está instalado o no está en PATH"
+  echo "[ERROR] docker no estÃ¡ instalado o no estÃ¡ en PATH"
   exit 1
 fi
 
@@ -52,14 +52,14 @@ if [[ -n "$COMPOSE_FILE" ]]; then
     if command -v docker-compose >/dev/null 2>&1; then
       COMPOSE_CMD="docker-compose"
     else
-      echo "[ERROR] No se encontró 'docker compose' ni 'docker-compose'"
+      echo "[ERROR] No se encontrÃ³ 'docker compose' ni 'docker-compose'"
       exit 1
     fi
   fi
   echo "[INFO] Ejecutando: $COMPOSE_CMD -f $COMPOSE_FILE down --remove-orphans"
-  $COMPOSE_CMD -f "$COMPOSE_FILE" down --remove-orphans || echo "[WARN] compose down retornó error"
+  $COMPOSE_CMD -f "$COMPOSE_FILE" down --remove-orphans || echo "[WARN] compose down retornÃ³ error"
 else
-  echo "[WARN] No se encontró docker-compose*.yml en $APP_DIR, usando plan B (detener contenedores por nombre)"
+  echo "[WARN] No se encontrÃ³ docker-compose*.yml en $APP_DIR, usando plan B (detener contenedores por nombre)"
   # Detener y eliminar contenedores conocidos del stack
   for name in api-recetas-backend api-recetas-postgres api-recetas-pgadmin; do
     if docker ps -a --format '{{.Names}}' | grep -qx "$name"; then

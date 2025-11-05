@@ -11,13 +11,13 @@ fi
 set -euo pipefail
 
 # start_stack.sh
-# Arranca el stack de docker-compose para la aplicación Recetas.
+# Arranca el stack de docker-compose para la aplicaciÃ³n Recetas.
 
 APP_DIR="${APP_DIR:-/home/admin/api-recetas}"
 ENV_FILE="${ENV_FILE:-$APP_DIR/.env}"
 LOG_FILE="${LOG_FILE:-/var/log/recetas-stack.log}"
 
-# Selección de compose file: prod primero, luego default
+# SelecciÃ³n de compose file: prod primero, luego default
 if [[ -f "$APP_DIR/docker-compose.prod.yml" ]]; then
   COMPOSE_FILE="$APP_DIR/docker-compose.prod.yml"
 elif [[ -f "$APP_DIR/docker-compose.yml" ]]; then
@@ -42,7 +42,7 @@ echo "[$(date --iso-8601=seconds)] start_stack: iniciando"
 
 # Validar docker
 if ! command -v docker >/dev/null 2>&1; then
-  echo "[ERROR] docker no está instalado o no está en PATH"
+  echo "[ERROR] docker no estÃ¡ instalado o no estÃ¡ en PATH"
   exit 1
 fi
 
@@ -52,7 +52,7 @@ if ! docker compose version >/dev/null 2>&1; then
   if command -v docker-compose >/dev/null 2>&1; then
     COMPOSE_CMD="docker-compose"
   else
-    echo "[ERROR] No se encontró 'docker compose' ni 'docker-compose'"
+    echo "[ERROR] No se encontrÃ³ 'docker compose' ni 'docker-compose'"
     exit 1
   fi
 fi
@@ -73,8 +73,8 @@ else
 fi
 
 # Soporte para docker-compose.override.yml local (builds locales)
-# Para evitar builds accidentales en producción, el override solo se considerará
-# si la variable ALLOW_LOCAL_BUILD está explícitamente a 'true'.
+# Para evitar builds accidentales en producciÃ³n, el override solo se considerarÃ¡
+# si la variable ALLOW_LOCAL_BUILD estÃ¡ explÃ­citamente a 'true'.
 ALLOW_LOCAL_BUILD="${ALLOW_LOCAL_BUILD:-false}"
 OVERRIDE_FILE="$APP_DIR/docker-compose.override.yml"
 if [[ "$ALLOW_LOCAL_BUILD" =~ ^([Tt]rue|1)$ ]] && [[ -f "$OVERRIDE_FILE" ]]; then
@@ -82,12 +82,12 @@ if [[ "$ALLOW_LOCAL_BUILD" =~ ^([Tt]rue|1)$ ]] && [[ -f "$OVERRIDE_FILE" ]]; the
   COMPOSE_FILES=("-f" "$COMPOSE_FILE" "-f" "$OVERRIDE_FILE")
 else
   if [[ -f "$OVERRIDE_FILE" ]]; then
-    echo "[INFO] Existe $OVERRIDE_FILE pero ALLOW_LOCAL_BUILD!='true' -> se ignorará (no se harán builds locales)"
+    echo "[INFO] Existe $OVERRIDE_FILE pero ALLOW_LOCAL_BUILD!='true' -> se ignorarÃ¡ (no se harÃ¡n builds locales)"
   fi
   COMPOSE_FILES=("-f" "$COMPOSE_FILE")
 fi
 
-echo "[INFO] Saltando el paso 'pull' por decisión del despliegue (haz pull externamente si corresponde)."
+echo "[INFO] Saltando el paso 'pull' por decisiÃ³n del despliegue (haz pull externamente si corresponde)."
 
 echo "[INFO] Ejecutando: $COMPOSE_CMD ${COMPOSE_FILES[*]} up -d --remove-orphans"
 $COMPOSE_CMD "${COMPOSE_FILES[@]}" "${ENV_ARGS[@]}" up -d --remove-orphans

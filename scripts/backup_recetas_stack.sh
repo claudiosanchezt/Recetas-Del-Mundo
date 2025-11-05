@@ -1,20 +1,18 @@
-echo "[INFO] Raíz repo: $ROOT_DIR"
-echo "[INFO] Usando comando compose: $COMPOSE_CMD"
 #!/usr/bin/env bash
 
 # backup_recetas_stack.sh
-# Respaldo completo del stack (imágenes Docker, dump Postgres, volúmenes, configs y artefactos).
+# Respaldo completo del stack (imagenes Docker, dump Postgres, volumenes, configs y artefactos).
 # No realiza subida remota; crea un tar.gz en ./backups listo para transferir.
 
 set -euo pipefail
 
-# --- Configuración (sobrescribible por variables de entorno) ---
+# --- Configuracion (sobrescribible por variables de entorno) ---
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 BACKUP_DIR="${BACKUP_DIR:-$ROOT_DIR/backups}"
 TIMESTAMP="$(date +%Y%m%d_%H%M%S)"
 TMP_DIR="$(mktemp -d "$BACKUP_DIR/backup_tmp.XXXXXX")"
 
-# Contenedores / volúmenes por defecto (ajusta si tu compose usa otros nombres)
+# Contenedores / volumenes por defecto (ajusta si tu compose usa otros nombres)
 POSTGRES_CONTAINER_NAME="${POSTGRES_CONTAINER_NAME:-api-recetas-postgres}"
 POSTGRES_DB="${POSTGRES_DB:-api_recetas_postgres}"
 POSTGRES_USER="${POSTGRES_USER:-postgres}"
@@ -28,6 +26,7 @@ mkdir -p "$BACKUP_DIR"
 mkdir -p "$TMP_DIR/staging" "$TMP_DIR/staging/database" "$TMP_DIR/staging/volumes" "$TMP_DIR/staging/docker" "$TMP_DIR/staging/config" "$TMP_DIR/staging/artifacts"
 
 echo "[INFO] Backup root: $BACKUP_DIR"
+echo "[INFO] Raiz repo: $ROOT_DIR"
 echo "[INFO] Temporary staging: $TMP_DIR/staging"
 
 # Cargar .env local si existe (quita CRLF si vienen de Windows)
@@ -56,7 +55,7 @@ if docker ps -a --format '{{.Names}}' | grep -qx "$POSTGRES_CONTAINER_NAME"; the
   rc=$?
   set -e
   if [ $rc -ne 0 ]; then
-    echo "[WARN] pg_dump falló (rc=$rc). Se omitirá el dump pero continuaré con resto de backup."
+    echo "[WARN] pg_dump fallo (rc=$rc). Se omitira el dump pero continuare con resto de backup."
     rm -f "$DB_DUMP" || true
   else
     gzip -9 "$DB_DUMP"
@@ -66,30 +65,35 @@ else
   echo "[WARN] Contenedor $POSTGRES_CONTAINER_NAME no encontrado. Omitiendo pg_dump."
 fi
 
-### 2) Guardar imágenes Docker (priorizar contenedores en ejecución)
+### 2) Guardar imagenes Docker (priorizar contenedores en ejecucion)
 IMAGES_FILE="$TMP_DIR/staging/docker/images_${TIMESTAMP}.txt"
 IMAGES_TAR="$TMP_DIR/staging/docker/images_${TIMESTAMP}.tar"
-echo "[INFO] Detectando imágenes activas (contenedores en ejecución)..."
+echo "[INFO] Detectando imagenes activas (contenedores en ejecucion)..."
 if command -v docker >/dev/null 2>&1; then
-  # 1) imágenes de contenedores en ejecución (running)
-  docker ps --format '{{.Image}}' | sort -u > "$IMAGES_FILE" || true
+  # 1) imagenes de contenedores en ejecucion (running) - obtener nombres completos
+  # Usar docker inspect para obtener repository:tag en lugar de IDs cortos
+  docker ps -q | while read -r cid; do
+    docker inspect "$cid" --format '{{.Config.Image}}' 2>/dev/null || echo ""
+  done | grep -v '^$' | sort -u > "$IMAGES_FILE" || true
 
-  # 2) si no hay contenedores en ejecución, intentar imágenes definidas en docker-compose
+  # 2) si no hay contenedores en ejecucion, intentar imagenes definidas en docker-compose
   if [ ! -s "$IMAGES_FILE" ] && [ -f "$COMPOSE_FILE" ]; then
     if docker compose -f "$COMPOSE_FILE" images --quiet >/dev/null 2>&1; then
-      echo "[INFO] No hay contenedores en ejecución; usando imágenes definidas en compose"
+      echo "[INFO] No hay contenedores en ejecucion; usando imagenes definidas en compose"
       docker compose -f "$COMPOSE_FILE" images --quiet | sort -u > "$IMAGES_FILE" || true
     fi
   fi
 
-  # 3) fallback final: todas las imágenes de contenedores (incluye parados)
+  # 3) fallback final: todas las imagenes de contenedores (incluye parados)
   if [ ! -s "$IMAGES_FILE" ]; then
-    docker ps -a --format '{{.Image}}' | sort -u > "$IMAGES_FILE" || true
+    docker ps -a -q | while read -r cid; do
+      docker inspect "$cid" --format '{{.Config.Image}}' 2>/dev/null || echo ""
+    done | grep -v '^$' | sort -u > "$IMAGES_FILE" || true
   fi
   if [ -s "$IMAGES_FILE" ]; then
-    echo "[INFO] Imágenes a guardar:"; sed -n '1,200p' "$IMAGES_FILE"
+    echo "[INFO] Imagenes a guardar:"; sed -n '1,200p' "$IMAGES_FILE"
     # docker save lee la lista desde archivo
-    xargs -a "$IMAGES_FILE" docker save -o "$IMAGES_TAR" || echo "[WARN] docker save devolvió error; se intentará imagen por imagen"
+    xargs -a "$IMAGES_FILE" docker save -o "$IMAGES_TAR" || echo "[WARN] docker save devolvio error; se intentara imagen por imagen"
     if [ ! -f "$IMAGES_TAR" ] || [ ! -s "$IMAGES_TAR" ]; then
       rm -f "$IMAGES_TAR"
       while IFS= read -r img; do
@@ -98,18 +102,18 @@ if command -v docker >/dev/null 2>&1; then
         docker save -o "$out" "$img" || echo "[WARN] no se pudo guardar imagen: $img"
       done < "$IMAGES_FILE"
     else
-      echo "[OK] Imágenes guardadas en $IMAGES_TAR"
+      echo "[OK] Imagenes guardadas en $IMAGES_TAR"
     fi
   else
-    echo "[WARN] No se detectaron imágenes para guardar."
+    echo "[WARN] No se detectaron imagenes para guardar."
   fi
 else
-  echo "[WARN] docker no disponible en PATH. Omitiendo guardado de imágenes."
+  echo "[WARN] docker no disponible en PATH. Omitiendo guardado de imagenes."
 fi
 
-### 3) Respaldar volúmenes (detectar por prefijo o heurística)
-echo "[INFO] Detectando volúmenes Docker para respaldo"
-# Construir lista candidate basada en varias heurísticas:
+### 3) Respaldar volumenes (detectar por prefijo o heuristica)
+echo "[INFO] Detectando volumenes Docker para respaldo"
+# Construir lista candidate basada en varias heuristicas:
 #  - nombres exactos en POSTGRES_VOLUME y PGADMIN_VOLUME
 #  - nombres que terminan en _${POSTGRES_VOLUME} o _${PGADMIN_VOLUME}
 #  - nombres que contienen 'postgres' o 'pgadmin'
@@ -144,16 +148,14 @@ if command -v docker >/dev/null 2>&1; then
   done | sort -u > "$TMP_DIR/staging/volumes/vols_to_backup_${TIMESTAMP}.txt"
   vols_to_backup_file="$TMP_DIR/staging/volumes/vols_to_backup_${TIMESTAMP}.txt"
   if [ -s "$vols_to_backup_file" ]; then
-    echo "[INFO] Volúmenes detectados para respaldo:"; sed -n '1,200p' "$vols_to_backup_file"
+    echo "[INFO] Volumenes detectados para respaldo:"; sed -n '1,200p' "$vols_to_backup_file"
   else
-    echo "[WARN] No se detectaron volúmenes por heurística. Intentando nombres por defecto: $POSTGRES_VOLUME $PGADMIN_VOLUME"
-    printf "%s
-" "$POSTGRES_VOLUME" "$PGADMIN_VOLUME" > "$vols_to_backup_file"
+    echo "[WARN] No se detectaron volumenes por heuristica. Intentando nombres por defecto: $POSTGRES_VOLUME $PGADMIN_VOLUME"
+    printf "%s\n" "$POSTGRES_VOLUME" "$PGADMIN_VOLUME" > "$vols_to_backup_file"
   fi
 else
-  echo "[WARN] docker no disponible; no se pueden listar volúmenes. Usando nombres por defecto."
-  printf "%s
-" "$POSTGRES_VOLUME" "$PGADMIN_VOLUME" > "$TMP_DIR/staging/volumes/vols_to_backup_${TIMESTAMP}.txt"
+  echo "[WARN] docker no disponible; no se pueden listar volumenes. Usando nombres por defecto."
+  printf "%s\n" "$POSTGRES_VOLUME" "$PGADMIN_VOLUME" > "$TMP_DIR/staging/volumes/vols_to_backup_${TIMESTAMP}.txt"
   vols_to_backup_file="$TMP_DIR/staging/volumes/vols_to_backup_${TIMESTAMP}.txt"
 fi
 
@@ -162,15 +164,15 @@ while IFS= read -r vol; do
   if docker volume inspect "$vol" >/dev/null 2>&1; then
     out="$TMP_DIR/staging/volumes/${vol}_${TIMESTAMP}.tar.gz"
     echo "[INFO] Empaquetando volumen: $vol -> $out"
-    # Usar tar por stdout para evitar problemas de bind-mount en entornos Windows/Docker Desktop
-    if docker run --rm -v "$vol:/volume:ro" alpine sh -c "cd /volume || exit 0; tar -czf - ." > "$out"; then
+    # Usar postgres:15 en lugar de busybox (ya disponible en el sistema, evita rate limit de Docker Hub)
+    if docker run --rm -v "$vol:/volume:ro" postgres:15 sh -c "cd /volume || exit 0; tar -czf - ." > "$out"; then
       echo "[OK] Volumen $vol empaquetado -> $out"
     else
-      echo "[WARN] Falló empaquetar volumen $vol via stdout redirection. Intentando método alternativo con contenedor temporal."
+      echo "[WARN] Fallo empaquetar volumen $vol via stdout redirection. Intentando metodo alternativo con contenedor temporal."
       tmpctr="backup_tmp_pack_${TIMESTAMP}"
-      docker run -d --name "$tmpctr" -v "$vol:/volume" alpine sleep 600 >/dev/null 2>&1 || true
+      docker run -d --name "$tmpctr" -v "$vol:/volume" postgres:15 sleep 600 >/dev/null 2>&1 || true
       if docker cp "$tmpctr":/volume - > /dev/null 2>&1; then
-        # Fallback: intentar copiar contenido vía tar dentro del contenedor a un archivo en /tmp y luego docker cp out
+        # Fallback: intentar copiar contenido via tar dentro del contenedor a un archivo en /tmp y luego docker cp out
         docker exec "$tmpctr" sh -c "cd /volume || exit 0; tar -czf /tmp/${vol}_${TIMESTAMP}.tar.gz ." || true
         docker cp "$tmpctr":/tmp/${vol}_${TIMESTAMP}.tar.gz "$out" || true
       fi
@@ -187,7 +189,7 @@ while IFS= read -r vol; do
 done < "$vols_to_backup_file"
 
 ### 4) Copiar archivos relevantes (compose, configs, jar)
-echo "[INFO] Copiando configuración y artefactos"
+echo "[INFO] Copiando configuracion y artefactos"
 if [ -f "$COMPOSE_FILE" ]; then
   cp -f "$COMPOSE_FILE" "$TMP_DIR/staging/config/"
 fi
@@ -217,12 +219,10 @@ tar -C "$TMP_DIR/staging" -czf "$OUTFILE" .
 echo "[OK] Backup creado: $OUTFILE"
 ls -lh "$OUTFILE" || true
 
-### 6) Retención
-echo "[INFO] Aplicando retención de $RETENTION_DAYS días en $BACKUP_DIR"
+### 6) Retencion
+echo "[INFO] Aplicando retencion de $RETENTION_DAYS dias en $BACKUP_DIR"
 find "$BACKUP_DIR" -type f -name 'complete_backup_*.tar.gz' -mtime +"$RETENTION_DAYS" -print -delete || true
 
 # Limpieza
 rm -rf "$TMP_DIR"
-echo "[DONE] Respaldo finalizado"
-
-exit 0
+echo "[OK] Backup completado exitosamente: $OUTFILE"

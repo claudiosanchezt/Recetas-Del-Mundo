@@ -41,7 +41,7 @@ if [[ -z "$BACKUP_TAR" ]]; then
   fi
   if [[ -z "$BACKUP_TAR" ]]; then
     echo "Uso: $0 /ruta/a/complete_backup_YYYYMMDD_HHMMSS.tar.gz" >&2
-    echo "También puedes colocarlo en $BASE_DIR/backups y el script intentará detectarlo automaticamente." >&2
+    echo "Tambien puedes colocarlo en $BASE_DIR/backups y el script intentara detectarlo automaticamente." >&2
     exit 1
   fi
 fi
@@ -51,27 +51,32 @@ POSTGRES_DB="${POSTGRES_DB:-api_recetas_postgres}"
 POSTGRES_USER="${POSTGRES_USER:-postgres}"
 RESTORE_DB="${RESTORE_DB:-auto}"
 COMPOSE_UP="${COMPOSE_UP:-no}"
-ENV_FILE="${ENV_FILE:-auto}"
-
-if [[ ! -f "$BACKUP_TAR" ]]; then
-  echo "[ERROR] Archivo de backup no encontrado: $BACKUP_TAR" >&2
-  exit 1
+ENV_FILE_DEFAULT="$BASE_DIR/.env"
+if [[ -z "${ENV_FILE:-}" && -f "$ENV_FILE_DEFAULT" ]]; then
+  ENV_FILE="$ENV_FILE_DEFAULT"
 fi
 
-echo "[INFO] Restaurando desde: $BACKUP_TAR"
-WORKDIR="$(mktemp -d /tmp/restore_recetas.XXXXXX)"
-trap "rm -rf '$WORKDIR'" EXIT
+WORKDIR="$(mktemp -d)"
+trap 'rm -rf "$WORKDIR"' EXIT
 
-echo "[INFO] Extrayendo backup a: $WORKDIR"
-tar -xzf "$BACKUP_TAR" -C "$WORKDIR" || {
-  echo "[ERROR] Fallo al extraer el backup" >&2
-  exit 1
-}
-echo "[OK] Backup extraido"
+echo "[INFO] Extrayendo $BACKUP_TAR"
+tar -C "$WORKDIR" -xzf "$BACKUP_TAR"
 
-# Detectar comando docker compose vs docker-compose
+echo "[INFO] Archivos extraidos (nivel 2):"
+find "$WORKDIR" -maxdepth 2 -type f -printf '  - %P\n' || true
+
+# Buscar archivos de imagenes (pueden ser multiples archivos .tar individuales o uno combinado)
+DB_SQL="$(ls -1 "$WORKDIR"/database/pgdump_*.sql* 2>/dev/null | head -n1 || true)"
+
+# Verificar prerequisitos: docker y docker-compose/docker compose
 DOCKER_COMPOSE_CMD=""
-if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1; then
+if ! command -v docker >/dev/null 2>&1; then
+  echo "[ERROR] Docker no esta instalado o no esta en PATH. Instala Docker antes de continuar." >&2
+  exit 2
+fi
+
+# Preferir el subcomando 'docker compose' si esta disponible, si no usar 'docker-compose' binario
+if docker compose version >/dev/null 2>&1; then
   DOCKER_COMPOSE_CMD="docker compose"
 elif command -v docker-compose >/dev/null 2>&1; then
   DOCKER_COMPOSE_CMD="docker-compose"
@@ -162,16 +167,6 @@ else
 fi
 
 # 3) Restaurar DB (opcional)
-# Buscar dump SQL (.sql o .sql.gz)
-DB_SQL=""
-if [[ -d "$WORKDIR/database" ]]; then
-  shopt -s nullglob
-  sql_files=("$WORKDIR"/database/*.sql "$WORKDIR"/database/*.sql.gz)
-  if [[ ${#sql_files[@]} -gt 0 ]]; then
-    DB_SQL="${sql_files[0]}"
-  fi
-fi
-
 if [[ -n "$DB_SQL" && -f "$DB_SQL" ]]; then
   do_restore_db="no"
   if [[ "$RESTORE_DB" == "yes" ]]; then
@@ -183,87 +178,75 @@ if [[ -n "$DB_SQL" && -f "$DB_SQL" ]]; then
       echo "[INFO] Detectado volumen de Postgres restaurado. Omitiendo importacion SQL (RESTORE_DB=auto)."
       do_restore_db="no"
     else
-      echo "[INFO] No se restauro volumen de Postgres. Importando dump SQL (RESTORE_DB=auto)."
       do_restore_db="yes"
     fi
   fi
 
   if [[ "$do_restore_db" == "yes" ]]; then
-    echo "[INFO] Restaurando base de datos desde: $DB_SQL"
-    if ! docker ps --format '{{.Names}}' | grep -qx "$POSTGRES_CONTAINER_NAME"; then
-      echo "[WARN] Contenedor $POSTGRES_CONTAINER_NAME no en ejecucion. Intentando levantar con compose..." >&2
-      if [[ -f "$WORKDIR/config/docker-compose.yml" && -n "$DOCKER_COMPOSE_CMD" ]]; then
-        cp "$WORKDIR/config/docker-compose.yml" "$DEPLOY_DIR/" || true
-        if [[ "$ENV_FILE" == "auto" && -f "$BASE_DIR/.env" ]]; then
-          ENV_FILE="$BASE_DIR/.env"
-        fi
-        cd "$DEPLOY_DIR"
-        if [[ -n "$ENV_FILE" && -f "$ENV_FILE" ]]; then
-          $DOCKER_COMPOSE_CMD --env-file "$ENV_FILE" up -d postgres
-        else
-          $DOCKER_COMPOSE_CMD up -d postgres
-        fi
-        echo "[INFO] Esperando a que Postgres esté listo..."
-        sleep 10
+    echo "[INFO] Restaurando DB desde: $DB_SQL"
+    if docker ps --format '{{.Names}}' | grep -qx "$POSTGRES_CONTAINER_NAME"; then
+      # Verificar si el dump esta comprimido (.gz)
+      if [[ "$DB_SQL" == *.gz ]]; then
+        echo "[INFO] Descomprimiendo dump SQL..."
+        gunzip -c "$DB_SQL" | docker exec -i "$POSTGRES_CONTAINER_NAME" sh -lc "psql -U '$POSTGRES_USER' -d '$POSTGRES_DB'"
       else
-        echo "[ERROR] No se puede levantar contenedor de Postgres. Compose no disponible o no encontrado." >&2
-        exit 1
+        docker exec -i "$POSTGRES_CONTAINER_NAME" sh -lc "psql -U '$POSTGRES_USER' -d '$POSTGRES_DB'" < "$DB_SQL"
       fi
-    fi
-
-    # Descomprimir si es .gz
-    if [[ "$DB_SQL" == *.gz ]]; then
-      echo "[INFO] Descomprimiendo $DB_SQL..."
-      UNCOMPRESSED_SQL="/tmp/restore_db_$(date +%s).sql"
-      gunzip -c "$DB_SQL" > "$UNCOMPRESSED_SQL"
-      DB_SQL="$UNCOMPRESSED_SQL"
-    fi
-
-    echo "[INFO] Importando SQL a $POSTGRES_DB..."
-    if docker exec -i "$POSTGRES_CONTAINER_NAME" psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" < "$DB_SQL"; then
-      echo "[OK] Base de datos restaurada"
+      echo "[OK]   Dump importado en $POSTGRES_CONTAINER_NAME ($POSTGRES_DB)"
     else
-      echo "[WARN] Importacion de DB fallo. Verifica logs del contenedor." >&2
+      echo "[WARN] Contenedor Postgres '$POSTGRES_CONTAINER_NAME' no esta ejecutandose. Omitiendo importacion."
     fi
-
-    if [[ -f "$UNCOMPRESSED_SQL" ]]; then
-      rm -f "$UNCOMPRESSED_SQL"
-    fi
-  else
-    echo "[INFO] Omitiendo importacion de DB (RESTORE_DB=$RESTORE_DB)"
   fi
 else
-  echo "[WARN] No se encontro dump SQL en el backup"
+  echo "[WARN] No se encontro dump SQL en $WORKDIR/database"
 fi
 
-# 4) Copiar archivos de configuracion al directorio de deployment
-if [[ -d "$WORKDIR/config" ]]; then
-  echo "[INFO] Copiando configuracion a $DEPLOY_DIR"
-  mkdir -p "$DEPLOY_DIR"
-  cp -r "$WORKDIR"/config/* "$DEPLOY_DIR/" 2>/dev/null || true
-  echo "[OK] Archivos de configuracion copiados"
+# 4) Levantar stack (opcional) si hay compose y el usuario lo pide
+CONFIG_DIR="$WORKDIR/config"
+# 4) Copiar SIEMPRE configuracion al DEPLOY_DIR para dejar artefactos listos
+compose_src=""
+compose_name="docker-compose.prod.yml"
+if [[ -f "$CONFIG_DIR/docker-compose.prod.yml" ]]; then
+  compose_src="$CONFIG_DIR/docker-compose.prod.yml"
+  compose_name="docker-compose.prod.yml"
+elif [[ -f "$CONFIG_DIR/docker-compose.yml" ]]; then
+  compose_src="$CONFIG_DIR/docker-compose.yml"
+  compose_name="docker-compose.yml"
 fi
 
-# 5) Levantar servicios con docker compose (opcional)
-if [[ "$COMPOSE_UP" == "yes" ]]; then
-  if [[ -f "$DEPLOY_DIR/docker-compose.yml" && -n "$DOCKER_COMPOSE_CMD" ]]; then
-    echo "[INFO] Levantando servicios con docker compose..."
-    cd "$DEPLOY_DIR"
-    if [[ "$ENV_FILE" == "auto" && -f "$BASE_DIR/.env" ]]; then
-      ENV_FILE="$BASE_DIR/.env"
-    fi
-    if [[ -n "$ENV_FILE" && -f "$ENV_FILE" ]]; then
-      $DOCKER_COMPOSE_CMD --env-file "$ENV_FILE" up -d
-    else
-      $DOCKER_COMPOSE_CMD up -d
-    fi
-    echo "[OK] Servicios levantados"
-  else
-    echo "[WARN] No se puede levantar compose: archivo no encontrado o comando no disponible"
-  fi
+echo "[INFO] Preparando directorio de despliegue: $DEPLOY_DIR"
+mkdir -p "$DEPLOY_DIR"
+if [[ -n "$compose_src" ]]; then
+  cp -f "$compose_src" "$DEPLOY_DIR/$compose_name"
+  echo "[OK]   Compose dejado en: $DEPLOY_DIR/$compose_name"
 else
-  echo "[INFO] Servicios NO levantados automaticamente (COMPOSE_UP=$COMPOSE_UP)"
-  echo "[INFO] Para levantar manualmente: cd $DEPLOY_DIR && docker compose up -d"
+  echo "[WARN] No se encontro archivo docker-compose en $CONFIG_DIR"
+fi
+if [[ -f "$CONFIG_DIR/servers.json" ]]; then
+  mkdir -p "$DEPLOY_DIR/pgadmin"
+  cp -f "$CONFIG_DIR/servers.json" "$DEPLOY_DIR/pgadmin/servers.json"
+  echo "[OK]   pgAdmin servers.json dejado en: $DEPLOY_DIR/pgadmin/servers.json"
 fi
 
-echo "[OK] Restauracion completada exitosamente"
+# 5) Levantar stack si asi se solicito
+if [[ "$COMPOSE_UP" == "yes" && -n "$compose_src" ]]; then
+  echo "[INFO] Levantando stack con: $DEPLOY_DIR/$compose_name"
+  # Usar la variable DOCKER_COMPOSE_CMD detectada
+  if [[ -z "$DOCKER_COMPOSE_CMD" ]]; then
+    echo "[ERROR] No se encontro un comando de docker-compose funcional. Abortando levantado." >&2
+    exit 3
+  fi
+  if [[ -n "${ENV_FILE:-}" && -f "$ENV_FILE" ]]; then
+    (cd "$DEPLOY_DIR" && eval "$DOCKER_COMPOSE_CMD -f \"$compose_name\" --env-file \"$ENV_FILE\" up -d")
+  else
+    (cd "$DEPLOY_DIR" && eval "$DOCKER_COMPOSE_CMD -f \"$compose_name\" up -d")
+  fi
+  echo "[OK]   Stack levantado"
+else
+  if [[ "$COMPOSE_UP" != "yes" ]]; then
+    echo "[INFO] Compose no ejecutado automaticamente. Puedes usar:"
+    echo "       docker compose -f $DEPLOY_DIR/$compose_name --env-file ${ENV_FILE:-$DEPLOY_DIR/.env} up -d"
+  fi
+fi
+
+echo "[DONE] Restauracion completada"
