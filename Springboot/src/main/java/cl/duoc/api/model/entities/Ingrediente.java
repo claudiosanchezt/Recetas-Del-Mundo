@@ -12,7 +12,7 @@ public class Ingrediente {
     @Column(name = "id_ingrediente")
     private Integer idIngrediente;
 
-    @Column(name = "nombre", nullable = false, length = 500)
+    @Column(name = "nombre", nullable = false, length = 500, columnDefinition = "TEXT")
     private String nombre;
 
     @ManyToOne(fetch = FetchType.LAZY)

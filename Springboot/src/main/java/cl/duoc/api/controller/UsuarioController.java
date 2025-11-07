@@ -1,5 +1,6 @@
 package cl.duoc.api.controller;
 
+import cl.duoc.api.model.dto.UsuarioBasicoDTO;
 import cl.duoc.api.model.entities.Usuario;
 import cl.duoc.api.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -188,6 +189,39 @@ public class UsuarioController {
             if (usuario.isPresent()) {
                 response.put("exito", true);
                 response.put("data", usuario.get());
+            } else {
+                response.put("exito", false);
+                response.put("mensaje", "Usuario no encontrado");
+            }
+        } catch (Exception e) {
+            response.put("exito", false);
+            response.put("mensaje", "Error al buscar usuario: " + e.getMessage());
+        }
+        
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/id/{id}")
+    @Operation(summary = "Obtener nombre del usuario", description = "Retorna solo el nombre de un usuario específico (endpoint público para frontend)")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Nombre del usuario obtenido exitosamente"),
+        @ApiResponse(responseCode = "404", description = "Usuario no encontrado"),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
+    public ResponseEntity<Map<String, Object>> obtenerNombreYEmail(
+            @Parameter(description = "ID del usuario a consultar", required = true) @PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            Optional<Usuario> usuario = usuarioService.findById(id.intValue());
+            
+            if (usuario.isPresent()) {
+                Usuario user = usuario.get();
+                UsuarioBasicoDTO dto = new UsuarioBasicoDTO(user.getNombre());
+                
+                response.put("exito", true);
+                response.put("data", dto);
+                response.put("mensaje", "Nombre obtenido correctamente");
             } else {
                 response.put("exito", false);
                 response.put("mensaje", "Usuario no encontrado");

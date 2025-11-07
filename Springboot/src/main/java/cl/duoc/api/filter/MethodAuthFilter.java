@@ -32,7 +32,8 @@ public class MethodAuthFilter extends OncePerRequestFilter {
     private static final List<String> PUBLIC_PATHS = List.of(
             "/actuator/health", "/actuator/info",
             "/swagger-ui/**", "/v3/api-docs/**",
-            "/auth/**" // login/register públicos
+            "/auth/**", // login/register públicos
+            "/usuarios/id/**" // obtener nombre de usuario (público)
     );
 
     // Rutas GET que requieren rol (excepción a GET público)
