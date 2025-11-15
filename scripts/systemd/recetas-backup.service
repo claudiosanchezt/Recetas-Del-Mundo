@@ -7,9 +7,11 @@ After=network-online.target docker.service
 Type=oneshot
 RemainAfterExit=no
 WorkingDirectory=/home/admin/api-recetas
-ExecStart=/bin/bash /home/admin/api-recetas/scripts/backup_full.sh /home/admin/api-recetas/backups
-User=admin
-Group=admin
+Environment=BACKUP_DIR=/home/admin/api-recetas/backups
+Environment=RETENTION_DAYS=7
+ExecStart=/bin/bash /home/admin/api-recetas/scripts/backup_recetas_stack.sh
+StandardOutput=append:/var/log/recetas-backup.log
+StandardError=append:/var/log/recetas-backup.log
 
 [Install]
 WantedBy=multi-user.target
