@@ -120,3 +120,106 @@ public class StripeDonacionController {
         }
     }
 }
+
+    // POST /donaciones/verify-session
+    @PostMapping("/donaciones/verify-session")
+    public ResponseEntity<?> verifySession(@RequestHeader HttpHeaders headers, @RequestBody Map<String, Object> body) {
+        try {
+            String auth = headers.getFirst(HttpHeaders.AUTHORIZATION);
+            if (auth == null || !auth.startsWith("Bearer ")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authorization header missing or invalid");
+            }
+            String token = auth.substring(7);
+            Integer tokenUserId;
+            try {
+                tokenUserId = jwtUtil.extractUserId(token);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+            }
+
+            String sessionId = body.get("sessionId") == null ? null : body.get("sessionId").toString();
+            if (sessionId == null || sessionId.isEmpty()) {
+                return ResponseEntity.badRequest().body("sessionId is required");
+            }
+
+            // If STRIPE_SECRET_KEY present, ask Stripe for session info
+            String stripeKey = System.getenv("STRIPE_SECRET_KEY");
+            if (stripeKey != null && !stripeKey.isEmpty()) {
+                Stripe.apiKey = stripeKey;
+                try {
+                    Session session = Session.retrieve(sessionId);
+                    String paymentStatus = session.getPaymentStatus();
+                    String paymentIntent = session.getPaymentIntent();
+
+                    // Try find existing Donacion by session id
+                    java.util.Optional<Donacion> od = donacionRepository.findByStripeSessionId(sessionId);
+                    if (od.isPresent()) {
+                        Donacion d = od.get();
+                        if ("paid".equalsIgnoreCase(paymentStatus) || (paymentIntent != null && !paymentIntent.isEmpty())) {
+                            d.setStatus("PAID");
+                            d.setStripePaymentIntent(paymentIntent);
+                        } else {
+                            d.setStatus("PENDING");
+                        }
+                        donacionRepository.save(d);
+                        Map<String,Object> resp = new HashMap<>();
+                        resp.put("status", d.getStatus());
+                        resp.put("donacion", d);
+                        return ResponseEntity.ok(resp);
+                    }
+
+                    // Not found by sessionId — try metadata
+                    java.util.Map<String,String> meta = session.getMetadata();
+                    if (meta != null && meta.containsKey("donacion_id")) {
+                        try {
+                            Integer did = Integer.valueOf(meta.get("donacion_id"));
+                            java.util.Optional<Donacion> od2 = donacionRepository.findById(did);
+                            if (od2.isPresent()) {
+                                Donacion d2 = od2.get();
+                                if ("paid".equalsIgnoreCase(paymentStatus) || (paymentIntent != null && !paymentIntent.isEmpty())) {
+                                    d2.setStatus("PAID");
+                                    d2.setStripePaymentIntent(paymentIntent);
+                                    d2.setStripeSessionId(sessionId);
+                                } else {
+                                    d2.setStatus("PENDING");
+                                }
+                                donacionRepository.save(d2);
+                                Map<String,Object> resp = new HashMap<>();
+                                resp.put("status", d2.getStatus());
+                                resp.put("donacion", d2);
+                                return ResponseEntity.ok(resp);
+                            }
+                        } catch (NumberFormatException nfe) {
+                            // fall through
+                        }
+                    }
+
+                    // Nothing updated — return Stripe session info
+                    Map<String,Object> resp2 = new HashMap<>();
+                    resp2.put("stripePaymentStatus", paymentStatus);
+                    resp2.put("stripePaymentIntent", paymentIntent);
+                    resp2.put("session", session.getId());
+                    return ResponseEntity.ok(resp2);
+                } catch (com.stripe.exception.StripeException se) {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Stripe error: " + se.getMessage());
+                }
+            } else {
+                // No stripe key — just inspect DB
+                java.util.Optional<Donacion> od = donacionRepository.findByStripeSessionId(sessionId);
+                if (od.isPresent()) {
+                    Donacion d = od.get();
+                    Map<String,Object> resp = new HashMap<>();
+                    resp.put("status", d.getStatus());
+                    resp.put("donacion", d);
+                    return ResponseEntity.ok(resp);
+                } else {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No donacion found for sessionId");
+                }
+            }
+
+        } catch (ClassCastException cce) {
+            return ResponseEntity.badRequest().body("Invalid request payload types");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
