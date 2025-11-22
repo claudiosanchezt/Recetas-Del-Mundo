@@ -93,6 +93,12 @@ if command -v docker >/dev/null 2>&1; then
   if [ -f "$COMPOSE_FILE" ]; then
     # capture lines like 'image: name:tag' possibly with indentation
     grep -E '^[[:space:]]*image:' "$COMPOSE_FILE" 2>/dev/null | sed -E 's/^[[:space:]]*image:[[:space:]]*//' >> "$IMAGES_FILE" || true
+    # try `docker compose` to list images referenced by the compose file (if available)
+    if command -v docker >/dev/null 2>&1; then
+      if docker compose -f "$COMPOSE_FILE" images --format "{{.Repository}}:{{.Tag}}" >/dev/null 2>&1; then
+        docker compose -f "$COMPOSE_FILE" images --format "{{.Repository}}:{{.Tag}}" 2>/dev/null | grep -v '^$' >> "$IMAGES_FILE" || true
+      fi
+    fi
   fi
 
   # normalize, remove empty lines and duplicates
@@ -136,7 +142,11 @@ if command -v docker >/dev/null 2>&1; then
     # Also persist the final images list for restore convenience
     cp -f "$IMAGES_FILE" "$TMP_DIR/staging/docker/images_${TIMESTAMP}.txt" || true
   else
-    echo "[WARN] No se detectaron imagenes para guardar."
+    echo "[WARN] No se detectaron imagenes para guardar. Aplicando lista por defecto." 
+    # Fallback: incluir imágenes base conocidas y la imagen de backend configurada
+    echo "postgres:15" >> "$IMAGES_FILE"
+    echo "dpage/pgadmin4:latest" >> "$IMAGES_FILE"
+    if [ -n "${BACKEND_IMAGE_NAME:-}" ]; then echo "$BACKEND_IMAGE_NAME" >> "$IMAGES_FILE"; fi
   fi
 else
   echo "[WARN] docker no disponible en PATH. Omitiendo guardado de imagenes."
