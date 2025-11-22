@@ -33,6 +33,7 @@ public class MethodAuthFilter extends OncePerRequestFilter {
             "/actuator/health", "/actuator/info",
             "/swagger-ui/**", "/v3/api-docs/**",
             "/auth/**", // login/register públicos
+            "/webhook/stripe", // webhook de Stripe debe ser público (firma en payload)
             "/usuarios/id/**" // obtener nombre de usuario (público)
     );
 

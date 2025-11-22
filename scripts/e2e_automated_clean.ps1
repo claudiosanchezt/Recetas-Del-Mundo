@@ -28,7 +28,8 @@ function Simulate-Webhook($sessionId) {
     $payload = ConvertTo-Json $event -Depth 10
     $ts = [int][double]::Parse((Get-Date -UFormat %s))
     $signed = "$ts.$payload"
-    $h = New-Object System.Security.Cryptography.HMACSHA256([Text.Encoding]::UTF8.GetBytes($secret))
+    $keyBytes = [Text.Encoding]::UTF8.GetBytes($secret)
+    $h = New-Object System.Security.Cryptography.HMACSHA256 -ArgumentList (,@($keyBytes))
     $sig = ($h.ComputeHash([Text.Encoding]::UTF8.GetBytes($signed)) | ForEach-Object { $_.ToString('x2') }) -join ''
     $header = "t=$ts,v1=$sig"
     try {

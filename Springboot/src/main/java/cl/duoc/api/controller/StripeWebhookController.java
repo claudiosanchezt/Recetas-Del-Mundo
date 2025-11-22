@@ -30,7 +30,6 @@ public class StripeWebhookController {
     public ResponseEntity<String> handleWebhook(@RequestHeader(value = "Stripe-Signature", required = false) String sigHeader,
                                                 @RequestBody String payload) {
         String webhookSecret = System.getenv("STRIPE_WEBHOOK_SECRET");
-
         // If no webhook secret is set, try to parse raw event (best-effort) but reject signature checks
         Event event = null;
         try {

@@ -3,8 +3,9 @@ package cl.duoc.api.controller;
 import cl.duoc.api.model.entities.Donacion;
 import cl.duoc.api.model.repositories.DonacionRepository;
 import cl.duoc.api.util.JwtUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import com.stripe.Stripe;
-import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,11 @@ public class StripeDonacionController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    private final ObjectMapper mapper = new ObjectMapper();
 
     // POST /donaciones/create-session
     @PostMapping("/donaciones/create-session")
@@ -104,6 +110,21 @@ public class StripeDonacionController {
             saved.setStripeSessionId(session.getId());
             donacionRepository.save(saved);
 
+            // Persist a sesion_pago row including metadata (jsonb)
+            try {
+                String metadataJson = null;
+                if (session.getMetadata() != null && !session.getMetadata().isEmpty()) {
+                    metadataJson = mapper.writeValueAsString(session.getMetadata());
+                }
+                String status = (session.getPaymentStatus() != null && session.getPaymentStatus().equalsIgnoreCase("paid")) ? "PAID" : "PENDING";
+                // Insert with explicit cast to jsonb so Postgres stores it correctly
+                String sql = "INSERT INTO sesion_pago (session_id, provider, status, id_donacion, metadata) VALUES (?,'stripe',?,?::jsonb)";
+                jdbcTemplate.update(sql, session.getId(), status, saved.getIdDonacion(), metadataJson);
+            } catch (Exception e) {
+                // Don't fail the whole request if DB write for sesion_pago fails; log to stdout for now
+                System.out.println("Warning: could not insert sesion_pago metadata: " + e.getMessage());
+            }
+
             Map<String, Object> result = new HashMap<>();
             result.put("sessionId", session.getId());
             result.put("url", session.getUrl());
@@ -111,7 +132,7 @@ public class StripeDonacionController {
 
             return ResponseEntity.status(HttpStatus.CREATED).body(result);
 
-        } catch (StripeException se) {
+        } catch (com.stripe.exception.StripeException se) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Stripe error: " + se.getMessage());
         } catch (ClassCastException cce) {
             return ResponseEntity.badRequest().body("Invalid request payload types");
@@ -119,7 +140,6 @@ public class StripeDonacionController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
-}
 
     // POST /donaciones/verify-session
     @PostMapping("/donaciones/verify-session")
@@ -223,3 +243,5 @@ public class StripeDonacionController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
+}
