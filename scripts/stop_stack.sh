@@ -47,6 +47,7 @@ if ! command -v docker >/dev/null 2>&1; then
 fi
 
 if [[ -n "$COMPOSE_FILE" ]]; then
+  # Resolver comando compose (mismo criterio que start_stack.sh)
   COMPOSE_CMD="docker compose"
   if ! docker compose version >/dev/null 2>&1; then
     if command -v docker-compose >/dev/null 2>&1; then
@@ -56,12 +57,26 @@ if [[ -n "$COMPOSE_FILE" ]]; then
       exit 1
     fi
   fi
-  echo "[INFO] Ejecutando: $COMPOSE_CMD -f $COMPOSE_FILE down --remove-orphans"
-  $COMPOSE_CMD -f "$COMPOSE_FILE" down --remove-orphans || echo "[WARN] compose down retornó error"
+
+  # Soporte para docker-compose.override.yml local (igual que en start)
+  ALLOW_LOCAL_BUILD="${ALLOW_LOCAL_BUILD:-false}"
+  OVERRIDE_FILE="$APP_DIR/docker-compose.override.yml"
+  if [[ "$ALLOW_LOCAL_BUILD" =~ ^([Tt]rue|1)$ ]] && [[ -f "$OVERRIDE_FILE" ]]; then
+    echo "[INFO] ALLOW_LOCAL_BUILD habilitado; usando override compose: $OVERRIDE_FILE"
+    COMPOSE_FILES=("-f" "$COMPOSE_FILE" "-f" "$OVERRIDE_FILE")
+  else
+    if [[ -f "$OVERRIDE_FILE" ]]; then
+      echo "[INFO] Existe $OVERRIDE_FILE pero ALLOW_LOCAL_BUILD!='true' -> se ignorará"
+    fi
+    COMPOSE_FILES=("-f" "$COMPOSE_FILE")
+  fi
+
+  echo "[INFO] Ejecutando: $COMPOSE_CMD ${COMPOSE_FILES[*]} down --remove-orphans"
+  $COMPOSE_CMD "${COMPOSE_FILES[@]}" down --remove-orphans || echo "[WARN] compose down retornó error"
 else
   echo "[WARN] No se encontró docker-compose*.yml en $APP_DIR, usando plan B (detener contenedores por nombre)"
-  # Detener y eliminar contenedores conocidos del stack
-  for name in api-recetas-backend api-recetas-postgres api-recetas-pgadmin; do
+  # Detener y eliminar contenedores conocidos del stack (extendido)
+  for name in api-recetas-backend api-recetas-postgres api-recetas-redis api-recetas-pgadmin api-recetas-frontend; do
     if docker ps -a --format '{{.Names}}' | grep -qx "$name"; then
       echo "[INFO] Deteniendo contenedor: $name"
       docker stop "$name" || true

@@ -107,7 +107,35 @@ function Normalize-Ts {
     }
 }
 
- $origFechaNorm = Normalize-Ts $origFecha
+# Mejor manejo de timestamps: aceptar tanto strings ISO como arrays [year,month,day,h,m,s,nanos]
+function Normalize-Ts-Flexible {
+    param([object]$input)
+    if ($null -eq $input) { return $null }
+
+    # Si viene como array de componentes de fecha/hora
+    if ($input -is [System.Object[]]) {
+        $arr = $input
+        if ($arr.Length -lt 7) { return $null }
+        $year = $arr[0]; $month = $arr[1]; $day = $arr[2]; $hour = $arr[3]; $min = $arr[4]; $sec = $arr[5]; $nanos = $arr[6]
+        # Convertir nanos a microsegundos (6 dígitos) con redondeo
+        try {
+            $micro = [math]::Round([double]$nanos / 1000)
+        } catch {
+            $micro = 0
+        }
+        $microStr = [string]$micro
+        if ($microStr.Length -gt 6) { $microStr = $microStr.Substring(0,6) }
+        elseif ($microStr.Length -lt 6) { $microStr = $microStr.PadLeft(6,'0') }
+        # Construir string normalizado similar a 'yyyy-MM-ddTHH:mm:ss.ffffff'
+        $datePart = "{0}-{1:D2}-{2:D2} {3:D2}:{4:D2}:{5:D2}" -f $year, $month, $day, $hour, $min, $sec
+        return "$datePart.$microStr"
+    }
+
+    # Si es string, reutilizar la función previa
+    return Normalize-Ts -s $input
+}
+
+ $origFechaNorm = Normalize-Ts-Flexible $origFecha
  Write-Host "Fecha original normalizada: $origFechaNorm"
 
 # 2) Modificar comentario (PUT) - usando JSON body parcial { texto: 'nuevo texto' }
@@ -128,25 +156,27 @@ $updated = $null
 if ($updatedResp.data) { $updated = $updatedResp.data }
 if (-not $updated) { Write-Host "No se obtuvo el comentario actualizado en response.data"; exit 1 }
 
-# Verificar preservación de fechaCreacion y claves foraneas
+ # Verificar preservación de fechaCreacion y claves foraneas
  $updatedFecha = $updated.fechaCreacion
  # comparar con tolerancia de hasta 5 ms para evitar diferencias por redondeo/format
  try {
-     $dtOrig = [datetime]::Parse($origFecha)
-     $dtUpdated = [datetime]::Parse($updatedFecha)
+     $origNorm = Normalize-Ts-Flexible $origFecha
+     $updatedNorm = Normalize-Ts-Flexible $updatedFecha
+     $dtOrig = [datetime]::Parse($origNorm)
+     $dtUpdated = [datetime]::Parse($updatedNorm)
      $diffMs = [math]::Abs((($dtUpdated - $dtOrig).TotalMilliseconds))
  } catch {
      # si no se pueden parsear, fallback a comparación string normalizada
-     $updatedFechaNorm = Normalize-Ts $updatedFecha
+     $updatedFechaNorm = Normalize-Ts-Flexible $updatedFecha
      if ($updatedFechaNorm -ne $origFechaNorm) { Write-Host "ERROR: fechaCreacion no preservada! original=$origFechaNorm nuevo=$updatedFechaNorm"; exit 1 }
      else { Write-Host "OK: fechaCreacion preservada (por normalizacion)" }
  }
 
-if ($diffMs -gt 5) {
-    Write-Host "ERROR: fechaCreacion no preservada (diferencia ms=$diffMs) original=$origFecha nuevo=$updatedFecha"; exit 1
-} else {
-    Write-Host "OK: fechaCreacion preservada (diferencia ms=$diffMs)"
-}
+ if ($diffMs -gt 5) {
+     Write-Host "ERROR: fechaCreacion no preservada (diferencia ms=$diffMs) original=$origFecha nuevo=$updatedFecha"; exit 1
+ } else {
+     Write-Host "OK: fechaCreacion preservada (diferencia ms=$diffMs)"
+ }
 
 if ($updated.receta.idReceta -ne $createdResp.data.receta.idReceta -or $updated.usuario.idUsr -ne $createdResp.data.usuario.idUsr) {
     Write-Host "ERROR: claves foraneas cambiaron (idReceta/idUsr)"; exit 1

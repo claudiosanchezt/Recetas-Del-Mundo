@@ -79,7 +79,7 @@ else
   echo "[WARN] No se encontro comando 'docker compose' ni 'docker-compose'. Algunas operaciones pueden fallar." >&2
 fi
 
-# 1) Cargar imagenes - buscar todos los archivos .tar en la carpeta docker
+## 1) Cargar imagenes - buscar todos los archivos .tar en la carpeta docker
 echo "[INFO] Cargando imagenes Docker..."
 images_loaded=0
 if [[ -d "$WORKDIR/docker" ]]; then
@@ -87,15 +87,19 @@ if [[ -d "$WORKDIR/docker" ]]; then
   image_files=("$WORKDIR"/docker/*.tar)
   if [[ ${#image_files[@]} -gt 0 ]]; then
     for img_file in "${image_files[@]}"; do
-      echo "[INFO] -> Cargando imagen: $(basename "$img_file")"
-      if docker load -i "$img_file" >/dev/null 2>&1; then
-        echo "[OK]   Imagen cargada: $(basename "$img_file")"
-        ((images_loaded++))
+      base_img=$(basename "${img_file}")
+      echo "[INFO] -> Cargando imagen: ${base_img}"
+      if docker load -i "${img_file}" > "$WORKDIR/docker/${base_img}.load.out" 2>"$WORKDIR/docker/${base_img}.load.err"; then
+        # parse loaded image name from output if present
+        printf "%s\n" "$(<"$WORKDIR/docker/${base_img}.load.out")"
+        echo "[OK]   Imagen cargada: ${base_img}"
+        images_loaded=$((images_loaded+1))
       else
-        echo "[WARN] No se pudo cargar: $(basename "$img_file")"
+        echo "[WARN] No se pudo cargar: ${base_img}; ver $WORKDIR/docker/${base_img}.load.err"
+        tail -n 50 "$WORKDIR/docker/${base_img}.load.err" || true
       fi
     done
-    echo "[OK]   Total imagenes cargadas: $images_loaded"
+    echo "[OK]   Total imagenes intentadas: ${#image_files[@]}, cargadas: $images_loaded"
   else
     echo "[WARN] No se encontraron archivos .tar de imagenes en $WORKDIR/docker"
   fi
@@ -113,18 +117,20 @@ if [[ -d "$VOLUMES_DIR" ]]; then
     echo "[WARN] Asegurate de tener los contenedores detenidos (docker compose down) antes de restaurar volumenes."
     for vf in "${vol_files[@]}"; do
       base="$(basename "$vf")"
-      # Derivar nombre del volumen removiendo sufijo _YYYYMMDD_HHMMSS.tar.gz
-      vol_name="${base%_????????_??????.tar.gz}"
+      # Derivar nombre del volumen removiendo sufijo _YYYYMMDD_HHMMSS.tar.gz u otros sufijos comunes
+      vol_name="$(echo "$base" | sed -E 's/_[0-9]{8}_[0-9]{6}\.tar\.gz$//; s/_[0-9]{8}\.tar\.gz$//; s/\.tar\.gz$//')"
+      # If derived name is empty, fall back to using the original base name without extension
+      if [[ -z "$vol_name" ]]; then
+        vol_name="$(echo "$base" | sed -E 's/\.tar\.gz$//')"
+      fi
       echo "[INFO] -> Volumen: $vol_name (archivo: $base)"
       if ! docker volume inspect "$vol_name" >/dev/null 2>&1; then
-        docker volume create "$vol_name" >/dev/null
+        docker volume create "$vol_name" >/dev/null || echo "[WARN] No se pudo crear volumen $vol_name"
         echo "[INFO]    Volumen creado: $vol_name"
       fi
 
       echo "[INFO]    Restaurando desde archivo: $vf"
-      # Montar el archivo tar.gz individualmente (bind) y el volumen como volume
-      # Usa --mount para evitar problemas de interpretacion de rutas y dejar claro el tipo de mount
-      # Intento preferido: --mount (mas explicito). Si falla, usar contenedor temporal + docker cp (funciona en Docker Desktop/Git Bash).
+      # Prefer mount method; if it fails, try container+docker cp fallback
       if docker run --rm \
         --mount type=volume,source="$vol_name",target=/volume \
         --mount type=bind,source="$vf",target=/backup/backup.tar.gz,readonly \
@@ -132,22 +138,20 @@ if [[ -d "$VOLUMES_DIR" ]]; then
         echo "[OK]   Volumen restaurado (via --mount): $vol_name"
       else
         echo "[WARN] --mount fallo, intentando extraccion via contenedor temporal para $vol_name" >&2
-        # Contenedor temporal: montar solo el volumen y usar docker cp para evitar path translation issues
         tmp_ctr="restore_tmp_$(date +%s)_$RANDOM"
         if ! docker run -d --name "$tmp_ctr" -v "$vol_name:/volume" postgres:15 sleep 600 >/dev/null; then
           echo "[ERROR] No se pudo crear contenedor temporal $tmp_ctr para $vol_name" >&2
-          exit 1
+          continue
         fi
-        # Copiar archivo dentro del contenedor y extraer
         if ! docker cp "$vf" "$tmp_ctr:/backup.tar.gz"; then
           echo "[ERROR] docker cp fallo para $vf -> $tmp_ctr:/backup.tar.gz" >&2
           docker rm -f "$tmp_ctr" >/dev/null || true
-          exit 1
+          continue
         fi
         if ! docker exec "$tmp_ctr" sh -c 'rm -rf /volume/* && tar -xzf /backup.tar.gz -C /volume'; then
           echo "[ERROR] Extraccion dentro del contenedor temporal fallo para $vol_name" >&2
           docker rm -f "$tmp_ctr" >/dev/null || true
-          exit 1
+          continue
         fi
         docker rm -f "$tmp_ctr" >/dev/null || true
         echo "[OK]   Volumen restaurado (via contenedor temporal): $vol_name"
@@ -161,15 +165,12 @@ else
   echo "[WARN] Carpeta de volumenes no encontrada: $VOLUMES_DIR"
 fi
 
-# 3) Restaurar DB (opcional)
-# Buscar dump SQL (.sql o .sql.gz)
+## 3) Restaurar DB (opcional)
+## Buscar dump SQL (.sql | .sql.gz) en el backup extraido (cualquier subdirectorio)
 DB_SQL=""
-if [[ -d "$WORKDIR/database" ]]; then
-  shopt -s nullglob
-  sql_files=("$WORKDIR"/database/*.sql "$WORKDIR"/database/*.sql.gz)
-  if [[ ${#sql_files[@]} -gt 0 ]]; then
-    DB_SQL="${sql_files[0]}"
-  fi
+found_sql=$(find "$WORKDIR" -type f -iname 'pgdump*.sql*' -print -quit 2>/dev/null || true)
+if [[ -n "$found_sql" ]]; then
+  DB_SQL="$found_sql"
 fi
 
 if [[ -n "$DB_SQL" && -f "$DB_SQL" ]]; then

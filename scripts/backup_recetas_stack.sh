@@ -30,10 +30,13 @@ echo "[INFO] Raiz repo: $ROOT_DIR"
 echo "[INFO] Temporary staging: $TMP_DIR/staging"
 
 # Cargar .env local si existe (quita CRLF si vienen de Windows)
+# También eliminar BOM UTF-8 si existe (evita errores al ejecutar en Git Bash)
 if [ -f "$ROOT_DIR/.env" ]; then
   echo "[INFO] Cargando $ROOT_DIR/.env"
   CLEAN_ENV="$(mktemp)"
-  tr -d '\r' < "$ROOT_DIR/.env" > "$CLEAN_ENV"
+  # Remover BOM en la primera línea y eliminar CRLF (compatible con bash/sed/tr)
+  # Usamos $'...' en sed para soportar escape de bytes en bash
+  sed $'1s/^\xEF\xBB\xBF//' "$ROOT_DIR/.env" | tr -d '\r' > "$CLEAN_ENV"
   # shellcheck disable=SC1090
   set -a; . "$CLEAN_ENV"; set +a
   rm -f "$CLEAN_ENV"
@@ -67,43 +70,71 @@ fi
 
 ### 2) Guardar imagenes Docker (priorizar contenedores en ejecucion)
 IMAGES_FILE="$TMP_DIR/staging/docker/images_${TIMESTAMP}.txt"
-IMAGES_TAR="$TMP_DIR/staging/docker/images_${TIMESTAMP}.tar"
-echo "[INFO] Detectando imagenes activas (contenedores en ejecucion)..."
+echo "[INFO] Detectando imagenes relevantes (contenedores, compose y compose file)..."
+mkdir -p "$TMP_DIR/staging/docker"
 if command -v docker >/dev/null 2>&1; then
-  # 1) imagenes de contenedores en ejecucion (running) - obtener nombres completos
-  # Usar docker inspect para obtener repository:tag en lugar de IDs cortos
+  # Build a union of images:
+  #  - images used by running containers
+  #  - images used by all containers (fallback)
+  #  - images explicitly declared in docker-compose.yml (image: entries)
+  > "$IMAGES_FILE"
+
+  # images from running containers (preferred)
   docker ps -q | while read -r cid; do
-    docker inspect "$cid" --format '{{.Config.Image}}' 2>/dev/null || echo ""
-  done | grep -v '^$' | sort -u > "$IMAGES_FILE" || true
+    docker inspect "$cid" --format '{{.Config.Image}}' 2>/dev/null || true
+  done | grep -v '^$' >> "$IMAGES_FILE" || true
 
-  # 2) si no hay contenedores en ejecucion, intentar imagenes definidas en docker-compose
-  if [ ! -s "$IMAGES_FILE" ] && [ -f "$COMPOSE_FILE" ]; then
-    if docker compose -f "$COMPOSE_FILE" images --quiet >/dev/null 2>&1; then
-      echo "[INFO] No hay contenedores en ejecucion; usando imagenes definidas en compose"
-      docker compose -f "$COMPOSE_FILE" images --quiet | sort -u > "$IMAGES_FILE" || true
-    fi
+  # also include images from all containers (in case some are stopped)
+  docker ps -a -q | while read -r cid; do
+    docker inspect "$cid" --format '{{.Config.Image}}' 2>/dev/null || true
+  done | grep -v '^$' >> "$IMAGES_FILE" || true
+
+  # parse docker-compose file for explicit image: entries (if compose file exists)
+  if [ -f "$COMPOSE_FILE" ]; then
+    # capture lines like 'image: name:tag' possibly with indentation
+    grep -E '^[[:space:]]*image:' "$COMPOSE_FILE" 2>/dev/null | sed -E 's/^[[:space:]]*image:[[:space:]]*//' >> "$IMAGES_FILE" || true
   fi
 
-  # 3) fallback final: todas las imagenes de contenedores (incluye parados)
-  if [ ! -s "$IMAGES_FILE" ]; then
-    docker ps -a -q | while read -r cid; do
-      docker inspect "$cid" --format '{{.Config.Image}}' 2>/dev/null || echo ""
-    done | grep -v '^$' | sort -u > "$IMAGES_FILE" || true
+  # normalize, remove empty lines and duplicates
+  if [ -f "$IMAGES_FILE" ]; then
+    awk 'NF' "$IMAGES_FILE" | sort -u > "${IMAGES_FILE}.uniq" || true
+    mv "${IMAGES_FILE}.uniq" "$IMAGES_FILE" || true
   fi
+
   if [ -s "$IMAGES_FILE" ]; then
     echo "[INFO] Imagenes a guardar:"; sed -n '1,200p' "$IMAGES_FILE"
-    # docker save lee la lista desde archivo
-    xargs -a "$IMAGES_FILE" docker save -o "$IMAGES_TAR" || echo "[WARN] docker save devolvio error; se intentara imagen por imagen"
-    if [ ! -f "$IMAGES_TAR" ] || [ ! -s "$IMAGES_TAR" ]; then
-      rm -f "$IMAGES_TAR"
-      while IFS= read -r img; do
-        safe="$(echo "$img" | tr '/:@' '___')"
-        out="$TMP_DIR/staging/docker/${safe}_${TIMESTAMP}.tar"
-        docker save -o "$out" "$img" || echo "[WARN] no se pudo guardar imagen: $img"
-      done < "$IMAGES_FILE"
-    else
-      echo "[OK] Imagenes guardadas en $IMAGES_TAR"
-    fi
+    # Save each image individually to avoid multi-image docker save failures
+    # Asegurarse de incluir imágenes construidas localmente indicadas por variables de entorno
+    # (p. ej. BACKEND_IMAGE, FRONTEND_IMAGE) que pueden no aparecer en los listados anteriores.
+    if [ -n "${BACKEND_IMAGE_NAME:-}" ]; then echo "$BACKEND_IMAGE_NAME" >> "$IMAGES_FILE" || true; fi
+    if [ -n "${FRONTEND_IMAGE:-}" ]; then echo "$FRONTEND_IMAGE" >> "$IMAGES_FILE" || true; fi
+    # normalizar de nuevo tras posibles adiciones
+    awk 'NF' "$IMAGES_FILE" | sort -u > "${IMAGES_FILE}.uniq" || true
+    mv "${IMAGES_FILE}.uniq" "$IMAGES_FILE" || true
+    while IFS= read -r img; do
+      [ -z "$img" ] && continue
+      # Trim possible surrounding quotes and whitespace
+      img_clean=$(echo "$img" | sed -E 's/^\s+|\s+$//g; s/^"//; s/"$//')
+      img="$img_clean"
+      # sanitize filename safe for filesystem
+      safe="$(echo "$img" | sed 's/[^a-zA-Z0-9_.-]/_/g')"
+      out="$TMP_DIR/staging/docker/${safe}_${TIMESTAMP}.tar"
+      echo "[INFO] Guardando imagen: $img -> $out"
+      if docker save -o "$out" "$img" 2>/dev/null; then
+        echo "[OK] Imagen guardada: $out"
+      else
+        echo "[WARN] Fallo docker save para imagen: $img. Intentando pull+save..."
+        # try pulling then saving
+        if docker pull "$img" 2>/dev/null && docker save -o "$out" "$img" 2>/dev/null; then
+          echo "[OK] Imagen pull+save OK: $out"
+        else
+          echo "[ERROR] No se pudo guardar imagen: $img"
+          rm -f "$out" || true
+        fi
+      fi
+    done < "$IMAGES_FILE"
+    # Also persist the final images list for restore convenience
+    cp -f "$IMAGES_FILE" "$TMP_DIR/staging/docker/images_${TIMESTAMP}.txt" || true
   else
     echo "[WARN] No se detectaron imagenes para guardar."
   fi
